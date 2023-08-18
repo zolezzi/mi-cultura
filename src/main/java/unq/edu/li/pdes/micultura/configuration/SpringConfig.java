@@ -48,7 +48,7 @@ public class SpringConfig {
 					typeResolver.resolve(List.class, LocalDateTime.class),
 					typeResolver.resolve(List.class, Date.class), Ordered.HIGHEST_PRECEDENCE))
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("unq.edu.li.pdes.unqpremium"))
+				.apis(RequestHandlerSelectors.basePackage("unq.edu.li.pdes.micultura"))
 				.paths(PathSelectors.any())
 				.build();
 	}
@@ -62,7 +62,9 @@ public class SpringConfig {
     }
     
     @Bean
-    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
+    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier, 
+    		ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier, 
+    		EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
     	List<ExposableEndpoint<?>> allEndpoints = new ArrayList<ExposableEndpoint<?>>();
     	Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
     	allEndpoints.addAll(webEndpoints);

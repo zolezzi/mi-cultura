@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+   context-path: /
 
 mysql:
   service:
@@ -21,6 +23,7 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-bean-definition-overriding: true
+    allow-circular-references: true
   
   datasource:
     url:      jdbc:mariadb://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
@@ -47,3 +50,7 @@ spring:
       hibernate.cache.use_query_cache: true
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.enable_lazy_load_no_trans: true
+
+jwt:
+  secret: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  validaty: 18000
