@@ -1,6 +1,47 @@
 server:
   port: 8080
-  
+
+mysql:
+  service:
+    # The host of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_HOST' env variable
+    host:     localhost
+    # The port of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_PORT' env variable
+    port:     3306
+    # The database to use, can be customized using the 'MYSQL_SERVICE_DATABASE'
+    # env variable
+    database: mi_cultura 
+
 spring:
   application:
   name: "MiCultura"
+  
+  main:
+    allow-bean-definition-overriding: true
+  
+  datasource:
+    url:      jdbc:mariadb://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
+    jdbcUrl:      jdbc:mariadb://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
+    username: mi_cultura
+    password: micultura123
+    minimumIdle: 5
+    maximumPoolSize: 5
+    maxActive: 5
+    maxIdle: 5
+    maxWait: 1000
+    validationQuery: "select 1"
+    testOnBorrow: true
+    testOnConnect: true
+    testWhileIdle: true
+  jpa:
+#    database: mysql
+    hibernate:
+      ddl-auto: update
+      database-platform: org.hibernate.dialect.MariaDB53Dialect
+    properties:
+      hibernate.show_sql: true
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      hibernate.enable_lazy_load_no_trans: true
