@@ -6,6 +6,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class JwtResponseDTO {
+
     private String email;
     private String token;
+    private String firstname;
+    private String lastname;
+    private String role;
 }

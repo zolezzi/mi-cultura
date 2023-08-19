@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +36,9 @@ public class User implements UserDetails{
 	@Column(name = "password")
 	private String password;
 
+	@OneToOne
+	private Account account;
+	
 	@Override
 	public String getPassword() {
 		return password;
@@ -69,5 +73,8 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-
+	
+	public boolean isAdmin() {
+		return AccountRole.ADMIN.equals(account.getAccountRole());
+	}
 }

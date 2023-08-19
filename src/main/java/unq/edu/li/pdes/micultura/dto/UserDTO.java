@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @Data
-@JsonPropertyOrder({ "id", "email", "password"})
+@JsonPropertyOrder({ "id", "email", "password", "account"})
 public class UserDTO {
 	
 	@JsonProperty("id")
@@ -17,4 +17,7 @@ public class UserDTO {
 	
 	@JsonProperty("password")
 	private String password;
+	
+	@JsonProperty("account")
+	private AccountDTO account;
 }

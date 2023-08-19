@@ -22,14 +22,19 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import unq.edu.li.pdes.micultura.dto.AccountDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
 import unq.edu.li.pdes.micultura.exception.UserCreateException;
 import unq.edu.li.pdes.micultura.mapper.Mapper;
+import unq.edu.li.pdes.micultura.model.Account;
+import unq.edu.li.pdes.micultura.model.AccountRole;
 import unq.edu.li.pdes.micultura.model.User;
 import unq.edu.li.pdes.micultura.repository.UserRepository;
+import unq.edu.li.pdes.micultura.service.impl.AccountServiceImpl;
 import unq.edu.li.pdes.micultura.service.impl.UserServiceImpl;
 import unq.edu.li.pdes.micultura.utils.EncodeAndDecodeCrypt;
 import unq.edu.li.pdes.micultura.utils.TokenUtils;
+import unq.edu.li.pdes.micultura.vo.AccountVO;
 import unq.edu.li.pdes.micultura.vo.UserLoginVO;
 import unq.edu.li.pdes.micultura.vo.UserVO;
 
@@ -40,13 +45,26 @@ public class UserServiceTest {
 	private static final String PASSWORD = "HolaAdmin123!";
 	private static final String USER_NOT_FOUND = "USER2";
 	private static final String TOKEN_VALUE = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NTMwMTAyNCwibmFtZSI6ImFkbWluIn0.1nWH5XPt71NJ3cC4nzrvXPLr31DnXg5iUUFg0dyemHbhYirBI4IMbR0KH_iNnt0x_dAwNWZco66w8XCOXIut9g";
+	private static final String DNI = "35000111";
+	private static final String FIRST_NAME = "TEST";
+	private static final String LAST_NAME = "TEST";
+	private static final String ACCOUNT_ROLE = "ADMIN";
+	private static final String ACCOUNT_ROLE_DESCRIPTION = "ADMIN";
 	private static final String EMAIL_CREATE = "admin2@gmail.com";
+	private static final AccountRole ROLE_ADMIN = AccountRole.ADMIN;
+	private static final Long ACCOUNT_ID = 1l;
 	
 	@Mock
 	private User user;
 	
 	@Mock
 	private User userCreate;
+	
+	@Mock
+	private Account account;
+	
+	@Mock
+	private AccountDTO accountDto;
 	
 	@Mock
 	private UserDTO userDto;
@@ -60,7 +78,9 @@ public class UserServiceTest {
 	@Mock
 	private AuthenticationManager authenticationManager;
 	
-    
+	@Mock
+	private AccountServiceImpl accountService;
+	
 	@Mock
 	private TokenUtils tokenUtil;
 	
@@ -78,18 +98,29 @@ public class UserServiceTest {
 	
 	@Before
 	public void setUp(){
-		service = new UserServiceImpl(repository, authenticationManager, mapper, tokenUtil, encodeAndDecodeCrypt);
-		
+		service = new UserServiceImpl(repository, authenticationManager, accountService, mapper, tokenUtil, encodeAndDecodeCrypt);
 		when(repository.findOneByEmail(eq(EMAIL))).thenReturn(Optional.of(user));
 		when(user.getUsername()).thenReturn(EMAIL);
 		when(tokenUtil.createToken(eq(EMAIL))).thenReturn(TOKEN_VALUE);
 		when(mapper.map(any(), eq(User.class))).thenReturn(user);
 		when(user.getEmail()).thenReturn(EMAIL_CREATE);
 		when(user.getPassword()).thenReturn(PASSWORD);
+		when(user.getAccount()).thenReturn(account);
+		when(account.getFirstname()).thenReturn(FIRST_NAME);
+		when(account.getLastname()).thenReturn(LAST_NAME);
+		when(account.getAccountRole()).thenReturn(ROLE_ADMIN);
 		when(repository.findOneByEmail(EMAIL_CREATE)).thenReturn(Optional.empty());
+		when(accountService.createAccountByUser(any())).thenReturn(account);
 		when(mapper.map(any(), eq(UserDTO.class))).thenReturn(userDto);
 		when(userDto.getEmail()).thenReturn(EMAIL_CREATE);
 		when(userDto.getPassword()).thenReturn(PASSWORD);
+		when(userDto.getAccount()).thenReturn(accountDto);
+		when(accountDto.getId()).thenReturn(ACCOUNT_ID);
+		when(accountDto.getDni()).thenReturn(DNI);
+		when(accountDto.getFirstname()).thenReturn(FIRST_NAME);
+		when(accountDto.getLastname()).thenReturn(LAST_NAME);
+		when(accountDto.getRole()).thenReturn(ACCOUNT_ROLE);
+		when(accountDto.getRoleDescripton()).thenReturn(ACCOUNT_ROLE_DESCRIPTION);
 		when(mapper.map(eq(userVO), eq(User.class))).thenReturn(userCreate);
 		when(userCreate.getEmail()).thenReturn(EMAIL);
 		when(userCreate.getPassword()).thenReturn(PASSWORD);
@@ -105,6 +136,9 @@ public class UserServiceTest {
 		var jwtResponseDTO = service.login(user);
 	    assertThat(jwtResponseDTO.getEmail(), is(EMAIL));
 	    assertThat(jwtResponseDTO.getToken(), is(TOKEN_VALUE));
+	    assertThat(jwtResponseDTO.getFirstname(), is(FIRST_NAME));
+	    assertThat(jwtResponseDTO.getLastname(), is(LAST_NAME));
+	    assertThat(jwtResponseDTO.getRole(), is(ACCOUNT_ROLE));
 		assertNotNull(jwtResponseDTO.toString());
 		assertNotNull(jwtResponseDTO.hashCode());
 	    verify(repository).findOneByEmail(eq(EMAIL));
@@ -123,14 +157,22 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testCreateUserValidThenReturnANewUser(){
+	public void testCreateUserWithAccountValidThenReturnANewUserWithAnAccount(){
+		var account = createAccountVO();
 		var user = new UserVO();
 		user.setEmail(EMAIL_CREATE);
 		user.setPassword(PASSWORD);
 		user.setRepeatPassword(PASSWORD);
+		user.setAccount(account);
 		var userDTO = service.create(user);
 	    assertThat(userDTO.getEmail(), is(EMAIL_CREATE));
 	    assertThat(userDTO.getPassword(), is(PASSWORD));
+	    assertThat(userDTO.getAccount().getId(), is(ACCOUNT_ID));
+	    assertThat(userDTO.getAccount().getDni(), is(DNI));
+	    assertThat(userDTO.getAccount().getFirstname(), is(FIRST_NAME));
+	    assertThat(userDTO.getAccount().getLastname(), is(LAST_NAME));
+	    assertThat(userDTO.getAccount().getRole(), is(ACCOUNT_ROLE));
+	    assertThat(userDTO.getAccount().getRoleDescripton(), is(ACCOUNT_ROLE_DESCRIPTION));
 		assertNotNull(userDTO.toString());
 		assertNotNull(userDTO.hashCode());
 	}
@@ -141,5 +183,14 @@ public class UserServiceTest {
 		ex.expectMessage("Error register user resolved errors: [There is already a registered user with this email:admin@gmail.com ] ");
 		service.create(userVO);
 		verify(repository).findOneByEmail(eq(EMAIL_CREATE));
+	}
+	
+	private AccountVO createAccountVO() {
+		var account = new AccountVO();
+		account.setDni(DNI);
+		account.setFirstname(FIRST_NAME);
+		account.setLastname(LAST_NAME);
+		account.setRole(ACCOUNT_ROLE);
+		return account;
 	}
 }

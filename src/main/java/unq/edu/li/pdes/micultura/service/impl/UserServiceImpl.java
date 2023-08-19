@@ -30,22 +30,24 @@ public class UserServiceImpl implements UserService{
 
 	private final UserRepository repository;
 	private final AuthenticationManager authenticationManager;
+	private final AccountServiceImpl accountService;
 	private final Mapper mapper;
     private final TokenUtils tokenUtils;
     private final EncodeAndDecodeCrypt passwordEncoder;
     private Vector<String> errors = new Vector<>();
 	
-	@Override
-	public JwtResponseDTO login(UserLoginVO user) {
+    @Override
+    public JwtResponseDTO login(UserLoginVO user) {
     	String passEncrypt = user.getPassword();
     	user.setPassword(passwordEncoder.encode(passEncrypt));
     	var userDetails = (User) repository.findOneByEmail(user.getEmail())
 				.orElseThrow(() -> new UsernameNotFoundException(String.format("No found user:%s", user.getEmail())));
     	var token = tokenUtils.createToken(userDetails.getUsername());
     	authenticate(user.getEmail(), user.getPassword());
-		return new JwtResponseDTO(userDetails.getUsername(), token);
+		return new JwtResponseDTO(userDetails.getUsername(), token, userDetails.getAccount().getFirstname(),
+				userDetails.getAccount().getLastname(), userDetails.getAccount().getAccountRole().name());
 	}
-
+	
 	@Transactional
 	@Override
 	public UserDTO create(UserVO userVO) {
@@ -56,10 +58,12 @@ public class UserServiceImpl implements UserService{
         if(!UserValidator.validate(newUser, errors) || !errors.isEmpty()) {
 			throw new UserCreateException(String.format("Error register user resolved errors: %s ", errors.toString()));
 		}
+        var accountNew = accountService.createAccountByUser(userVO.getAccount());
+        newUser.setAccount(accountNew);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return mapper.map(repository.save(newUser), UserDTO.class);
 	}
-
+	
     private void authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }

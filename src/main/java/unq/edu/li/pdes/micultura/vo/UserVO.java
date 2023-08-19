@@ -15,4 +15,7 @@ public class UserVO {
 	
 	@JsonProperty("repeatPassword")
 	private String repeatPassword;
+	
+	@JsonProperty("account")
+	private AccountVO account;
 }
