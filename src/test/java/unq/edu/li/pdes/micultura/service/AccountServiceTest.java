@@ -172,7 +172,7 @@ public class AccountServiceTest {
 	}
 	
 	@Test
-	public void testSaveAccountAndNotFoundDegreeThenReturnException(){
+	public void testSaveAccountAndNotFoundDniThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("error there is already an account registered with this DNI: %s ", DNI));
 		var accountVO = new AccountVO();
@@ -241,7 +241,7 @@ public class AccountServiceTest {
 	}
 	
 	@Test
-	public void testCreateAccountAndNotFoundDegreeThenReturnException(){
+	public void testCreateAccountAndNotFoundDNIThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("error there is already an account registered with this DNI: %s ", DNI));
 		var accountVO = new AccountVO();
