@@ -17,13 +17,14 @@ public class UserTest {
 	private static final Long ID = 1L;
 	private static final String EMAIL = "admin@gmail.com";
 	private static final String PASSWORD = "admin";
-	
 	private User user;
-	
 	private User otherUser;
+	private Account account;
 	
 	@Before
 	public void setUp(){
+		account = new Account();
+		account.setAccountRole(AccountRole.ADMIN);
 		otherUser = new User();
 		otherUser.setEmail(EMAIL);
 		otherUser.setPassword(PASSWORD);
@@ -31,6 +32,7 @@ public class UserTest {
 		user.setId(ID);
 		user.setEmail(EMAIL);
 		user.setPassword(PASSWORD);
+		user.setAccount(account);
 	}
 	
 	@Test
@@ -43,6 +45,7 @@ public class UserTest {
 		assertThat(user.isAccountNonLocked(), is(Boolean.TRUE));
 		assertThat(user.isCredentialsNonExpired(), is(Boolean.TRUE));
 		assertThat(user.isEnabled(), is(Boolean.TRUE));
+		assertThat(user.isAdmin(), is(Boolean.TRUE));
 		assertThat(user.getAuthorities(), is(Collections.emptyList()));
 		assertNotNull(user.toString());
 		assertNotNull(user.hashCode());

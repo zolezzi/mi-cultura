@@ -75,6 +75,6 @@ public class User implements UserDetails{
 	}
 	
 	public boolean isAdmin() {
-		return AccountRole.ADMIN.equals(account.getAccountRole());
+		return AccountRole.ADMIN.equals(this.getAccount().getAccountRole());
 	}
 }
