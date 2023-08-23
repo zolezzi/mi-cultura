@@ -1,0 +1,51 @@
+import { NgModule, ModuleWithProviders, SkipSelf, Optional, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
+{{#useHttpClient}}
+import { HttpClientModule } from '@angular/common/http';
+{{/useHttpClient}}
+{{^useHttpClient}}
+import { HttpModule } from '@angular/http';
+{{/useHttpClient}}
+import { Configuration } from './configuration';
+
+
+{{#apiInfo}}
+{{#apis}}
+import { {{classname}} } from './service/api';
+{{/apis}}
+{{/apiInfo}}
+
+export const tokenMap = new Map<String, InjectionToken<any>>();
+
+{{#apiInfo}}
+{{#apis}}
+export const {{classname}}_Token = new InjectionToken<any>('{{classname}}');
+tokenMap.set('{{classname}}', {{classname}}_Token)
+{{/apis}}
+{{/apiInfo}}
+
+export const TokenMap = "TokenMap"
+
+
+@NgModule({
+  imports:      [ CommonModule, {{#useHttpClient}}HttpClientModule{{/useHttpClient}}{{^useHttpClient}}HttpModule{{/useHttpClient}} ],
+  declarations: [],
+  exports:      [],
+  providers: [
+    {{#apiInfo}}{{#apis}}{{classname}},  {provide: {{classname}}_Token, useClass: {{classname}} } {{#hasMore}},
+    {{/hasMore}}{{/apis}}{{/apiInfo}},{provide: TokenMap, useValue: tokenMap, multi:true} ]
+})
+export class ApiModule {
+    public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {
+        return {
+            ngModule: ApiModule,
+            providers: [ { provide: Configuration, useFactory: configurationFactory } ]
+        }
+    }
+
+    constructor( @Optional() @SkipSelf() parentModule: ApiModule) {
+        if (parentModule) {
+            throw new Error('ApiModule is already loaded. Import your base AppModule only.');
+        }
+    }
+}

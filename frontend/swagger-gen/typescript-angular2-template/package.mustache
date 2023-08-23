@@ -1,0 +1,42 @@
+{
+  "name": "{{{npmName}}}",
+  "version": "{{{npmVersion}}}",
+  "description": "swagger client for {{{npmName}}}",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "swagger-client"
+  ],
+  "license": "Unlicense",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "postinstall": "npm run build"
+  },
+  "peerDependencies": {
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "rxjs": "~7.5.0",
+    "rxjs-compat": "^6.6.7",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "@angular/platform-browser": "^{{ngVersion}}",
+    "rxjs": "~7.5.0",
+    "rxjs-compat": "^6.6.7",
+    "zone.js": "~0.11.4",
+    "ng-packagr": "^14.2.0",
+    "typescript": "4.7.2"
+  }{{#npmRepository}},{{/npmRepository}}
+{{#npmRepository}}
+  "publishConfig": {
+    "registry": "{{{npmRepository}}}"
+  }
+{{/npmRepository}}
+}
