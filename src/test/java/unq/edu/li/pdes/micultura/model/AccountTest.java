@@ -21,9 +21,7 @@ public class AccountTest {
 	private static final String ACCOUNT_ROLE_DESCRIPTION = "ADMIN";
 	private static final Long OTHER_ID = 10L;
 	private static final AccountRole ADMIN_ROLE = AccountRole.ADMIN;
-	
 	private Account account;
-	
 	private Account otherAccount;
 	
 	@Before
