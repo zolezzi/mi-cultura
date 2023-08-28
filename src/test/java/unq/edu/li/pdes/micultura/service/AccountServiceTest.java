@@ -1,7 +1,6 @@
 package unq.edu.li.pdes.micultura.service;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -38,7 +37,6 @@ import unq.edu.li.pdes.micultura.vo.AccountVO;
 public class AccountServiceTest {
 
 	private static final Long ID = 1L;
-	private static final Long USER_ID = 1L;
 	private static final Long USER_ADMIN_ID = 5L;
 	private static final Long ID_USER_DELETE = 2L;
 	private static final Long ID_USER_UPDATE = 3L;
