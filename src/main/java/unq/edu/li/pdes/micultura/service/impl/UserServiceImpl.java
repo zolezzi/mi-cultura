@@ -1,5 +1,6 @@
 package unq.edu.li.pdes.micultura.service.impl;
 
+import java.util.List;
 import java.util.Vector;
 
 import javax.transaction.Transactional;
@@ -12,9 +13,12 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import unq.edu.li.pdes.micultura.dto.JwtResponseDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
+import unq.edu.li.pdes.micultura.exception.MiCulturaException;
 import unq.edu.li.pdes.micultura.exception.UserCreateException;
+import unq.edu.li.pdes.micultura.exception.UserNotFoundException;
 import unq.edu.li.pdes.micultura.mapper.Mapper;
 import unq.edu.li.pdes.micultura.model.User;
+import unq.edu.li.pdes.micultura.repository.AccountRepository;
 import unq.edu.li.pdes.micultura.repository.UserRepository;
 import unq.edu.li.pdes.micultura.service.UserService;
 import unq.edu.li.pdes.micultura.utils.EncodeAndDecodeCrypt;
@@ -29,6 +33,7 @@ import unq.edu.li.pdes.micultura.vo.UserVO;
 public class UserServiceImpl implements UserService{
 
 	private final UserRepository repository;
+	private final AccountRepository accountRepository;
 	private final AuthenticationManager authenticationManager;
 	private final AccountServiceImpl accountService;
 	private final Mapper mapper;
@@ -62,6 +67,43 @@ public class UserServiceImpl implements UserService{
         newUser.setAccount(accountNew);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return mapper.map(repository.save(newUser), UserDTO.class);
+	}
+
+	@Override
+	public UserDTO findById(Long userId) {
+		var userDB = getUserById(userId);
+		return mapper.map(userDB, UserDTO.class);
+	}
+
+	@Override
+	public void deleteById(Long userId, Long adminId) throws Exception {
+		var userAdmin = repository.findById(adminId).orElseThrow(() -> new MiCulturaException(String.format("No found user:%s", adminId)));
+		if(!userAdmin.isAdmin()) {
+			throw new MiCulturaException(String.format("Error Unauthorized permission user: %s ", adminId));
+		}
+		var userDelete = repository.findById(userId).orElseThrow(() -> new MiCulturaException(String.format("No found user:%s", userId)));
+		repository.delete(userDelete);
+		accountRepository.delete(userDelete.getAccount());
+	}
+
+	@Override
+	public UserDTO update(UserDTO user, Long userId) {
+		var userDB = getUserById(userId);
+		userDB = mapper.map(userDB, User.class);
+		return mapper.map(repository.save(userDB), UserDTO.class);
+	}
+
+	@Override
+	public List<UserDTO> findAll() {
+		return mapper.mapList(repository.findAll(), UserDTO.class);
+	}
+	
+	private User getUserById(Long userId) {
+		var userIdIdOpt = repository.findById(userId);
+		if(userIdIdOpt.isEmpty()) {
+			throw new UserNotFoundException(String.format("User not found with id:%s ", userId));
+		}
+		return userIdIdOpt.get();
 	}
 	
     private void authenticate(String username, String password) {
