@@ -1,0 +1,38 @@
+<div class="container"></div>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span routerLink="/home"> MiCultura </span>
+  <span class="spacer"></span>
+  <div class="buttons-login">
+    <button mat-button *ngIf="!isLoggedIn" routerLink="/login">Login</button>
+    <button mat-button *ngIf="!isLoggedIn" routerLink="/register">
+      Register
+    </button>
+    <span *ngIf="isLoggedIn" style="margin-right: 20px"
+      ><i class="fa-solid fa-user" style="margin-right: 10px"></i
+      >{{ fullName }}</span
+    >
+    <button mat-button *ngIf="isLoggedIn" (click)="logout()">Salir</button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container style="background-color: rgba(155, 148, 148, 0.7)">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [(opened)]="isSidenavOpened"
+    class="sidenav"
+    style="background-color: grey"
+  >
+    <mat-nav-list>
+      <a mat-list-item *ngIf="isLoggedIn" routerLink="/">Home</a>
+      <a mat-list-item *ngIf="isLoggedIn" (click)="logout()">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
