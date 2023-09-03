@@ -21,6 +21,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -48,6 +49,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatStepperModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatCardModule,
     
   ],
   exports: [
@@ -72,7 +74,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatListModule  ,
     MatStepperModule ,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule
   ],
 })
 export class AngularMaterialModule {}
