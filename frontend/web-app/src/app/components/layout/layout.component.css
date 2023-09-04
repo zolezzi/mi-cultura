@@ -47,15 +47,15 @@ li {
 }
 
 #image1 {
-  background-image: url(https://fca.uncuyo.edu.ar/cache/egresados_999_750.jpg);
+  background-image: url(https://media.ambito.com/p/7e4743f8d3f3eb6057c7c7107e39d3f7/adjuntos/239/imagenes/039/581/0039581161/1200x675/smart/museo-la-platajpg.jpg);
 }
 
 #image2 {
-  background-image: url(https://cdn.pixabay.com/photo/2015/02/02/11/09/office-620822_1280.jpg);
+  background-image: url(https://www.argentina.gob.ar/sites/default/files/jumbotron_tramites.jpg);
 }
 
 #image3 {
-  background-image: url(https://cdn.pixabay.com/photo/2016/03/26/22/21/books-1281581_1280.jpg);
+  background-image: url(https://www.infocanuelas.com/app/media/baile-jinetes-y-carruajes-en-el-festival-de-la-patria-19642.jpg);
 }
 
 @media screen and (max-width: 768px) {
@@ -85,7 +85,34 @@ li {
 
 .example-card {
   display: flex;
-  margin-top: 20px;
+  margin-top: 60px;
   width: 350px;
-  height: 350px;
+  height: 300px;
+}
+
+.mat-mdc-card {
+  position: relative;
+  border-radius: var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+  background-color: #fafafa;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--mdc-elevated-card-container-color, transparent);
+}
+
+.mat-mdc-card-subtitle {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: var(--mdc-typography-subtitle2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+  font-size: var(--mdc-typography-subtitle2-font-size, 22px);
+  line-height: var(--mdc-typography-subtitle2-line-height, 36px);
+}
+
+.icon-title{
+  font-size: 36px;
+}
+.description-card{
+  color: black;
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: #38B6FF;
 }
