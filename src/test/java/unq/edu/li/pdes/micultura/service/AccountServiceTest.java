@@ -159,11 +159,7 @@ public class AccountServiceTest {
 	
 	@Test
 	public void testSaveAccount(){
-		var accountVO = new AccountVO();
-		accountVO.setFirstname(FIRST_NAME);
-		accountVO.setLastname(LAST_NAME);
-		accountVO.setDni(ID_DNI_NOT_FOUND);
-		accountVO.setRole(ACCOUNT_ROLE);
+		var accountVO = createAccountDNINotFound();
 	    assertThat(service.save(accountVO), is(accountDto));
 	    verify(repository).save(eq(account));
 	    verify(repository).findOneByDni(eq(ID_DNI_NOT_FOUND));
@@ -173,11 +169,7 @@ public class AccountServiceTest {
 	public void testSaveAccountAndNotFoundDniThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("error there is already an account registered with this DNI: %s ", DNI));
-		var accountVO = new AccountVO();
-		accountVO.setFirstname(FIRST_NAME);
-		accountVO.setLastname(LAST_NAME);
-		accountVO.setDni(DNI);
-		accountVO.setRole(ACCOUNT_ROLE);
+		var accountVO = createAccountVO();
 	    assertThat(service.save(accountVO), is(accountDto));
 	    verify(repository).save(eq(account));
 	    verify(repository).findById(eq(ID_ACCOUNT_NEW));
@@ -228,27 +220,36 @@ public class AccountServiceTest {
 	
 	@Test
 	public void testcreateAccount(){
-		var accountVO = new AccountVO();
-		accountVO.setFirstname(FIRST_NAME);
-		accountVO.setLastname(LAST_NAME);
-		accountVO.setDni(ID_DNI_NOT_FOUND);
-		accountVO.setRole(ACCOUNT_ROLE);
+		var accountVO = createAccountDNINotFound();
 	    assertThat(service.createAccountByUser(accountVO), is(account));
 	    verify(repository).save(eq(account));
 	    verify(repository).findOneByDni(eq(ID_DNI_NOT_FOUND));
 	}
-	
+
 	@Test
 	public void testCreateAccountAndNotFoundDNIThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("error there is already an account registered with this DNI: %s ", DNI));
+		var accountVO = createAccountVO();
+		service.createAccountByUser(accountVO);
+		verify(repository, never()).save(eq(account));
+	}
+	
+	private AccountVO createAccountVO() {
 		var accountVO = new AccountVO();
 		accountVO.setFirstname(FIRST_NAME);
 		accountVO.setLastname(LAST_NAME);
 		accountVO.setDni(DNI);
 		accountVO.setRole(ACCOUNT_ROLE);
-		service.createAccountByUser(accountVO);
-		verify(repository, never()).save(eq(account));
+		return accountVO;
 	}
-	
+
+	private AccountVO createAccountDNINotFound() {
+		var accountVO = new AccountVO();
+		accountVO.setFirstname(FIRST_NAME);
+		accountVO.setLastname(LAST_NAME);
+		accountVO.setDni(ID_DNI_NOT_FOUND);
+		accountVO.setRole(ACCOUNT_ROLE);
+		return accountVO;
+	}
 }
