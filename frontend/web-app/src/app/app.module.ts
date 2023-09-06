@@ -8,6 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AngularMaterialModule } from './shared/angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { LoginComponent } from './components/login/login/login.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     AppComponent,
     LayoutComponent,
     NavbarComponent,
+    LoginComponent,
     
   ],
   imports: [
