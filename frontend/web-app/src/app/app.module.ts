@@ -9,6 +9,7 @@ import { AngularMaterialModule } from './shared/angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { LoginComponent } from './components/login/login/login.component';
+import { RegisterComponent } from './components/register/register/register.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { LoginComponent } from './components/login/login/login.component';
     LayoutComponent,
     NavbarComponent,
     LoginComponent,
+    RegisterComponent,
     
   ],
   imports: [

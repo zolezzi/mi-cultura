@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="register-box">
+      <h2>Registrarse</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> 
+            <div class="user-box">
+              <input type="text" required="" formControlName="firstname" autocomplete="off"/>
+              <label>Nombre</label>
+              <mat-error *ngFor="let validation of register_validation_messages.firstname">
+                <mat-error class="error-message" style="position: relative"
+                  *ngIf="registerForm.get('firstname')?.hasError(validation.type) && (registerForm.get('firstname')?.dirty 
+                    || registerForm.get('firstname')?.touched)">{{ validation.message }}
+                </mat-error>
+              </mat-error>
+            <div class="user-box">
+              <input type="text" required="" formControlName="lastname" autocomplete="off"/>
+              <label>Apellido</label>
+              <mat-error *ngFor="let validation of register_validation_messages.lastname">
+                <mat-error class="error-message" style="position: relative"
+                  *ngIf="registerForm.get('lastname')?.hasError(validation.type) && (registerForm.get('lastname')?.dirty 
+                    || registerForm.get('lastname')?.touched)">{{ validation.message }}</mat-error>
+              </mat-error>
+            </div>
+            </div>
+            <div class="user-box ">
+              <input type="number" name="" required="" formControlName="dni" autocomplete="off"/>
+              <label>DNI</label>
+              <mat-error *ngFor="let validation of register_validation_messages.dni">
+                <mat-error class="error-message" style="position: relative"
+                  *ngIf="registerForm.get('dni')?.hasError(validation.type) && (registerForm.get('dni')?.dirty 
+                    || registerForm.get('dni')?.touched)">{{ validation.message }}
+                </mat-error>
+              </mat-error>
+              <div class="user-box">
+                <input type="text" name="" required="" formControlName="email" autocomplete="off"/>
+                <label>Email</label>
+                <mat-error *ngFor="let validation of register_validation_messages.email">
+                  <mat-error class="error-message" style="position: relative"
+                    *ngIf="registerForm.get('email')?.hasError(validation.type) && (registerForm.get('email')?.dirty 
+                    || registerForm.get('email')?.touched)">{{ validation.message }}
+                  </mat-error>
+                </mat-error>
+              </div>
+            </div>
+            <div class="user-box ">
+                <input type="number" name="" required="" formControlName="phone" autocomplete="off"/>
+                <label>Teléfono</label>
+                <mat-error *ngFor="let validation of register_validation_messages.phone">
+                  <mat-error class="error-message" style="position: relative"
+                    *ngIf="registerForm.get('phone')?.hasError(validation.type) && (registerForm.get('phone')?.dirty 
+                      || registerForm.get('phone')?.touched)">{{ validation.message }}
+                  </mat-error>
+                </mat-error>
+                <div class="user-box">
+                  <input type="text" name="" required="" formControlName="address" autocomplete="off"/>
+                  <label>Dirección</label>
+                  <mat-error *ngFor="let validation of register_validation_messages.address">
+                    <mat-error class="error-message" style="position: relative"
+                      *ngIf="registerForm.get('address')?.hasError(validation.type) && (registerForm.get('address')?.dirty 
+                      || registerForm.get('address')?.touched)">{{ validation.message }}
+                    </mat-error>
+                  </mat-error>
+                </div>
+              </div>
+            <div class="user-box ">
+              <input type="password" name="" required="" formControlName="password"/>
+              <label>Contraseña</label>
+              <mat-error *ngFor="let validation of register_validation_messages.password">
+                <mat-error
+                  class="error-message" style="position: relative"
+                  *ngIf="registerForm.get('password')?.hasError(validation.type) && (registerForm.get('password')?.dirty 
+                    || registerForm.get('password')?.touched)">{{ validation.message }}</mat-error>
+              </mat-error>
+              <div class="user-box">
+                <input type="password" name="" required="" formControlName="repeatPassword"/>
+                <label>Repetir contraseña</label>
+                <mat-error *ngFor="let validation of register_validation_messages.repeatPassword ">
+                  <mat-error class="error-message" style="position: relative"
+                    *ngIf="registerForm.get('repeatPassword')?.hasError(validation.type) &&(registerForm.get('repeatPassword')?.dirty 
+                        || registerForm.get('repeatPassword')?.touched)">{{ validation.message }}</mat-error>
+                </mat-error>
+              </div>
+            </div>
+            <div class="user-box">
+              <select type="text" name="" required="true" formControlName="role">
+                <option>TURISTA</option>
+                <option>VISITANTE</option>
+              </select>
+              <label>Seleccionar</label>
+              <mat-error *ngFor="let validation of register_validation_messages.role">
+                <mat-error class="error-message" style="position: relative"
+                  *ngIf="registerForm.get('role')?.hasError(validation.type) && (registerForm.get('role')?.dirty 
+                    || registerForm.get('role')?.touched)">{{ validation.message }}</mat-error>
+              </mat-error>
+            </div>
+        <div class="user-box2">
+          Ya estás registrado?
+          <a class="fcc-btn" style="margin-left: 10px" routerLink="/login">Ingresar</a>
+        </div>
+        <button type="submit" class="button">
+          <span></span><span></span><span></span><span></span>Registrarse
+        </button>
+      </form>  
+  </div>
