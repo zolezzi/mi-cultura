@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import { LocalStorageService } from 'ngx-webstorage';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
-  isSidenavOpened = false;
   fullName: string = '';
   role!: string;
   isAdmin: boolean = false;
@@ -17,18 +16,14 @@ export class NavbarComponent implements OnInit {
   private readonly FULL_NAME:string = "FULL_NAME";
   private readonly ROLE: string = 'ROLE';
 
-  constructor( private router: Router, /*private localStorageService: LocalStorageService*/) {}
+  constructor( private router: Router, private localStorageService: LocalStorageService) {}
  
   ngOnInit(): void {
-    //this.role = this.localStorageService.retrieve(this.ROLE);
+    this.role = this.localStorageService.retrieve(this.ROLE);
     this.isAdmin = 'ADMIN' == this.role;
-    //const token = this.localStorageService.retrieve(this.ACCESS_TOKEN);
-    //this.isLoggedIn = !!token;
-    //this.fullName = this.localStorageService.retrieve(this.FULL_NAME);
-  }
-
-  toggleSidenav() {
-    this.isSidenavOpened = !this.isSidenavOpened;
+    const token = this.localStorageService.retrieve(this.ACCESS_TOKEN);
+    this.isLoggedIn = !!token;
+    this.fullName = this.localStorageService.retrieve(this.FULL_NAME);
   }
 
   login() {
@@ -36,8 +31,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    //this.localStorageService.clear(this.ACCESS_TOKEN);
-    //this.isLoggedIn = false;
-    //this.router.navigate(['/home']);
+    this.localStorageService.clear(this.ACCESS_TOKEN);
+    this.isLoggedIn = false;
+    this.router.navigate(['/home']);
   }
 }

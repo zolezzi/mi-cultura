@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
-
+import { UserLoginVO } from 'src/app/api';
+import { UserControllerService } from 'src/app/api/service/userController.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,8 @@ export class LoginComponent implements OnInit {
   private readonly ROLE: string = 'ROLE';
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
 
-  constructor( private router: Router, private localStorageService: LocalStorageService, 
-    private formBuilder: FormBuilder) {
+  constructor( private userservice: UserControllerService, private router: Router,
+    private localStorageService: LocalStorageService, private formBuilder: FormBuilder) {
 
   }
 
@@ -45,15 +46,20 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    const authRequest: any = {
+    const authRequest: UserLoginVO = {
       email: value.email,
       password: value.password,
     };
-  }
-
-  goToCreateAccount() {
-    this.localStorageService.store('RELOAD', 'reload');
-    this.router.navigate(['/home']);
+    this.userservice.login(authRequest).subscribe({
+      next: (result) => {
+        this.localStorageService.store(this.ACCESS_TOKEN, result.token);
+        this.localStorageService.store(this.FULL_NAME, String(result.firstname + this.EMPTY + result.lastname));
+        this.localStorageService.store(this.ROLE, result.role);
+        this.goToWelcome();
+      },
+      error: (error) =>
+        console.error('Error iniciando sesión. Reintente nuevamente.'),
+    });
   }
 
   private goToWelcome() {

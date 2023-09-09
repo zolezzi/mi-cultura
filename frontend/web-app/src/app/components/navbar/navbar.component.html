@@ -3,6 +3,8 @@
     <img src=".\assets\images\logo.png" alt="">
   </a>
   <ul class="list">
+    <li *ngIf="isLoggedIn"><a  routerLink="/login">Favoritos</a></li>
+    <li *ngIf="isLoggedIn"><a  routerLink="/login">Usuarios</a></li>
     <li><a  routerLink="/login">Lugares</a></li>
     <li><a  routerLink="/login">Eventos</a></li>
     <li><a href="#">Novedades</a></li>
@@ -12,7 +14,11 @@
     <button class="btn-search"><i class="fas fa-search"></i></button>
     <input type="text" class="input-search" placeholder="Type to Search...">
   </div>
-  <div class="login-create">
+  <div *ngIf="!isLoggedIn" class="login-create">
     <a routerLink="/login">Iniciar sesión</a>
+  </div>
+  <div class="buttons-login">
+    <span *ngIf="isLoggedIn" style="margin-right: 20px"><i class="fa-solid fa-user" style="margin-right: 10px"></i>{{ fullName }}</span>
+    <button mat-button style="color: black;" *ngIf="isLoggedIn" (click)="logout()">Salir</button>
   </div>
 </nav>

@@ -10,6 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { LoginComponent } from './components/login/login/login.component';
 import { RegisterComponent } from './components/register/register/register.component';
+import { AccountControllerService } from './api/service/accountController.service';
+import { AdminControllerService } from './api/service/adminController.service';
+import { UserControllerService } from './api/service/userController.service';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { RegisterComponent } from './components/register/register/register.compo
     BrowserAnimationsModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [],
+  providers: [UserControllerService, AccountControllerService, AdminControllerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
