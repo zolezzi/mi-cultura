@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-   context-path: /
+    contextPath: /
 
 mysql:
   service:
@@ -26,10 +26,10 @@ spring:
     allow-circular-references: true
   
   datasource:
-    url:      jdbc:mariadb://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
-    jdbcUrl:      jdbc:mariadb://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
-    username: mi_cultura
-    password: micultura123
+    url:      jdbc:mariadb://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?autoReconnect=true&useSSL=false
+    jdbcUrl:  jdbc:mariadb://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?autoReconnect=true&useSSL=false
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
     minimumIdle: 5
     maximumPoolSize: 5
     maxActive: 5

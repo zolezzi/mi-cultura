@@ -1,19 +1,106 @@
+buildscript {
+  ext {
+        springBootVersion = '2.7.2'
+        springDependencyManagementVersion = '1.0.15.RELEASE'
+  }
+  repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        
+        maven 
+        {
+            url "https://plugins.gradle.org/m2/"
+        }
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "com.palantir.git-version" version "0.12.0-rc2"
+	id "com.github.node-gradle.node" version "3.0.1"
+	id "com.palantir.docker" version "0.22.1"
 }
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.git-version'
+apply plugin: 'org.springframework.boot'
 
 group = 'unq.edu.li.pdes'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+targetCompatibility = 11
 
-java {
-	sourceCompatibility = '11'
+task buildClient(type:NpmTask, dependsOn:'npmInstall') {
+  group = 'build'
+  description = "Compile client side folder for production"
+  args = ['run','build.prod']
 }
+
+if (hasProperty('profile') && ext.profile == 'container')  {
+
+	bootJar {
+	    dependsOn "buildClient"
+	    baseName="micultura"
+	    version="1.0.0"
+	    into('BOOT-INF/classes/static') {
+		    from "frontend/web-app/dist"
+	    }    
+	}
+}
+else {
+	bootJar {
+	    dependsOn "buildClient"
+	    baseName="micultura"
+	    version="1.0.0"
+	    launchScript();
+	    into('BOOT-INF/classes/static') {
+		    from "frontend/web-app/dist"
+	    }
+	}
+}
+
+node {
+    version = "18.15.0"
+	download = true
+	nodeModulesDir = file("frontend/web-app")
+	nodeProjectDir = file("frontend/web-app")
+	npmVersion= "9.6.2"
+}
+
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/dependency")
+}
+
+docker {
+    println "Docker Result -> micultura-app:latest"
+    name "micultura-app:latest"
+    tag "MiCultura", "micultura-app:latest"
+    dockerfile file("mi-cultura-docker/Dockerfile")
+    copySpec.from(tasks.unpack.outputs).into("dependency")
+    buildArgs(['DEPENDENCY': "dependency"])
+}
+
+jar.dependsOn(buildClient)
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
 	}
 }
 
