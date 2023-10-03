@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/register/register/register.compo
 import { AccountControllerService } from './api/service/accountController.service';
 import { AdminControllerService } from './api/service/adminController.service';
 import { UserControllerService } from './api/service/userController.service';
+import { PlaceSearchComponent } from './components/place/place-search/place-search/place-search.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { UserControllerService } from './api/service/userController.service';
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
+    PlaceSearchComponent,
     
   ],
   imports: [
