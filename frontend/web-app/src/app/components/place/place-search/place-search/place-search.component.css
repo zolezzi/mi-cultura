@@ -55,6 +55,24 @@
 }
 
 .card {
-    width: calc(20% - 200px); /* Calcula el ancho de cada tarjeta para mostrar 5 por fila */
+    width: calc(20% - 200px);
 }
+/*
+.mat-mdc-paginator {
+    background: #ffffff;
+    color: rgb(0 0 0 / 87%);
+}
+
+.mat-mdc-select-value {
+    color: rgb(0 0 0 / 87%) !important;
+}
+
+.mat-mdc-paginator-icon {
+    fill: rgb(0 0 0 / 54%);
+}
+
+.mdc-list-item--selected .mdc-list-item__primary-text, .mdc-list-item--activated .mdc-list-item__primary-text {
+    color: #f44336;
+}*/
+/*"@angular/material/prebuilt-themes/purple-green.css",*/
 /* https://static.vecteezy.com/system/resources/previews/009/951/833/non_2x/politician-or-government-building-cartoon-hand-drawn-illustration-as-a-place-for-sustained-economic-development-vector.jpg*/

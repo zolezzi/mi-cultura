@@ -14,7 +14,8 @@ import { AccountControllerService } from './api/service/accountController.servic
 import { AdminControllerService } from './api/service/adminController.service';
 import { UserControllerService } from './api/service/userController.service';
 import { PlaceSearchComponent } from './components/place/place-search/place-search/place-search.component';
-
+import { getDutchPaginatorIntl } from './components/place/place-search/place-search/dutch-paginator-intl';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { PlaceSearchComponent } from './components/place/place-search/place-sear
     BrowserAnimationsModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService],
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

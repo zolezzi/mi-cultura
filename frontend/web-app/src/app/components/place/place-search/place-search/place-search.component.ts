@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
@@ -11,6 +12,9 @@ export class PlaceSearchComponent implements OnInit{
 
   isAdmin: boolean = false;
   places: any[] = [];
+  length = 20;
+  pageSize = 10;
+  pageEvent: PageEvent = new PageEvent;
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
   private readonly ROLE: string = 'ROLE';
 
