@@ -8,7 +8,7 @@
     margin-top: 16px;
     margin-left: 16px;
     float: left;
-  }
+}
 
 .row {margin: 0 -5px; width: 100%;}
 
@@ -16,7 +16,7 @@
     content: "";
     display: table;
     clear: both;
-  }
+}
   
 .example-header-image {    
     background-size: cover;
@@ -37,21 +37,10 @@
     --mdc-elevated-card-container-color: #fff;
 }
 
-.limit-text {
-    white-space: pre-wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 75ch;
-}
-
-.limit-text p:nth-child(1n + 2){
-    display: none;
-}
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .card {

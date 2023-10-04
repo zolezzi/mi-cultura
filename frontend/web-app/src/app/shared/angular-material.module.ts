@@ -22,9 +22,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import { SanitizeHtmlPipe } from './pipe/dom-sanitizer.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SanitizeHtmlPipe
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -75,7 +78,8 @@ import { MatCardModule } from '@angular/material/card';
     MatStepperModule ,
     MatExpansionModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    SanitizeHtmlPipe
   ],
 })
 export class AngularMaterialModule {}

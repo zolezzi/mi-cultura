@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { LocalStorageService } from 'ngx-webstorage';
+import { Observable } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-place-search',
@@ -12,21 +14,40 @@ export class PlaceSearchComponent implements OnInit{
 
   isAdmin: boolean = false;
   places: any[] = [];
-  length = 20;
-  pageSize = 10;
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
   pageEvent: PageEvent = new PageEvent;
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
   private readonly ROLE: string = 'ROLE';
-
-  constructor( private router: Router, private localStorageService: LocalStorageService) {
+  
+  constructor(private router: Router, private localStorageService: LocalStorageService) {
 
   }
 
   ngOnInit(): void {
+    this.loadPlaces();
+  }
 
+  loadPlaces() {
+    this.places = [
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>`},
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>\r\n<p>Fue creado en 1971 por el Decreto n&ordm; 4657/71 y ampliadas sus funciones por los decretos: 1185/73; 1454/74 y 1479/81. El decreto 108/2013 cambia su nombre de Comisi&oacute;n Nacional a Complejo Hist&oacute;rico Cultural Manzana de las Luces.</p>\r\n<p>Son sus objetivos la restauraci&oacute;n y conservaci&oacute;n de los edificios hist&oacute;ricos; la investigaci&oacute;n con relaci&oacute;n a instituciones, acontecimientos y personajes que desfilaron por la Manzana de las Luces; y la refuncionalizaci&oacute;n de los edificios a trav&eacute;s de la actividad cultural.</p>`},
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>\r\n<p>Fue creado en 1971 por el Decreto n&ordm; 4657/71 y ampliadas sus funciones por los decretos: 1185/73; 1454/74 y 1479/81. El decreto 108/2013 cambia su nombre de Comisi&oacute;n Nacional a Complejo Hist&oacute;rico Cultural Manzana de las Luces.</p>\r\n<p>Son sus objetivos la restauraci&oacute;n y conservaci&oacute;n de los edificios hist&oacute;ricos; la investigaci&oacute;n con relaci&oacute;n a instituciones, acontecimientos y personajes que desfilaron por la Manzana de las Luces; y la refuncionalizaci&oacute;n de los edificios a trav&eacute;s de la actividad cultural.</p>`},
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>\r\n<p>Fue creado en 1971 por el Decreto n&ordm; 4657/71 y ampliadas sus funciones por los decretos: 1185/73; 1454/74 y 1479/81. El decreto 108/2013 cambia su nombre de Comisi&oacute;n Nacional a Complejo Hist&oacute;rico Cultural Manzana de las Luces.</p>\r\n<p>Son sus objetivos la restauraci&oacute;n y conservaci&oacute;n de los edificios hist&oacute;ricos; la investigaci&oacute;n con relaci&oacute;n a instituciones, acontecimientos y personajes que desfilaron por la Manzana de las Luces; y la refuncionalizaci&oacute;n de los edificios a trav&eacute;s de la actividad cultural.</p>`},
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>\r\n<p>Fue creado en 1971 por el Decreto n&ordm; 4657/71 y ampliadas sus funciones por los decretos: 1185/73; 1454/74 y 1479/81. El decreto 108/2013 cambia su nombre de Comisi&oacute;n Nacional a Complejo Hist&oacute;rico Cultural Manzana de las Luces.</p>\r\n<p>Son sus objetivos la restauraci&oacute;n y conservaci&oacute;n de los edificios hist&oacute;ricos; la investigaci&oacute;n con relaci&oacute;n a instituciones, acontecimientos y personajes que desfilaron por la Manzana de las Luces; y la refuncionalizaci&oacute;n de los edificios a trav&eacute;s de la actividad cultural.</p>`},
+      {type: 'MUSEUM', description: `<p>El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura de la Naci&oacute;n.</p>\r\n<p>Fue creado en 1971 por el Decreto n&ordm; 4657/71 y ampliadas sus funciones por los decretos: 1185/73; 1454/74 y 1479/81. El decreto 108/2013 cambia su nombre de Comisi&oacute;n Nacional a Complejo Hist&oacute;rico Cultural Manzana de las Luces.</p>\r\n<p>Son sus objetivos la restauraci&oacute;n y conservaci&oacute;n de los edificios hist&oacute;ricos; la investigaci&oacute;n con relaci&oacute;n a instituciones, acontecimientos y personajes que desfilaron por la Manzana de las Luces; y la refuncionalizaci&oacute;n de los edificios a trav&eacute;s de la actividad cultural.</p>`},
+    ]
+    this.totalItems = this.places.length;
   }
 
   delete(id: number) {}
 
   update(id: number) {}
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    //this.loadPlaces();
+  }
 }
