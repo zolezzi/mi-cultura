@@ -52,8 +52,7 @@ import { SanitizeHtmlPipe } from './pipe/dom-sanitizer.component';
     MatStepperModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatCardModule,
-    
+    MatCardModule
   ],
   exports: [
     MatMenuModule,

@@ -1,19 +1,16 @@
-<div class="title">
-    <h1>Lugares</h1>
-  </div>
-<div class="addButton">
-    <button *ngIf="isAdmin" type="button" style="font-size: 14px; padding: 0.6rem 0.9rem" class="btn btn-primary btn-lg" routerLink="/addPlace">
-        + Nuevo Lugar
-    </button>
-</div>
 <div class="row">
-    <div class="col-sm-6" *ngFor="let place of places">
-
+    <div class="title">
+        <h1>Lugares</h1>
+    </div>
+    <div class="addButton">
+        <button *ngIf="isAdmin" type="button" style="font-size: 14px; padding: 0.6rem 0.9rem" class="btn btn-primary btn-lg" routerLink="/addPlace">
+            + Nuevo Lugar
+        </button>
     </div>
 </div>
 <div class="row">
-    <div class="card-container" >
-        <mat-card *ngFor="let place of places |slice:
+    <div *ngIf="places.length > 0" class="card-container" >
+        <mat-card *ngFor="let place of places | slice:
         (paginator.pageIndex*paginator.pageSize):
         ((paginator.pageIndex+1)*paginator.pageSize)" class="example-card">
             <img mat-card-image src="https://img.freepik.com/vector-premium/edificio-museo-titulo-columnas-ilustracion-vectorial_560788-51.jpg" alt="">

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -16,6 +16,7 @@ import { UserControllerService } from './api/service/userController.service';
 import { PlaceSearchComponent } from './components/place/place-search/place-search/place-search.component';
 import { getDutchPaginatorIntl } from './components/place/place-search/place-search/dutch-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CulturaAPIService } from './shared/service/cultura-api.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,11 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
     AppRoutingModule,
     AngularMaterialModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, CulturaAPIService,
+    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

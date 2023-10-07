@@ -46,6 +46,11 @@
 .card {
     width: calc(20% - 200px);
 }
+
+.addButton {
+    display: flex;
+    justify-content: flex-end;
+}
 /*
 .mat-mdc-paginator {
     background: #ffffff;

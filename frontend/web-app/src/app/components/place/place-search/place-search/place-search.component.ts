@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { LocalStorageService } from 'ngx-webstorage';
-import { Observable } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
+import { CulturaAPIService } from 'src/app/shared/service/cultura-api.service';
 
 @Component({
   selector: 'app-place-search',
@@ -14,18 +13,25 @@ export class PlaceSearchComponent implements OnInit{
 
   isAdmin: boolean = false;
   places: any[] = [];
-  pageSize = 5;
+  pageSize = 10;
   pageIndex = 0;
   totalItems = 0;
-  pageEvent: PageEvent = new PageEvent;
+  role!: string;
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
   private readonly ROLE: string = 'ROLE';
   
-  constructor(private router: Router, private localStorageService: LocalStorageService) {
+  constructor(private router: Router, private localStorageService: LocalStorageService, private culturaAPIService :CulturaAPIService) {
 
   }
 
   ngOnInit(): void {
+    this.role = this.localStorageService.retrieve(this.ROLE);
+    this.isAdmin = 'ADMIN' == this.role;
+    const token = this.localStorageService.retrieve(this.ACCESS_TOKEN);
+    
+    this.culturaAPIService.getMuseums().subscribe((data) => {debugger
+      console.log("DATA:" + data.results);
+    });
     this.loadPlaces();
   }
 
