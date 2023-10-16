@@ -17,6 +17,7 @@ import { PlaceSearchComponent } from './components/place/place-search/place-sear
 import { getDutchPaginatorIntl } from './components/place/place-search/place-search/dutch-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CulturaAPIService } from './shared/service/cultura-api.service';
+import { PlaceControllerService } from './api/service/placeController.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { CulturaAPIService } from './shared/service/cultura-api.service';
     HttpClientModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, CulturaAPIService,
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })

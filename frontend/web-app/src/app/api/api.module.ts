@@ -5,6 +5,7 @@ import { Configuration } from './configuration';
 
 import { AccountControllerService } from './service/accountController.service';
 import { AdminControllerService } from './service/adminController.service';
+import { PlaceControllerService } from './service/placeController.service';
 import { UserControllerService } from './service/userController.service';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { UserControllerService } from './service/userController.service';
   providers: [
     AccountControllerService,
     AdminControllerService,
+    PlaceControllerService,
     UserControllerService ]
 })
 export class ApiModule {

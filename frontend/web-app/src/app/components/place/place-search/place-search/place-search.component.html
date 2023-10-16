@@ -15,10 +15,18 @@
         ((paginator.pageIndex+1)*paginator.pageSize)" class="example-card">
             <img mat-card-image src="https://img.freepik.com/vector-premium/edificio-museo-titulo-columnas-ilustracion-vectorial_560788-51.jpg" alt="">
             <mat-card-content>
+                <h3>{{place.name}}</h3>
                 <div class="limit-text" [innerHTML]="place.description | sanitizeHtml"></div>
             </mat-card-content>
+            <div class="flex-fill"></div>
             <mat-card-actions>
                 <button mat-button>VER MÁS</button>
+                <button mat-icon-button aria-label="Example icon button with a delete icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button disabled color="" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
             </mat-card-actions>
         </mat-card>
     </div>

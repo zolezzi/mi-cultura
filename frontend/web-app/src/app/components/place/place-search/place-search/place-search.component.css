@@ -51,6 +51,22 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.limit-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+
+.limit-text div p:nth-child(1n + 2){
+    display: none;
+}
+
+.flex-fill {
+    flex: 1 1 auto !important;
+}
+
 /*
 .mat-mdc-paginator {
     background: #ffffff;
