@@ -34,6 +34,9 @@ public class PlaceVO {
 	@JsonProperty("dependsOn")
 	private String dependsOn;
 	
+	@JsonProperty("placeType")
+	private String placeType;
+	
 	@JsonProperty("placeTypeDescription")
 	private String placeTypeDescription;
 	

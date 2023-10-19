@@ -37,9 +37,15 @@ public class PlaceDTO {
 	@JsonProperty("dependsOn")
 	private String dependsOn;
 	
+	@JsonProperty("placeType")
+	private String placeType;
+	
 	@JsonProperty("placeTypeDescription")
 	private String placeTypeDescription;
 	
 	@JsonProperty("authority")
 	private AuthorityDTO authority;
+	
+	@JsonProperty("isFavorite")
+	private Boolean isFavorite;
 }

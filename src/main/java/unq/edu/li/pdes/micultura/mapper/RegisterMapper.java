@@ -137,7 +137,7 @@ public class RegisterMapper {
 				b.setEmail(a.getEmail());
 				b.setLink(a.getLink());
 				b.setPhoneNumber(b.getPhoneNumber());
-				b.setPlaceType(PlaceType.valueOf(a.getPlaceTypeDescription()));
+				b.setPlaceType(PlaceType.valueOf(a.getPlaceType()));
 				b.setProvince(a.getProvince());
 				b.setUrl(a.getUrl());
 			}
@@ -153,6 +153,7 @@ public class RegisterMapper {
 				a.setLink(b.getLink());
 				a.setName(b.getName());
 				a.setPhoneNumber(b.getPhoneNumber());
+				a.setPlaceType(a.getPlaceType().toString());
 				a.setPlaceTypeDescription(b.getPlaceType().getDescription());
 				a.setProvince(b.getProvince());
 				a.setUrl(b.getUrl());
@@ -167,7 +168,7 @@ public class RegisterMapper {
 				b.setLink(a.getLink());
 				b.setName(a.getName());
 				b.setPhoneNumber(a.getPhoneNumber());
-				b.setPlaceType(PlaceType.valueOf(a.getPlaceTypeDescription()));
+				b.setPlaceType(PlaceType.valueOf(a.getPlaceType()));
 				b.setProvince(a.getProvince());
 				b.setUrl(a.getUrl());
 			}
