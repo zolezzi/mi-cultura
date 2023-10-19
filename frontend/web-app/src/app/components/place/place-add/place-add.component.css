@@ -1,0 +1,39 @@
+.container{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.container-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #c3c7ca;
+    border-radius: 10px;
+    height: 100%;
+    width: 70%;
+    padding: 40px;
+    border: 2px solid #38b6ff;
+}
+
+.container-form .place-box {
+    position: relative;
+    flex-direction: row;
+    display: flex;
+    margin: 0px 15px 0 20px
+}
+
+.container-form h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    font-size: 26px;
+    color: #fff;
+    text-align: center;
+}
+
+.container-form .place-box-description{
+    position: relative;
+    flex-direction: row;
+    display: flex;
+}

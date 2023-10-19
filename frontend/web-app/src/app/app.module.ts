@@ -18,6 +18,8 @@ import { getDutchPaginatorIntl } from './components/place/place-search/place-sea
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CulturaAPIService } from './shared/service/cultura-api.service';
 import { PlaceControllerService } from './api/service/placeController.service';
+import { PlaceAddComponent } from './components/place/place-add/place-add.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { PlaceControllerService } from './api/service/placeController.service';
     LoginComponent,
     RegisterComponent,
     PlaceSearchComponent,
+    PlaceAddComponent,
+    ConfirmDialogComponent,
     
   ],
   imports: [

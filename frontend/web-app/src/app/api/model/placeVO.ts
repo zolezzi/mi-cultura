@@ -22,6 +22,7 @@ export interface PlaceVO {
     link?: string;
     name?: string;
     phoneNumber?: string;
+    placeType?: string;
     placeTypeDescription?: string;
     province?: string;
     url?: string;

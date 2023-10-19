@@ -35,6 +35,7 @@
 .mat-mdc-card {
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     --mdc-elevated-card-container-color: #fff;
+    border: 1px solid #38b6ff;
 }
 
 .card-container {
@@ -66,6 +67,37 @@
 .flex-fill {
     flex: 1 1 auto !important;
 }
+
+.tag {
+    align-self: flex-start;
+    padding: .25em .75em;
+    border-radius: 1em;
+    font-size: .75rem;
+    margin-top: 6px;
+    margin-left: 8px;
+  }
+  
+  .tag + .tag {
+    margin-left: .5em;
+  }
+  
+  .tag-blue {
+    background: #56CCF2;
+  background: linear-gradient(to bottom, #2F80ED, #56CCF2);
+    color: #fafafa;
+  }
+  
+  .tag-brown {
+    background: #D1913C;
+  background: linear-gradient(to bottom, #FFD194, #D1913C);
+    color: #fafafa;
+  }
+  
+  .tag-red {
+    background: #cb2d3e;
+  background: linear-gradient(to bottom, #ef473a, #cb2d3e);
+    color: #fafafa;
+  }
 
 /*
 .mat-mdc-paginator {

@@ -22,7 +22,9 @@ export interface PlaceDTO {
     link?: string;
     name?: string;
     phoneNumber?: string;
+    placeType?: string;
     placeTypeDescription?: string;
     province?: string;
     url?: string;
+    isFavorite? : boolean;
 }
