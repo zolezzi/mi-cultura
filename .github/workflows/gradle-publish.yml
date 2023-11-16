@@ -18,7 +18,8 @@ jobs:
       uses: actions/checkout@v2
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      
+    - name: Create Jacoco directory
+      run: mkdir -p target/site/jacoco/
     - name: Run Tests
       run: ./gradlew test
 
