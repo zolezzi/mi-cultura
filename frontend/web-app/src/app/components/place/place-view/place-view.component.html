@@ -3,7 +3,17 @@
 </button>
 <div class="container">
     <div class="container-form">
-        <h2>LUGAR</h2>
+        <div class="place-box-title">
+            <h2>LUGAR</h2>
+            <div class="health-favorite">
+                <button *ngIf="!isAdmin && isLoggedIn && !place.isFavorite" (click)="isFavourite()" mat-icon-button color="" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button *ngIf="isLoggedIn && place.isFavorite" (click)="removeFavourite()" mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+            </div>
+        </div>
         <div class="container-form-2">
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
@@ -85,10 +95,72 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="">
-            <h2>Descripcion</h2>
+        <div>
+            <h2>DESCRIPCIÓN</h2>
             <div [innerHTML]="place.description | sanitizeHtml"></div>
         </div>
     </div>
-    <div class="container-form-review"></div>
+    <div class="container-form-review">
+        <h2>CALIFICACIÓN</h2>
+        <div>
+            <bar-rating class="star-total-font" [readOnly]="true" [theme]="'stars'" [rate]="totalRate" [max]="5">
+                <fa-icon
+                *ratingInactive
+                [icon]="['far', 'star']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+              <fa-icon
+                *ratingActive
+                [icon]="['fas', 'star']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+              <fa-icon
+                *ratingFraction
+                [icon]="['fas', 'star-half-alt']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+            </bar-rating>
+            <span>total: {{totalRate}} / 5</span>
+        </div>
+        <div style="margin-top: 8px;">
+            <bar-rating class="star-font" [theme]="'stars'" [rate]="currentRate" [max]="5">
+                <fa-icon
+                  *ratingInactive
+                  [icon]="['far', 'star']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+                <fa-icon
+                  *ratingActive
+                  [icon]="['fas', 'star']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+                <fa-icon
+                  *ratingFraction
+                  [icon]="['fas', 'star-half-alt']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+              </bar-rating>
+        </div>
+          <div class="place-box-description">
+            <mat-form-field style="width: 600px;">
+                <mat-label>Dejanos un comentario:</mat-label>
+                <textarea [(ngModel)]="comments" style="height: 100px;" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="sendReview()">ENVIAR</button>
+        
+    </div>
+    
 </div>

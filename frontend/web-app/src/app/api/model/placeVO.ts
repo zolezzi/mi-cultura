@@ -12,6 +12,7 @@
 
 
 export interface PlaceVO {
+    placeId?: number;
     address?: string;
     authorityEmail?: string;
     authorityName?: string;

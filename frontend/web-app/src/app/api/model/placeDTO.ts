@@ -13,6 +13,7 @@ import { AuthorityDTO } from './authorityDTO';
 
 
 export interface PlaceDTO {
+    placeId?: number;
     address?: string;
     authority?: AuthorityDTO;
     dependsOn?: string;

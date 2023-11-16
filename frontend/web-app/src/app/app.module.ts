@@ -21,6 +21,10 @@ import { CulturaAPIService } from './shared/service/cultura-api.service';
 import { PlaceControllerService } from './api/service/placeController.service';
 import { PlaceViewComponent } from './components/place/place-view/place-view.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { BarRatingModule } from "ngx-bar-rating";
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faStar, faStarHalfAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 @NgModule({
   declarations: [
@@ -41,10 +45,16 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    BarRatingModule,
+    FontAwesomeModule,
     NgxWebstorageModule.forRoot()
   ],
   providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faStar, faStarHalfAlt, farStar, faTimesCircle);
+  }
+}

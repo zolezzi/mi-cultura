@@ -95,6 +95,7 @@ export class PlaceSearchComponent implements OnInit{
     return museums.map( (item:any) => {  
       var placeI = {} as PlaceDTO;
       placeI.id = item.id;
+      placeI.placeId = item.id;
       placeI.name = item.nombre;
       placeI.placeType = 'MUSEUM';
       placeI.address = item.direccion;
@@ -140,12 +141,12 @@ export class PlaceSearchComponent implements OnInit{
     if(!this.isLoggedIn){
       this.router.navigate(['/login']);
     }
-    if(!this.isAdmin){
+    if(this.isAdmin){
       this.localStorageService.store(this.PLACE_VIEW_ADMIN, place);
       this.router.navigate(['/place-view-admin/']);
-    } else{
-        this.placeService.save(this.ACCESS_TOKEN, place.id, place, this.userId).subscribe((result) => {
-          this.places.concat(result);
+    } else{debugger
+        this.placeService.save(this.localStorageService.retrieve(this.ACCESS_TOKEN), place.id, place, this.userId).subscribe((result) => {
+          this.router.navigate(['place-view/' + place.id])
         });
     }
 
