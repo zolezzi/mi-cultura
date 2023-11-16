@@ -47,6 +47,6 @@ jobs:
         name: jacoco-report
 
     - name: Publish coverage
-      uses: actions/upload-sarif@v1
+      uses: actions/upload-artifact@v2
       with:
         sarif_file: build/reports/jacoco/test/jacocoTestReport.xml
