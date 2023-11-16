@@ -160,4 +160,22 @@ public class PlaceController {
     public BigDecimal getTotalReviewScore(@PathVariable("placeId") Long placeId){
         return service.getTotalReviewScore(placeId);
     }
+	
+	@ApiOperation(
+            value = "This service update a Place",
+            notes = "Update a Place, if it doesn't find it throw an exception",
+            nickname = "favorite",
+            response = PlaceDTO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = PlaceDTO.class),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = PlaceDTO.class) })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @PutMapping(
+            value = "/favorite/{accountId}/{placeId}",
+            produces = { "application/json" }
+    )
+    public PlaceDTO update(@PathVariable("accountId") Long accountId, @PathVariable("placeId") Long placeId){
+        return service.favorite(accountId, placeId);
+    }
 }

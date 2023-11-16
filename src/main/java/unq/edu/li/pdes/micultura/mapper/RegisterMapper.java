@@ -121,6 +121,7 @@ public class RegisterMapper {
 			@Override
 			public void mapBtoA(Place b, PlaceVO a, MappingContext context) {
 				a.setAddress(b.getAddress());
+				a.setPlaceId(b.getPlaceId());
 				a.setDependsOn(b.getDependsOn());
 				a.setDescription(b.getDescription());
 				a.setEmail(b.getEmail());
@@ -134,6 +135,7 @@ public class RegisterMapper {
 			@Override
 			public void mapAtoB(PlaceVO a, Place b, MappingContext context) {
 				b.setAddress(a.getAddress());
+				b.setPlaceId(a.getPlaceId());
 				b.setDependsOn(a.getDependsOn());
 				b.setDescription(a.getDescription());
 				b.setEmail(a.getEmail());

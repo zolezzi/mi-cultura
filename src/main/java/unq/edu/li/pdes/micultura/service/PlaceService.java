@@ -16,6 +16,8 @@ public interface PlaceService {
 	
 	PlaceDTO update(ReviewVO review, Long userId, Long placeId);
 	
+	PlaceDTO favorite(Long accountId, Long placeId);
+	
 	List<PlaceDTO> findAllByUserId(Long userId);
 	
 	List<PlaceDTO> findAll();

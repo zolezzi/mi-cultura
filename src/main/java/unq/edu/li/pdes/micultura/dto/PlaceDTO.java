@@ -10,6 +10,9 @@ public class PlaceDTO {
 	@JsonProperty("id")
 	private Long id;
 	
+	@JsonProperty("placeId")
+	private Long placeId;
+	
 	@JsonProperty("url")
 	private String url;
 	
