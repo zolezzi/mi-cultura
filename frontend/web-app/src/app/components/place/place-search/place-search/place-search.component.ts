@@ -144,7 +144,7 @@ export class PlaceSearchComponent implements OnInit{
     if(this.isAdmin){
       this.localStorageService.store(this.PLACE_VIEW_ADMIN, place);
       this.router.navigate(['/place-view-admin/']);
-    } else{debugger
+    } else{
         this.placeService.save(this.localStorageService.retrieve(this.ACCESS_TOKEN), place.id, place, this.userId).subscribe((result) => {
           this.router.navigate(['place-view/' + place.id])
         });

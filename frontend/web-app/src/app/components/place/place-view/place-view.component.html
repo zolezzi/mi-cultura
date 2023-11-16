@@ -24,19 +24,19 @@
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Provincia</mat-label>
-                    <input [(ngModel)]="place.province" matInput>
+                    <input [(ngModel)]="place.province" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                         <mat-label>Teléfono</mat-label>
-                        <input [(ngModel)]="place.phoneNumber"  matInput>
+                        <input [(ngModel)]="place.phoneNumber"  matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Email</mat-label>
-                    <input [(ngModel)]="place.email" matInput>
+                    <input [(ngModel)]="place.email" matInput readonly>
                 </mat-form-field>
             </div>
         </div>
@@ -44,25 +44,25 @@
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Nombre</mat-label>
-                    <input [(ngModel)]="place.name" matInput>
+                    <input [(ngModel)]="place.name" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Link</mat-label>
-                    <input [(ngModel)]="place.link" matInput>
+                    <input [(ngModel)]="place.link" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>URL</mat-label>
-                    <input  [(ngModel)]="place.url" matInput>
+                    <input  [(ngModel)]="place.url" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Pertenece al Ministerio</mat-label>
-                    <input [(ngModel)]="place.dependsOn" matInput>
+                    <input [(ngModel)]="place.dependsOn" matInput readonly>
                 </mat-form-field>
             </div>
         </div>
@@ -70,28 +70,28 @@
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Tipo de lugar</mat-label>
-                    <input [(ngModel)]="place.placeTypeDescription" matInput>
+                    <input [(ngModel)]="place.placeTypeDescription" matInput readonly>
                   </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Nombre Autoridad</mat-label>
-                    <input *ngIf="authority != undefined" [(ngModel)]="authority.name" matInput>
-                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.name" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Email Autoridad</mat-label>
-                    <input *ngIf="authority != undefined" [(ngModel)]="authority.email" matInput>
-                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.email" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
                 </mat-form-field>
             </div>
             <div class="place-box">
                 <mat-form-field class="mat-field-full-width">
                     <mat-label>Cargo Autoridad</mat-label>
-                    <input *ngIf="authority != undefined" [(ngModel)]="authority.position" matInput>
-                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.position" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
                 </mat-form-field>
             </div>
         </div>

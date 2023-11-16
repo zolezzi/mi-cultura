@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
 import { PlaceDTO, ReviewVO } from 'src/app/api';
 import { PlaceControllerService } from 'src/app/api/service/placeController.service';
+import { ReviewControllerService } from 'src/app/api/service/reviewController.service';
 import { PlaceCommunicationService } from 'src/app/shared/service/place-communication.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class PlaceViewComponent implements OnInit{
   userId!: number;
   role!: string;
   id!: number;
-  currentRate = 0;
+  currentRate : number = 0;
   totalRate = 0;
   comments:string = '';
   private readonly PLACE_VIEW_ADMIN_URL: string = "place-view-admin";
@@ -32,7 +33,7 @@ export class PlaceViewComponent implements OnInit{
   private readonly ACCOUNT_ID: string = 'ACCOUNT_ID';
 
   constructor(private router: Router, private routerActived: ActivatedRoute, private localStorageService: LocalStorageService, 
-    private placeService: PlaceControllerService, private placeCommunication:PlaceCommunicationService) {
+    private placeService: PlaceControllerService, private placeCommunication:PlaceCommunicationService, private reviewService : ReviewControllerService) {
       
   }
 
@@ -58,12 +59,16 @@ export class PlaceViewComponent implements OnInit{
         });
         this.placeService.findById(token, this.id).subscribe((result) => {
           this.place = result; 
+          this.reviewService.getReview(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(this.place.placeId)).subscribe((result) => {
+            this.currentRate = Number(result.score);
+            this.comments = String(result.comments);
+          });
         });
       }
     });
   }
 
-  isFavourite(){ debugger;
+  isFavourite(){ 
     this.place.isFavorite = true;
     var value_id = this.place.placeId;
     this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(value_id)).subscribe((result) => {
@@ -79,7 +84,7 @@ export class PlaceViewComponent implements OnInit{
     });
   }
 
-  sendReview(){debugger;
+  sendReview(){
     var review :ReviewVO = {};
     review.score = this.currentRate;
     review.comments = this.comments;

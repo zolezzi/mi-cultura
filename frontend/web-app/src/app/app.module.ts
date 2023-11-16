@@ -25,6 +25,7 @@ import { BarRatingModule } from "ngx-bar-rating";
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar, faStarHalfAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { ReviewControllerService } from './api/service/reviewController.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
     FontAwesomeModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService,
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, ReviewControllerService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })
