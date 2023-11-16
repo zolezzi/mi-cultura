@@ -143,6 +143,7 @@ dependencies {
 
 jacoco {
 	toolVersion = "0.8.8"
+	reportsDir = file("$buildDir/reports/jacoco")
 }
 
 jacocoTestReport {
@@ -150,6 +151,7 @@ jacocoTestReport {
 		xml.enabled true
 		html.enabled true
 		csv.enabled true
+		html.destination file("$buildDir/reports/jacoco")
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
@@ -164,6 +166,11 @@ jacocoTestReport {
 		}))
 	}
 	dependsOn test
+}
+
+task uploadJacocoReport(type: Copy) {
+    from("$buildDir/reports/jacoco/test")
+    into("target/site/jacoco/")
 }
 
 test {
