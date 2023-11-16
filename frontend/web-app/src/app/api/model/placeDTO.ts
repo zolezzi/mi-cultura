@@ -13,7 +13,6 @@ import { AuthorityDTO } from './authorityDTO';
 
 
 export interface PlaceDTO {
-    placeId?: number;
     address?: string;
     authority?: AuthorityDTO;
     dependsOn?: string;
@@ -24,6 +23,7 @@ export interface PlaceDTO {
     link?: string;
     name?: string;
     phoneNumber?: string;
+    placeId?: number;
     placeType?: string;
     placeTypeDescription?: string;
     province?: string;

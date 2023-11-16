@@ -59,6 +59,59 @@ export class PlaceControllerService {
 
 
     /**
+     * This service update a Place
+     * Update a Place, if it doesn&#39;t find it throw an exception
+     * @param accountId accountId
+     * @param authorization 
+     * @param placeId placeId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
+    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
+    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
+    public favorite(accountId: number, authorization: string, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (accountId === null || accountId === undefined) {
+            throw new Error('Required parameter accountId was null or undefined when calling favorite.');
+        }
+        if (authorization === null || authorization === undefined) {
+            throw new Error('Required parameter authorization was null or undefined when calling favorite.');
+        }
+        if (placeId === null || placeId === undefined) {
+            throw new Error('Required parameter placeId was null or undefined when calling favorite.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (authorization !== undefined && authorization !== null) {
+            headers = headers.set('Authorization', String('Bearer ' + authorization));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Service that returns all places
      * This service returns all places load
      * @param authorization 

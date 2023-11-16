@@ -129,7 +129,7 @@
             <span>total: {{totalRate}} / 5</span>
         </div>
         <div style="margin-top: 8px;">
-            <bar-rating class="star-font" [theme]="'stars'" [rate]="currentRate" [max]="5">
+            <bar-rating class="star-font" [theme]="'stars'" [(rate)]="currentRate" [max]="5">
                 <fa-icon
                   *ratingInactive
                   [icon]="['far', 'star']"

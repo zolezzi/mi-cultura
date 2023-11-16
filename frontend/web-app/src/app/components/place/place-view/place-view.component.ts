@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
-import { PlaceDTO } from 'src/app/api';
+import { PlaceDTO, ReviewVO } from 'src/app/api';
 import { PlaceControllerService } from 'src/app/api/service/placeController.service';
 import { PlaceCommunicationService } from 'src/app/shared/service/place-communication.service';
 
@@ -25,9 +25,11 @@ export class PlaceViewComponent implements OnInit{
   comments:string = '';
   private readonly PLACE_VIEW_ADMIN_URL: string = "place-view-admin";
   private readonly PLACE_VIEW_ADMIN: string = 'PLACE_VIEW_ADMIN';
+  private readonly PLACE_VIEW_REMOVE: string = 'PLACE_VIEW_REMOVE';
   private readonly ROLE: string = 'ROLE';
   private readonly USER_ID: string = 'USER_ID';
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
+  private readonly ACCOUNT_ID: string = 'ACCOUNT_ID';
 
   constructor(private router: Router, private routerActived: ActivatedRoute, private localStorageService: LocalStorageService, 
     private placeService: PlaceControllerService, private placeCommunication:PlaceCommunicationService) {
@@ -63,14 +65,28 @@ export class PlaceViewComponent implements OnInit{
 
   isFavourite(){ debugger;
     this.place.isFavorite = true;
+    var value_id = this.place.placeId;
+    this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(value_id)).subscribe((result) => {
+      this.place = result; 
+    });
   }
 
   removeFavourite(){
     this.place.isFavorite = false;
+    this.localStorageService.store(this.PLACE_VIEW_REMOVE, this.place);
+    this.placeService.removeFavorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(this.place.placeId)).subscribe((result) => {
+      this.place = this.localStorageService.retrieve(this.PLACE_VIEW_REMOVE); 
+    });
   }
 
-  sendReview(){
-
+  sendReview(){debugger;
+    var review :ReviewVO = {};
+    review.score = this.currentRate;
+    review.comments = this.comments;
+    this.placeService.update(this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(this.place.placeId), review, this.userId).subscribe((result) => {
+      this.place = result; 
+      this.ngOnInit();
+    });
   }
 
 }
