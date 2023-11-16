@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,7 @@ import { getDutchPaginatorIntl } from './components/place/place-search/place-sea
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CulturaAPIService } from './shared/service/cultura-api.service';
 import { PlaceControllerService } from './api/service/placeController.service';
-import { PlaceAddComponent } from './components/place/place-add/place-add.component';
+import { PlaceViewComponent } from './components/place/place-view/place-view.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
@@ -29,7 +30,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     LoginComponent,
     RegisterComponent,
     PlaceSearchComponent,
-    PlaceAddComponent,
+    PlaceViewComponent,
     ConfirmDialogComponent,
     
   ],
@@ -39,6 +40,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     AngularMaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     NgxWebstorageModule.forRoot()
   ],
   providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService,

@@ -1,6 +1,7 @@
 .container{
     display: flex;
-    justify-content: center;
+    margin-left: 10px;
+    justify-content: left;
     margin-top: 2rem;
 }
 
@@ -17,10 +18,36 @@
     border: 2px solid #38b6ff;
 }
 
-.container-form .place-box {
+.container-form-review{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #c3c7ca;
+    border-radius: 10px;
+    height: 100%;
+    margin-right: 8px;
+    margin-left: 12px;
+    width: 25%;
+    padding: 40px;
+    border: 2px solid #38b6ff;
+}
+
+.mat-field-full-width {
+    width: 100%;
+}
+
+.container-form-2 {
     position: relative;
     flex-direction: row;
     display: flex;
+    width: 100%;
+    margin: 0px 15px 0 20px
+}
+
+.place-box {
+    display: flex;
+    width: 100%;
     margin: 0px 15px 0 20px
 }
 

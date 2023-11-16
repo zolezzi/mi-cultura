@@ -5,6 +5,8 @@ export * from './basicResponse';
 export * from './jwtResponseDTO';
 export * from './placeDTO';
 export * from './placeVO';
+export * from './reviewDTO';
+export * from './reviewVO';
 export * from './userDTO';
 export * from './userLoginVO';
 export * from './userVO';

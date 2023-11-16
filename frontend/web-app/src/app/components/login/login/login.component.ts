@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   private readonly FULL_NAME: string = 'FULL_NAME';
   private readonly ROLE: string = 'ROLE';
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
+  private readonly USER_ID: string = 'USER_ID';
+  private readonly ACCOUNT_ID: string = 'ACCOUNT_ID';
 
   constructor( private userservice: UserControllerService, private router: Router,
     private localStorageService: LocalStorageService, private formBuilder: FormBuilder) {
@@ -55,6 +57,8 @@ export class LoginComponent implements OnInit {
         this.localStorageService.store(this.ACCESS_TOKEN, result.token);
         this.localStorageService.store(this.FULL_NAME, String(result.firstname + this.EMPTY + result.lastname));
         this.localStorageService.store(this.ROLE, result.role);
+        this.localStorageService.store(this.USER_ID, result.userId);
+        this.localStorageService.store(this.ACCOUNT_ID, result.accountId);
         this.goToWelcome();
       },
       error: (error) =>

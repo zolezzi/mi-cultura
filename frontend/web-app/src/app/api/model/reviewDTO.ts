@@ -11,12 +11,8 @@
  */
 
 
-export interface JwtResponseDTO {
-    accountId?: number;
-    email?: string;
-    firstname?: string;
-    lastname?: string;
-    role?: string;
-    token?: string;
-    userId?: number;
+export interface ReviewDTO {
+    comments?: string;
+    id?: number;
+    score?: number;
 }

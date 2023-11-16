@@ -19,6 +19,7 @@ export interface PlaceDTO {
     description?: string;
     email?: string;
     id?: number;
+    isFavorite?: boolean;
     link?: string;
     name?: string;
     phoneNumber?: string;
@@ -26,5 +27,4 @@ export interface PlaceDTO {
     placeTypeDescription?: string;
     province?: string;
     url?: string;
-    isFavorite? : boolean;
 }

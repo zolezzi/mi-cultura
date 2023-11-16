@@ -1,0 +1,94 @@
+<button class="btn btn-primary" style="width: 50px" routerLink="/places">
+    <i class="fa-solid fa-backward" style="color: black"></i>
+</button>
+<div class="container">
+    <div class="container-form">
+        <h2>LUGAR</h2>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Dirección</mat-label>
+                    <input [(ngModel)]="place.address" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Provincia</mat-label>
+                    <input [(ngModel)]="place.province" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input [(ngModel)]="place.phoneNumber"  matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Email</mat-label>
+                    <input [(ngModel)]="place.email" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Nombre</mat-label>
+                    <input [(ngModel)]="place.name" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Link</mat-label>
+                    <input [(ngModel)]="place.link" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>URL</mat-label>
+                    <input  [(ngModel)]="place.url" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Pertenece al Ministerio</mat-label>
+                    <input [(ngModel)]="place.dependsOn" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Tipo de lugar</mat-label>
+                    <input [(ngModel)]="place.placeTypeDescription" matInput>
+                  </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Nombre Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.name" matInput>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Email Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.email" matInput>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Cargo Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.position" matInput>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="">
+            <h2>Descripcion</h2>
+            <div [innerHTML]="place.description | sanitizeHtml"></div>
+        </div>
+    </div>
+    <div class="container-form-review"></div>
+</div>

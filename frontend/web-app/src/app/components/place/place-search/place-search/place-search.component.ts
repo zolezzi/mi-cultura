@@ -19,6 +19,7 @@ export class PlaceSearchComponent implements OnInit{
 
   isAdmin: boolean = false;
   isLoggedIn = false;
+  userId!: number;
   places: PlaceDTO[] = [];
   pageSize = 10;
   pageIndex = 0;
@@ -26,6 +27,8 @@ export class PlaceSearchComponent implements OnInit{
   role!: string;
   private readonly ACCESS_TOKEN: string = 'ACCESS_TOKEN';
   private readonly ROLE: string = 'ROLE';
+  private readonly USER_ID: string = 'USER_ID';
+  private readonly PLACE_VIEW_ADMIN: string = 'PLACE_VIEW_ADMIN';
   
   constructor(private router: Router, private localStorageService: LocalStorageService, 
     private culturaAPIService :CulturaAPIService, private placeService: PlaceControllerService,
@@ -38,6 +41,7 @@ export class PlaceSearchComponent implements OnInit{
     this.isAdmin = 'ADMIN' == this.role;
     const token = this.localStorageService.retrieve(this.ACCESS_TOKEN);
     this.isLoggedIn = !!token;
+    this.userId = this.localStorageService.retrieve(this.USER_ID);
     this.loadAllPlaces();
   }
 
@@ -79,6 +83,9 @@ export class PlaceSearchComponent implements OnInit{
       placeI.placeType = 'INSTITUTE';
       placeI.address = item.direccion;
       placeI.phoneNumber = item.telefono;
+      placeI.description = item.descripcion;
+      placeI.email = item.email;
+      placeI.placeTypeDescription = "INSTITUCIÓN";
       placeI.isFavorite = false;
       return placeI;
     });
@@ -92,6 +99,13 @@ export class PlaceSearchComponent implements OnInit{
       placeI.placeType = 'MUSEUM';
       placeI.address = item.direccion;
       placeI.phoneNumber = item.telefono;
+      placeI.description = item.descripcion;
+      placeI.email = item.email;
+      placeI.placeTypeDescription = "INSTITUCIÓN";
+      placeI.province = item.provincia;
+      placeI.dependsOn = item.depende_de;
+      placeI.link = item.link;
+      placeI.url = item.url;
       placeI.isFavorite = false;
       return placeI;
     });
@@ -102,12 +116,12 @@ export class PlaceSearchComponent implements OnInit{
     var id = 1;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: { message: 'Esta seguro que desea eliminar el lugar?' },
+      data: { message: 'Está seguro que desea sacar de sus favoritos este lugar?' },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'aceptar') {
         this.placeService
-          .deleteById(this.localStorageService.retrieve(this.ACCESS_TOKEN), id, userId)
+          .removeFavorite(this.localStorageService.retrieve(this.ACCESS_TOKEN), id, userId)
           .subscribe((data:any) => {
             this.snackBar.open('Borrado con éxito', '', {
               duration: 10000,
@@ -121,6 +135,21 @@ export class PlaceSearchComponent implements OnInit{
   }
 
   update(id: number) {}
+
+  view(place: any) {
+    if(!this.isLoggedIn){
+      this.router.navigate(['/login']);
+    }
+    if(!this.isAdmin){
+      this.localStorageService.store(this.PLACE_VIEW_ADMIN, place);
+      this.router.navigate(['/place-view-admin/']);
+    } else{
+        this.placeService.save(this.ACCESS_TOKEN, place.id, place, this.userId).subscribe((result) => {
+          this.places.concat(result);
+        });
+    }
+
+  }
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;

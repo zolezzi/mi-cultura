@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlaceAddComponent } from './place-add.component';
+import { PlaceViewComponent } from './place-view.component';
 
 describe('PlaceAddComponent', () => {
-  let component: PlaceAddComponent;
-  let fixture: ComponentFixture<PlaceAddComponent>;
+  let component: PlaceViewComponent;
+  let fixture: ComponentFixture<PlaceViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlaceAddComponent ]
+      declarations: [ PlaceViewComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlaceAddComponent);
+    fixture = TestBed.createComponent(PlaceViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
