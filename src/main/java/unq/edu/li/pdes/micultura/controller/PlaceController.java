@@ -1,5 +1,6 @@
 package unq.edu.li.pdes.micultura.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import unq.edu.li.pdes.micultura.controller.response.BasicResponse;
 import unq.edu.li.pdes.micultura.dto.PlaceDTO;
 import unq.edu.li.pdes.micultura.service.impl.PlaceServiceImpl;
 import unq.edu.li.pdes.micultura.vo.PlaceVO;
+import unq.edu.li.pdes.micultura.vo.ReviewVO;
 
 @RestController("place")
 @Api(value = "Place Controller")
@@ -59,11 +61,11 @@ public class PlaceController {
             @ApiResponse(code = 500, message = "Internal server error.", response = PlaceDTO.class) })
     @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
     @PostMapping(
-            value = "/save",
+            value = "/save/{userId}/{placeId}",
             produces = { "application/json" }
     )
-    public PlaceDTO save(@RequestBody PlaceVO placeVO){
-        return service.save(placeVO);
+    public PlaceDTO save(@RequestBody PlaceVO placeVO,  @PathVariable("userId") Long userId, @PathVariable("placeId") Long placeId){
+        return service.save(placeVO, userId, placeId);
     }
     
     @ApiOperation(
@@ -77,17 +79,17 @@ public class PlaceController {
             @ApiResponse(code = 500, message = "Internal server error.", response = PlaceDTO.class) })
     @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
     @PutMapping(
-            value = "/update/{userId}/{id}",
+            value = "/update/{userId}/{placeId}",
             produces = { "application/json" }
     )
-    public PlaceDTO update(@RequestBody PlaceDTO place, @PathVariable("userId") Long userId, @PathVariable("id") Long id){
-        return service.update(place, userId, id);
+    public PlaceDTO update(@RequestBody ReviewVO review, @PathVariable("userId") Long userId, @PathVariable("placeId") Long placeId){
+        return service.update(review, userId, placeId);
     }
     
     @ApiOperation(
             value = "This service delete a place",
             notes = "Delete a place, if it doesn't find it throw an exception",
-            nickname = "deleteById",
+            nickname = "removeFavorite",
             response = BasicResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The request has succeeded.", response = BasicResponse.class),
@@ -95,12 +97,31 @@ public class PlaceController {
             @ApiResponse(code = 500, message = "Internal server error.", response = BasicResponse.class) })
     @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
     @DeleteMapping(
-            value = "/delete/{userId}/{id}",
+            value = "/delete/{accountId}/{placeId}",
             produces = { "application/json" }
     )
-    public BasicResponse deleteById(@PathVariable("userId") Long userId, @PathVariable("id") Long id) throws Exception{
-    	service.deleteById(userId, id);
+    public BasicResponse removeFavorite(@PathVariable("accountId") Long accountId, @PathVariable("placeId") Long placeId) throws Exception{
+    	service.removeFavorite(accountId, placeId);
         return new BasicResponse("Successfully deleted", Boolean.FALSE);
+    }
+    
+	@ApiOperation(
+            value = "Service that returns all places by user",
+            notes = "This service returns all places load by user",
+            nickname = "findAllByUserId",
+            response = PlaceDTO.class, 
+            responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = PlaceDTO.class, responseContainer = "List"),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = PlaceDTO.class, responseContainer = "List") })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @GetMapping(
+            value = "/find-all-by-user-id/{userId}",
+            produces = { "application/json" }
+    )
+    public List<PlaceDTO> findAllByUserId(@PathVariable("userId") Long userId){
+        return service.findAllByUserId(userId);
     }
 	
 	@ApiOperation(
@@ -120,5 +141,41 @@ public class PlaceController {
     )
     public List<PlaceDTO> findAll(){
         return service.findAll();
+    }
+	
+	@ApiOperation(
+            value = "Service that returns all value score",
+            notes = "This service returns all value score",
+            nickname = "getTotalReviewScore",
+            response = BigDecimal.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The requesvt has succeeded.", response = BigDecimal.class),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = BigDecimal.class) })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @GetMapping(
+            value = "/total-review-score/{placeId}",
+            produces = { "application/json" }
+    )
+    public BigDecimal getTotalReviewScore(@PathVariable("placeId") Long placeId){
+        return service.getTotalReviewScore(placeId);
+    }
+	
+	@ApiOperation(
+            value = "This service update a Place",
+            notes = "Update a Place, if it doesn't find it throw an exception",
+            nickname = "favorite",
+            response = PlaceDTO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = PlaceDTO.class),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = PlaceDTO.class) })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @PutMapping(
+            value = "/favorite/{accountId}/{placeId}",
+            produces = { "application/json" }
+    )
+    public PlaceDTO update(@PathVariable("accountId") Long accountId, @PathVariable("placeId") Long placeId){
+        return service.favorite(accountId, placeId);
     }
 }

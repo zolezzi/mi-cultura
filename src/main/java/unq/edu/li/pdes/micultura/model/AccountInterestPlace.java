@@ -30,4 +30,7 @@ public class AccountInterestPlace {
 	@OneToOne
     @JoinColumn(name = "place_id", referencedColumnName = "id")
 	private Place place;
+	
+	@Column
+	private Boolean isFavorite = Boolean.FALSE;
 }

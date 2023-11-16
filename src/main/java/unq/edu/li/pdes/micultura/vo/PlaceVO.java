@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class PlaceVO {
 
+	@JsonProperty("placeId")
+	private Long placeId;
+	
 	@JsonProperty("url")
 	private String url;
 	
@@ -33,6 +36,9 @@ public class PlaceVO {
 	
 	@JsonProperty("dependsOn")
 	private String dependsOn;
+	
+	@JsonProperty("placeType")
+	private String placeType;
 	
 	@JsonProperty("placeTypeDescription")
 	private String placeTypeDescription;

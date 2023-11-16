@@ -24,9 +24,13 @@ public class Place {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name = "place_id")
+	private Long placeId;
+	
 	@Column(name = "url")
 	private String url;
 	
+	@Column(name = "link")
 	private String link;
 	
 	@Column(name = "name")
@@ -35,9 +39,10 @@ public class Place {
 	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@Column(name = "description")
+	@Column(name = "description", length= 10000000, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
 	private String description;
 	
 	@Column(name = "email")

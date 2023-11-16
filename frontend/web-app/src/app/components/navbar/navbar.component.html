@@ -3,10 +3,10 @@
     <img src=".\assets\images\logo.png" alt="">
   </a>
   <ul class="list">
-    <li *ngIf="isLoggedIn"><a  routerLink="/login">Favoritos</a></li>
-    <li *ngIf="isLoggedIn"><a  routerLink="/login">Usuarios</a></li>
-    <li><a  routerLink="/login">Lugares</a></li>
-    <li><a  routerLink="/login">Eventos</a></li>
+    <li *ngIf="isLoggedIn && !isAdmin"><a routerLink="/login">Favoritos</a></li>
+    <li *ngIf="isLoggedIn && isAdmin"><a routerLink="/login">Usuarios</a></li>
+    <li><a routerLink="/places">Lugares</a></li>
+    <li><a routerLink="/login">Eventos</a></li>
     <li><a href="#">Novedades</a></li>
     <li><a href="#">Contacto</a></li>
   </ul>

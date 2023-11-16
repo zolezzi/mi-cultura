@@ -9,11 +9,18 @@ import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 import unq.edu.li.pdes.micultura.dto.AccountDTO;
+import unq.edu.li.pdes.micultura.dto.PlaceDTO;
+import unq.edu.li.pdes.micultura.dto.ReviewDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
 import unq.edu.li.pdes.micultura.model.Account;
 import unq.edu.li.pdes.micultura.model.AccountRole;
+import unq.edu.li.pdes.micultura.model.Place;
+import unq.edu.li.pdes.micultura.model.PlaceType;
+import unq.edu.li.pdes.micultura.model.Review;
 import unq.edu.li.pdes.micultura.model.User;
 import unq.edu.li.pdes.micultura.vo.AccountVO;
+import unq.edu.li.pdes.micultura.vo.PlaceVO;
+import unq.edu.li.pdes.micultura.vo.ReviewVO;
 import unq.edu.li.pdes.micultura.vo.UserLoginVO;
 import unq.edu.li.pdes.micultura.vo.UserVO;
 
@@ -34,13 +41,13 @@ public class RegisterMapper {
 			public void mapBtoA(User b, UserVO a, MappingContext context) {
 				a.setEmail(b.getEmail());
 				a.setPassword(b.getPassword());
-				a.setAccount(mapper.map(a.getAccount(), AccountVO.class));
+				//a.setAccount(mapper.map(a.getAccount(), AccountVO.class));
 			}
 			@Override
 			public void mapAtoB(UserVO a, User b, MappingContext context) {
 				b.setEmail(a.getEmail());
 				b.setPassword(a.getPassword());
-				b.setAccount(mapper.map(a.getAccount(), Account.class));
+				//b.setAccount(mapper.map(a.getAccount(), Account.class));
 			}
 		}).byDefault().register();
 		
@@ -87,6 +94,8 @@ public class RegisterMapper {
 				b.setFirstname(a.getFirstname());
 				b.setLastname(a.getLastname());
 				b.setDni(a.getDni());
+				b.setAddress(a.getAddress());
+				b.setPhoneNumber(a.getPhoneNumber());
 				b.setAccountRole(AccountRole.valueOf(a.getRole()));
 			}
 		}).byDefault().register();
@@ -108,6 +117,93 @@ public class RegisterMapper {
 				b.setLastname(a.getLastname());
 				b.setDni(a.getDni());
 				b.setAccountRole(AccountRole.valueOf(a.getRole()));
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(PlaceVO.class, Place.class).customize(new CustomMapper<PlaceVO, Place>() {
+			@Override
+			public void mapBtoA(Place b, PlaceVO a, MappingContext context) {
+				a.setAddress(b.getAddress());
+				a.setPlaceId(b.getPlaceId());
+				a.setDependsOn(b.getDependsOn());
+				a.setDescription(b.getDescription());
+				a.setEmail(b.getEmail());
+				a.setLink(b.getLink());
+				a.setName(b.getName());
+				a.setPhoneNumber(b.getPhoneNumber());
+				a.setPlaceTypeDescription(b.getPlaceType().getDescription());
+				a.setProvince(b.getProvince());
+				a.setUrl(b.getUrl());
+			}
+			@Override
+			public void mapAtoB(PlaceVO a, Place b, MappingContext context) {
+				b.setAddress(a.getAddress());
+				b.setPlaceId(a.getPlaceId());
+				b.setDependsOn(a.getDependsOn());
+				b.setDescription(a.getDescription());
+				b.setEmail(a.getEmail());
+				b.setLink(a.getLink());
+				b.setPhoneNumber(b.getPhoneNumber());
+				b.setPlaceType(PlaceType.valueOf(a.getPlaceType()));
+				b.setProvince(a.getProvince());
+				b.setUrl(a.getUrl());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(PlaceDTO.class, Place.class).customize(new CustomMapper<PlaceDTO, Place>() {
+			@Override
+			public void mapBtoA(Place b, PlaceDTO a, MappingContext context) {
+				a.setId(b.getId());
+				a.setAddress(b.getAddress());
+				a.setDependsOn(b.getDependsOn());
+				a.setEmail(b.getEmail());
+				a.setLink(b.getLink());
+				a.setName(b.getName());
+				a.setPhoneNumber(b.getPhoneNumber());
+				a.setPlaceType(a.getPlaceType().toString());
+				a.setPlaceTypeDescription(b.getPlaceType().getDescription());
+				a.setProvince(b.getProvince());
+				a.setUrl(b.getUrl());
+			}
+			@Override
+			public void mapAtoB(PlaceDTO a, Place b, MappingContext context) {
+				b.setId(a.getId());
+				b.setAddress(a.getAddress());
+				b.setDependsOn(a.getDependsOn());
+				b.setDescription(a.getDescription());
+				b.setEmail(a.getDescription());
+				b.setLink(a.getLink());
+				b.setName(a.getName());
+				b.setPhoneNumber(a.getPhoneNumber());
+				b.setPlaceType(PlaceType.valueOf(a.getPlaceType()));
+				b.setProvince(a.getProvince());
+				b.setUrl(a.getUrl());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(ReviewVO.class, Review.class).customize(new CustomMapper<ReviewVO, Review>() {
+			@Override
+			public void mapBtoA(Review b, ReviewVO a, MappingContext context) {
+				a.setScore(b.getScore());
+				a.setComments(b.getCommets());
+			}
+			@Override
+			public void mapAtoB(ReviewVO a, Review b, MappingContext context) {
+				b.setScore(a.getScore());
+				b.setCommets(a.getComments());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(ReviewDTO.class, Review.class).customize(new CustomMapper<ReviewDTO, Review>() {
+			@Override
+			public void mapBtoA(Review b, ReviewDTO a, MappingContext context) {
+				a.setScore(b.getScore());
+				a.setComments(b.getCommets());
+			}
+			@Override
+			public void mapAtoB(ReviewDTO a, Review b, MappingContext context) {
+				b.setScore(a.getScore());
+				b.setCommets(a.getComments());
 			}
 		}).byDefault().register();
 	}

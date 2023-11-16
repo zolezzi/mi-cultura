@@ -49,8 +49,10 @@ public class UserServiceImpl implements UserService{
 				.orElseThrow(() -> new UsernameNotFoundException(String.format("No found user:%s", user.getEmail())));
     	var token = tokenUtils.createToken(userDetails.getUsername());
     	authenticate(user.getEmail(), user.getPassword());
+    	
 		return new JwtResponseDTO(userDetails.getUsername(), token, userDetails.getAccount().getFirstname(),
-				userDetails.getAccount().getLastname(), userDetails.getAccount().getAccountRole().name());
+				userDetails.getAccount().getLastname(), userDetails.getAccount().getAccountRole().name(), 
+				userDetails.getId(), userDetails.getAccount().getId());
 	}
 	
 	@Transactional

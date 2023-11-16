@@ -226,7 +226,7 @@
     -moz-appearance: textfield;
 }
 
-.user-box2,
+.user-box-register,
 .btn-link {
   display: flex;
   flex-direction: row;

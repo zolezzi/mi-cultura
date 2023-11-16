@@ -65,18 +65,18 @@ export class AdminControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteById1(authorization: string, id: number, userId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicResponse>;
-    public deleteById1(authorization: string, id: number, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicResponse>>;
-    public deleteById1(authorization: string, id: number, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicResponse>>;
-    public deleteById1(authorization: string, id: number, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteById(authorization: string, id: number, userId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicResponse>;
+    public deleteById(authorization: string, id: number, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicResponse>>;
+    public deleteById(authorization: string, id: number, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicResponse>>;
+    public deleteById(authorization: string, id: number, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
-            throw new Error('Required parameter authorization was null or undefined when calling deleteById1.');
+            throw new Error('Required parameter authorization was null or undefined when calling deleteById.');
         }
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteById1.');
+            throw new Error('Required parameter id was null or undefined when calling deleteById.');
         }
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling deleteById1.');
+            throw new Error('Required parameter userId was null or undefined when calling deleteById.');
         }
 
         let headers = this.defaultHeaders;
@@ -114,12 +114,12 @@ export class AdminControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll1(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserDTO>>;
-    public findAll1(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDTO>>>;
-    public findAll1(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDTO>>>;
-    public findAll1(authorization: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAll(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UserDTO>>;
+    public findAll(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDTO>>>;
+    public findAll(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDTO>>>;
+    public findAll(authorization: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
-            throw new Error('Required parameter authorization was null or undefined when calling findAll1.');
+            throw new Error('Required parameter authorization was null or undefined when calling findAll.');
         }
 
         let headers = this.defaultHeaders;
@@ -206,18 +206,18 @@ export class AdminControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update1(authorization: string, user: UserDTO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
-    public update1(authorization: string, user: UserDTO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
-    public update1(authorization: string, user: UserDTO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
-    public update1(authorization: string, user: UserDTO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public update(authorization: string, user: UserDTO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
+    public update(authorization: string, user: UserDTO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
+    public update(authorization: string, user: UserDTO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
+    public update(authorization: string, user: UserDTO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
-            throw new Error('Required parameter authorization was null or undefined when calling update1.');
+            throw new Error('Required parameter authorization was null or undefined when calling update.');
         }
         if (user === null || user === undefined) {
-            throw new Error('Required parameter user was null or undefined when calling update1.');
+            throw new Error('Required parameter user was null or undefined when calling update.');
         }
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling update1.');
+            throw new Error('Required parameter userId was null or undefined when calling update.');
         }
 
         let headers = this.defaultHeaders;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
+import { UserControllerService } from 'src/app/api';
 
 interface Roles {
   value: string;
@@ -18,36 +19,33 @@ export class RegisterComponent implements OnInit {
   submitted: boolean = false;
   private mapRoles = new Map<string, string>();
 
-  constructor( private router: Router, private localStorageService: LocalStorageService, private formBuilder: FormBuilder
+  constructor( private router: Router, private localStorageService: LocalStorageService, private formBuilder: FormBuilder,
+    private userservice: UserControllerService
   ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       email: [
         '',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
-        ]),
+        [Validators.required, Validators.email]
       ],
       password: [
         '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.required
       ],
       repeatPassword: [
         '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.required
       ],
-      role: ['', Validators.compose([Validators.required, ])],
-      dni: ['', Validators.compose([Validators.required, Validators.pattern('/^-?(0|[1-9]\d*)?$/')])],
-      phone: ['', Validators.compose([Validators.required, , Validators.pattern('/^-?(0|[1-9]\d*)?$/')])],
-      address: ['', Validators.compose([Validators.required, ])],
-      firstname: ['', Validators.compose([Validators.required, ])],
-      lastname: ['', Validators.compose([Validators.required])],
-      degreeId: [[]],
+      role: ['', Validators.required],
+      dni: ['', Validators.required],
+      phone: ['', Validators.required],
+      address: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required]
     });
-    this.mapRoles.set('Estudiante', 'STUDENT');
-    this.mapRoles.set('Profesor', 'PROFESSOR');
+    this.mapRoles.set('TURISTA', 'TOURIST');
+    this.mapRoles.set('VISITANTE', 'VISITOR');
   }
 
   onSubmit() {
@@ -62,13 +60,19 @@ export class RegisterComponent implements OnInit {
       account: {
         role: this.mapRoles.get(this.registerForm.controls['role'].value),
         dni: this.registerForm.controls['dni'].value,
-        phone: this.registerForm.controls['dni'].value,
-        address: this.registerForm.controls['dni'].value,
+        phoneNumber: this.registerForm.controls['phone'].value,
+        address: this.registerForm.controls['address'].value,
         firstname: this.registerForm.controls['firstname'].value,
-        lastname: this.registerForm.controls['lastname'].value,
-        degreeId: this.registerForm.controls['degreeId'].value,
+        lastname: this.registerForm.controls['lastname'].value
       },
     };
+    this.userservice.create(user).subscribe({
+      next: (result) => {
+        this.goToLogin();
+      },
+      error: (error) =>
+        console.error('Error creando la cuenta. Reintente nuevamente.'),
+    });
   }
 
   private goToLogin() {

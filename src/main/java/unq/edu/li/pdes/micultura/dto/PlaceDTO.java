@@ -10,6 +10,9 @@ public class PlaceDTO {
 	@JsonProperty("id")
 	private Long id;
 	
+	@JsonProperty("placeId")
+	private Long placeId;
+	
 	@JsonProperty("url")
 	private String url;
 	
@@ -37,9 +40,15 @@ public class PlaceDTO {
 	@JsonProperty("dependsOn")
 	private String dependsOn;
 	
+	@JsonProperty("placeType")
+	private String placeType;
+	
 	@JsonProperty("placeTypeDescription")
 	private String placeTypeDescription;
 	
 	@JsonProperty("authority")
 	private AuthorityDTO authority;
+	
+	@JsonProperty("isFavorite")
+	private Boolean isFavorite;
 }
