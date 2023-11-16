@@ -24,13 +24,22 @@ jobs:
       run: ./gradlew test
 
     - name: Run Test Coverage
-      run: |
-          ./gradlew jacocoTestReport --no-daemon
-          ./gradlew jacocoBadge
+      run: ./gradlew jacocoTestReport --no-daemon
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Download Jacoco Badge Generator
+      run: |
+          wget https://github.com/jacoco/jacoco-badge-generator/releases/latest/download/jacoco-badge-generator-<VERSION>.jar -O jacoco-badge-generator.jar
+          chmod +x jacoco-badge-generator.jar
+
+    - name: Generate Jacoco Badge
+      run: |
+          java -jar jacoco-badge-generator.jar \
+            --report=build/reports/jacoco/test/jacocoTestReport.csv \
+            --badge=build/reports/jacoco/badge.svg
+
     - name: Upload Jacoco badge artifact
       uses: actions/upload-artifact@v2
       with:
           name: jacoco-badge
-          path: build/reports/jacoco/jacocoBadge.svg
+          path: build/reports/jacoco/badge.svg
