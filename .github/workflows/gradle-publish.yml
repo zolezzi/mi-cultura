@@ -25,7 +25,7 @@ jobs:
 
     - name: Run Test Coverage
       run: |
-          ./gradlew test jacocoTestReport --no-daemon
+          ./gradlew jacocoTestReport --no-daemon
           ./gradlew jacocoBadge
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
