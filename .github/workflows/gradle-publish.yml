@@ -16,6 +16,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Use Gradle Wrapper
+      run: ./gradlew wrapper --gradle-version 6.8
     - name: Change permissions for gradlew
       run: chmod +x ./gradlew
     - name: Setup Java
