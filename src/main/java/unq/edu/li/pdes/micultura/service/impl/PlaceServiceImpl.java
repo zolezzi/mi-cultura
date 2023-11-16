@@ -68,7 +68,7 @@ public class PlaceServiceImpl implements PlaceService{
 	@Override
 	public PlaceDTO save(PlaceVO placeVO, Long userId, Long placeId) {
 		var userDB = userRepository.findById(userId).orElseThrow(() -> new MiCulturaException(String.format("No found user:%s", userId)));
-		var placeIdOpt = repository.findById(placeId);
+		var placeIdOpt = repository.findByPlaceId(placeId);
 		Place place = null;
 		if(placeIdOpt.isEmpty()) {
 			var aNewPlace = mapper.map(placeVO, Place.class);
