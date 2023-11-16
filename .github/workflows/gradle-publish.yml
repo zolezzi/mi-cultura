@@ -45,6 +45,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: jacoco-report
+        path: build/reports/jacoco/test/html
 
     - name: Publish coverage
       uses: actions/upload-artifact@v2
