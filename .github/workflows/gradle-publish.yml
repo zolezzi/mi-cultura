@@ -29,16 +29,15 @@ jobs:
         name: jacoco-reports
         path: build/reports/jacoco/
     - name: Get coverage percentage from JaCoCo report
-      id: get-coverage
-      run: |
-          coverage=$(awk -F ',' '{ print int($4) }' build/reports/jacoco/jacocoTestReport.csv)
+        id: get-coverage
+        run: |
+          coverage=$(awk -F ',' '{ print int($4) }' build/reports/jacoco/test/jacocoTestReport.csv)
           echo "::set-output name=coverage::$coverage"
 
-    - name: Generate and display badge
+    - name: Update README.md with coverage badge
       run: |
           coverage=$INPUT_COVERAGE
-          badge_url="https://img.shields.io/badge/Coverage-${coverage}%25-green.svg"
-          echo "Coverage: $coverage%"
-          echo "![Coverage]($badge_url)"
+          badge_url="https://img.shields.io/badge/Coverage-${coverage}%25-brightgreen.svg"
+          sed -i "s|!\[Coverage\].*|![Coverage]($badge_url)|" README.md
       env:
-          INPUT_COVERAGE: ${{ steps.get-coverage.outputs.coverage }}
+          NPUT_COVERAGE: ${{ steps.get-coverage.outputs.coverage }}
