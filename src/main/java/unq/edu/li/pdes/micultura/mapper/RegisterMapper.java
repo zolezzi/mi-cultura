@@ -10,14 +10,17 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 import unq.edu.li.pdes.micultura.dto.AccountDTO;
 import unq.edu.li.pdes.micultura.dto.PlaceDTO;
+import unq.edu.li.pdes.micultura.dto.ReviewDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
 import unq.edu.li.pdes.micultura.model.Account;
 import unq.edu.li.pdes.micultura.model.AccountRole;
 import unq.edu.li.pdes.micultura.model.Place;
 import unq.edu.li.pdes.micultura.model.PlaceType;
+import unq.edu.li.pdes.micultura.model.Review;
 import unq.edu.li.pdes.micultura.model.User;
 import unq.edu.li.pdes.micultura.vo.AccountVO;
 import unq.edu.li.pdes.micultura.vo.PlaceVO;
+import unq.edu.li.pdes.micultura.vo.ReviewVO;
 import unq.edu.li.pdes.micultura.vo.UserLoginVO;
 import unq.edu.li.pdes.micultura.vo.UserVO;
 
@@ -175,6 +178,32 @@ public class RegisterMapper {
 				b.setPlaceType(PlaceType.valueOf(a.getPlaceType()));
 				b.setProvince(a.getProvince());
 				b.setUrl(a.getUrl());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(ReviewVO.class, Review.class).customize(new CustomMapper<ReviewVO, Review>() {
+			@Override
+			public void mapBtoA(Review b, ReviewVO a, MappingContext context) {
+				a.setScore(b.getScore());
+				a.setComments(b.getCommets());
+			}
+			@Override
+			public void mapAtoB(ReviewVO a, Review b, MappingContext context) {
+				b.setScore(a.getScore());
+				b.setCommets(a.getComments());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(ReviewDTO.class, Review.class).customize(new CustomMapper<ReviewDTO, Review>() {
+			@Override
+			public void mapBtoA(Review b, ReviewDTO a, MappingContext context) {
+				a.setScore(b.getScore());
+				a.setComments(b.getCommets());
+			}
+			@Override
+			public void mapAtoB(ReviewDTO a, Review b, MappingContext context) {
+				b.setScore(a.getScore());
+				b.setCommets(a.getComments());
 			}
 		}).byDefault().register();
 	}

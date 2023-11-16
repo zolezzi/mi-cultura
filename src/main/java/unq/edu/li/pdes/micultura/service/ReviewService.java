@@ -8,4 +8,6 @@ public interface ReviewService {
 	ReviewDTO findById(Long reviewId);
 	
 	ReviewDTO update(ReviewVO review, Long reviewId);
+	
+	ReviewDTO getReviewByPlaceAndAccount(Long placeId, Long accountId);
 }

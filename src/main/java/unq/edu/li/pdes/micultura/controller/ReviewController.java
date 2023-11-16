@@ -39,4 +39,22 @@ public class ReviewController {
 	public ReviewDTO findById(@PathVariable("id") Long id) {
 		return service.findById(id);
 	}
+    
+    @ApiOperation(
+            value = "Service that return a Review",
+            notes = "This service return a Review by the ID",
+            nickname = "getReview",
+            response = ReviewDTO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = ReviewDTO.class),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ReviewDTO.class) })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @GetMapping(
+            value = "/get-review/{placeId}/{accountId}",
+            produces = { "application/json" }
+    )
+	public ReviewDTO getReview(@PathVariable("placeId") Long placeId, @PathVariable("accountId") Long accountId) {
+		return service.getReviewByPlaceAndAccount(placeId, accountId);
+	}
 }

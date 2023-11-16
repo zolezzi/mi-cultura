@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import unq.edu.li.pdes.micultura.dto.ReviewDTO;
+import unq.edu.li.pdes.micultura.exception.MiCulturaException;
 import unq.edu.li.pdes.micultura.exception.ReviewNotFoundException;
 import unq.edu.li.pdes.micultura.mapper.Mapper;
 import unq.edu.li.pdes.micultura.model.Review;
+import unq.edu.li.pdes.micultura.repository.AccountReviewPlaceRepository;
 import unq.edu.li.pdes.micultura.repository.ReviewRepository;
 import unq.edu.li.pdes.micultura.service.ReviewService;
 import unq.edu.li.pdes.micultura.vo.ReviewVO;
@@ -16,6 +18,7 @@ import unq.edu.li.pdes.micultura.vo.ReviewVO;
 public class ReviewServiceImpl implements ReviewService{
 
 	private final ReviewRepository repository;
+	private final AccountReviewPlaceRepository accountReviewPlaceRepository;
 	private final Mapper mapper;
 	
 	@Override
@@ -30,6 +33,13 @@ public class ReviewServiceImpl implements ReviewService{
 		reviewDB.setCommets(review.getComments());
 		reviewDB.setScore(review.getScore());
 		return mapper.map(repository.save(reviewDB), ReviewDTO.class);
+	}
+	
+	@Override
+	public ReviewDTO getReviewByPlaceAndAccount(Long placeId, Long accountId) {
+		var accountReviewPlaceOpt = accountReviewPlaceRepository.findOneByPlaceIdAndAccountId(placeId, accountId)
+				.orElseThrow(() -> new MiCulturaException(String.format("No found review para la cuenta:%s", accountId)));;
+		return mapper.map(accountReviewPlaceOpt.getReview(), ReviewDTO.class);
 	}
 	
 	private Review getReviewById(Long reviewId) {

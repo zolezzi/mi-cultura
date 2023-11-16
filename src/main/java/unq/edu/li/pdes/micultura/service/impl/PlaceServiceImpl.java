@@ -96,12 +96,15 @@ public class PlaceServiceImpl implements PlaceService{
 			accountReviewPlace = new AccountReviewPlace();
 			accountReviewPlace.setAccount(userDB.getAccount());
 			accountReviewPlace.setPlace(placeDB);
+			var reviewMapper = reviewRepository.save(mapper.map(review, Review.class));
+			accountReviewPlace.setReview(reviewMapper);
 		}else {
 			accountReviewPlace = accountReviewPlaceOpt.get();
+			accountReviewPlace.getReview().setScore(review.getScore());
+			accountReviewPlace.getReview().setCommets(review.getComments());
 		}
-		var reviewMapper = reviewRepository.save(mapper.map(review, Review.class));
-		accountReviewPlace.setReview(reviewMapper);
-		return mapper.map(repository.save(placeDB), PlaceDTO.class);
+		accountReviewPlaceRepository.save(accountReviewPlace);
+		return mapper.map(placeDB, PlaceDTO.class);
 	}
 	
 	@Override
