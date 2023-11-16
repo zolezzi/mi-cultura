@@ -25,6 +25,7 @@ plugins {
 	id "com.palantir.git-version" version "0.12.0-rc2"
 	id "com.github.node-gradle.node" version "3.0.1"
 	id "com.palantir.docker" version "0.22.1"
+	id 'jacoco'
 }
 
 apply plugin: 'java'
@@ -138,6 +139,36 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+	reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled true
+		html.destination file("$buildDir/jacoco")
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+				exclude: ['**/utils/**',
+					'**/dto/**',
+					'**/vo/**',
+					'**/security/**',
+					'**/configuration/**'
+				]
+			)
+		}))
+	}
+	dependsOn test
+}
+
+test {
+	finalizedBy jacocoTestReport
 }
 
 tasks.named('test') {
