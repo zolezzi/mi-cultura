@@ -16,38 +16,17 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Change permissions for gradlew
-      run: chmod +x ./gradlew
-    - name: Use Gradle Wrapper
-      run: ./gradlew wrapper --gradle-version 6.8
-    - name: Setup Java
-      uses: actions/setup-java@v2
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Run Tests
+      run: ./gradlew test
+
+    - name: Run Test Coverage
+      run: ./gradlew jacocoTestReport
+
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
       with:
-        java-version: '11'
-        distribution: 'adopt'
-        gradle-version: '6.8'
-
-    - name: Build with Gradle
-      run: ./gradlew build jacocoTestReport --no-daemon
-
-    - name: Upload JaCoCo report
-      uses: actions/upload-artifact@v2
-      with:
-        name: jacoco-report
-        path: build/reports/jacoco/test/html 
-
-  coverage:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download JaCoCo report
-      uses: actions/download-artifact@v2
-      with:
-        name: jacoco-report
-        path: build/reports/jacoco/test/html
-
-    - name: Publish coverage
-      uses: actions/upload-artifact@v2
-      with:
-        sarif_file: build/reports/jacoco/test/jacocoTestReport.xml
+        generate-branches-badge: true
+        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
