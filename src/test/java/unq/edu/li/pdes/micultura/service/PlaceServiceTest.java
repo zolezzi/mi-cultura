@@ -106,18 +106,18 @@ public class PlaceServiceTest {
 	@Before
 	public void setUp(){
 		service = new PlaceServiceImpl(repository, userRepository, accountRepository, accountInterestPlaceRepository, accountReviewPlaceRepository, reviewRepository, mapper);
-		when(repository.findById(ID)).thenReturn(Optional.of(place));
+		when(repository.findByPlaceId(ID)).thenReturn(Optional.of(place));
 		when(mapper.map(any(), eq(PlaceDTO.class))).thenReturn(placeDto);
-		when(userRepository.findById(ID_USER)).thenReturn(Optional.of(user));
-		when(userRepository.findById(ID_USER_DELETE)).thenReturn(Optional.of(user));
-		when(user.isAdmin()).thenReturn(Boolean.FALSE);
-		when(repository.findById(ID_PLACE_DELETE)).thenReturn(Optional.of(place));
-		when(userRepository.findById(USER_ADMIN_ID)).thenReturn(Optional.of(userAdmin));
-		when(userAdmin.isAdmin()).thenReturn(Boolean.TRUE);
-		when(mapper.map(any(), eq(Place.class))).thenReturn(place);
-		when(place.getEmail()).thenReturn(EMAIL);
-		when(repository.findById(ID_PLACE_UPDATE)).thenReturn(Optional.of(place));
-		when(repository.findById(ID_PLACE_NOT_FOUND)).thenReturn(Optional.empty());
+		//when(userRepository.findById(ID_USER)).thenReturn(Optional.of(user));
+		//when(userRepository.findById(ID_USER_DELETE)).thenReturn(Optional.of(user));
+		//when(user.isAdmin()).thenReturn(Boolean.FALSE);
+		//when(repository.findById(ID_PLACE_DELETE)).thenReturn(Optional.of(place));
+		//when(userRepository.findById(USER_ADMIN_ID)).thenReturn(Optional.of(userAdmin));
+		//when(userAdmin.isAdmin()).thenReturn(Boolean.TRUE);
+		//when(mapper.map(any(), eq(Place.class))).thenReturn(place);
+		//when(place.getEmail()).thenReturn(EMAIL);
+		//when(repository.findById(ID_PLACE_UPDATE)).thenReturn(Optional.of(place));
+		//when(repository.findById(ID_PLACE_NOT_FOUND)).thenReturn(Optional.empty());
 		when(repository.findAll()).thenReturn(List.of(place));
 		when(mapper.mapList(anyList(), eq(PlaceDTO.class))).thenReturn(List.of(placeDto));
 	}
@@ -126,7 +126,7 @@ public class PlaceServiceTest {
 	public void testFindPlaceByIdThenReturnAPlace(){
 		var placeResult = service.findById(ID);
 	    assertThat(placeResult, is(placeDto));
-	    verify(repository).findById(eq(ID));
+	    verify(repository).findByPlaceId(eq(ID));
 	}
 	
 	@Test
