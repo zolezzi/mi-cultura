@@ -2,8 +2,6 @@ package unq.edu.li.pdes.micultura.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,29 +13,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "account")
-public class Account {
+@Table(name = "review")
+public class Review {
 
 	@Id
 	@Column(name = "id", unique = true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
-    private String firstname;
-    
-	@Column
-	private String lastname;
-
-	@Column
-    private String dni;
+	@Column(name = "commets")
+	private String commets;
 	
-	@Column
-    private String address;
-	
-	@Column(name="phone_number")
-    private String phoneNumber;
-	
-	@Enumerated(EnumType.STRING)
-	private AccountRole accountRole;
+	@Column(name = "score")
+	private Double score;
 }

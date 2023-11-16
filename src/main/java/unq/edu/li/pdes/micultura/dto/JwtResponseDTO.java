@@ -12,4 +12,6 @@ public class JwtResponseDTO {
     private String firstname;
     private String lastname;
     private String role;
+    private Long userId;
+    private Long accountId;
 }

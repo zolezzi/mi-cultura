@@ -38,13 +38,13 @@ public class RegisterMapper {
 			public void mapBtoA(User b, UserVO a, MappingContext context) {
 				a.setEmail(b.getEmail());
 				a.setPassword(b.getPassword());
-				a.setAccount(mapper.map(a.getAccount(), AccountVO.class));
+				//a.setAccount(mapper.map(a.getAccount(), AccountVO.class));
 			}
 			@Override
 			public void mapAtoB(UserVO a, User b, MappingContext context) {
 				b.setEmail(a.getEmail());
 				b.setPassword(a.getPassword());
-				b.setAccount(mapper.map(a.getAccount(), Account.class));
+				//b.setAccount(mapper.map(a.getAccount(), Account.class));
 			}
 		}).byDefault().register();
 		
@@ -91,6 +91,8 @@ public class RegisterMapper {
 				b.setFirstname(a.getFirstname());
 				b.setLastname(a.getLastname());
 				b.setDni(a.getDni());
+				b.setAddress(a.getAddress());
+				b.setPhoneNumber(a.getPhoneNumber());
 				b.setAccountRole(AccountRole.valueOf(a.getRole()));
 			}
 		}).byDefault().register();
