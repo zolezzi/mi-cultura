@@ -18,15 +18,19 @@ jobs:
       uses: actions/checkout@v2
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      
+    - name: Create Jacoco directory
+      run: mkdir -p target/site/jacoco/
     - name: Run Tests
       run: ./gradlew test
 
     - name: Run Test Coverage
-      run: ./gradlew jacocoTestReport
-
-    - name: Generate JaCoCo Badge
-      uses: cicirello/jacoco-badge-generator@v2
+      run: |
+          ./gradlew test jacocoTestReport --no-daemon
+          ./gradlew jacocoBadge
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Jacoco badge artifact
+      uses: actions/upload-artifact@v2
       with:
-        generate-branches-badge: true
-        jacoco-xml-file: build/reports/jacoco/test/jacocoTestReport.xml
+          name: jacoco-badge
+          path: build/reports/jacoco/jacocoBadge.svg
