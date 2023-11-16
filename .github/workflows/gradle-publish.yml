@@ -1,0 +1,47 @@
+name: Micultura
+on:
+  push:
+    branches:
+      - main 
+      - development
+  pull_request:
+    branches:
+      - main 
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11' 
+
+    - name: Build with Gradle
+      run: ./gradlew build jacocoTestReport --no-daemon
+
+    - name: Upload JaCoCo report
+      uses: actions/upload-artifact@v2
+      with:
+        name: jacoco-report
+        path: build/reports/jacoco/test/html 
+
+  coverage:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download JaCoCo report
+      uses: actions/download-artifact@v2
+      with:
+        name: jacoco-report
+
+    - name: Publish coverage
+      uses: actions/upload-sarif@v1
+      with:
+        sarif_file: build/reports/jacoco/test/jacocoTestReport.xml
