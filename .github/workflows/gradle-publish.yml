@@ -18,19 +18,27 @@ jobs:
       uses: actions/checkout@v2
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Create Jacoco directory
-      run: mkdir -p target/site/jacoco/
     - name: Run Tests
       run: ./gradlew test
 
     - name: Run Test Coverage
-      run: |
-          ./gradlew jacocoTestReport --no-daemon
-          ./gradlew jacocoBadge
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Upload Jacoco badge artifact
+      run: ./gradlew jacocoTestReport --no-daemon
+    - name: Upload JaCoCo reports
       uses: actions/upload-artifact@v2
       with:
-          name: jacoco-badge
-          path: build/reports/jacoco/jacocoBadge.svg
+        name: jacoco-reports
+        path: build/reports/jacoco/
+    - name: Get coverage percentage from JaCoCo report
+      id: get-coverage
+      run: |
+          coverage=$(awk -F ',' '{ print int($4) }' build/reports/jacoco/jacocoTestReport.csv)
+          echo "::set-output name=coverage::$coverage"
+
+    - name: Generate and display badge
+      run: |
+          coverage=$INPUT_COVERAGE
+          badge_url="https://img.shields.io/badge/Coverage-${coverage}%25-green.svg"
+          echo "Coverage: $coverage%"
+          echo "![Coverage]($badge_url)"
+      env:
+          INPUT_COVERAGE: ${{ steps.get-coverage.outputs.coverage }}
