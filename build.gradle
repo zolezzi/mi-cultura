@@ -147,8 +147,7 @@ jacoco {
 
 jacocoTestReport {
 	reports {
-		xml.enabled true
-        csv.enabled true
+		xml.destination file("${buildDir}/target/site/jacoco/jacoco.xml")
     }
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
