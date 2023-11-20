@@ -29,6 +29,11 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         min-coverage-overall: 30
         min-coverage-changed-files: 20
+      run: |
+        branches_value="${{ steps.jacoco.outputs.branches }}"
+        echo "::set-output name=branches::$branches_value"
+        echo "Valor de branches establecido como: $branches_value"
+      
     - name: Generate Jacoco Badge
       id: jacoco-cicirello
       uses: cicirello/jacoco-badge-generator@v2
