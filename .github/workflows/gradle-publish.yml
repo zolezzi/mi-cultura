@@ -28,7 +28,7 @@ jobs:
       uses: madrapps/jacoco-report@v1.3
       with:
         paths: ${{ github.workspace }}/build/target/site/jacoco/jacoco.xml
-        token: ${{ secrets.GITH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Generate Jacoco Badge
       id: jacoco-cicirello
       uses: cicirello/jacoco-badge-generator@v2
