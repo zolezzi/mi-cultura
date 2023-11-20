@@ -147,7 +147,8 @@ jacoco {
 
 jacocoTestReport {
 	reports {
-        csv.enabled true // Habilitar el reporte CSV
+		xml.enabled true
+        csv.enabled true
     }
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
