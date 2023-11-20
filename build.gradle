@@ -147,6 +147,7 @@ jacoco {
 
 jacocoTestReport {
 	reports {
+		xml.enabled true
 		xml.destination file("${buildDir}/target/site/jacoco/jacoco.xml")
     }
 	afterEvaluate {
