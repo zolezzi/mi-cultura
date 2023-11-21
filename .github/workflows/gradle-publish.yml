@@ -24,6 +24,9 @@ jobs:
 
     - name: Run Test Coverage
       run: ./gradlew clean test jacocoTestReport --info
+    - name: Check JaCoCo report directory contents
+      run: ls -l build/reports/jacoco/test/
+        
     - name: Add coverage to PR
       id: jacoco-madrapps
       uses: madrapps/jacoco-report@v1.3
@@ -38,7 +41,7 @@ jobs:
         echo "Valor de branches_value: $branches_value"
       
     - name: Generate Jacoco Badge
-      id: jacoco-cicirello
+      id: jacoco-cicirellocc
       uses: cicirello/jacoco-badge-generator@v2
       with:
         jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
