@@ -149,8 +149,8 @@ jacocoTestReport {
 	reports {
 		csv.enabled true
 		xml.enabled true
-		xml.destination file("${buildDir}/target/site/jacoco/jacoco.xml")
-		csv.destination file("target/site/jacoco/jacoco.csv")
+		xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+		csv.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.csv")
     }
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
