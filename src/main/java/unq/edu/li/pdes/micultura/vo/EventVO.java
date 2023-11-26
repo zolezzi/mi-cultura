@@ -22,6 +22,9 @@ public class EventVO {
 	@JsonProperty("body")
 	private String body;
 	
+	@JsonProperty("email")
+	private String email;
+	
 	@JsonProperty("dependsOn")
 	private String dependsOn;
 	
@@ -39,4 +42,7 @@ public class EventVO {
 	
 	@JsonProperty("toDate")
 	private String toDate;
+	
+	@JsonProperty("eventType")
+	private String eventType;
 }

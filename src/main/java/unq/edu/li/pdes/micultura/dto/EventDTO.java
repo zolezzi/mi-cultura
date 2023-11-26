@@ -25,6 +25,9 @@ public class EventDTO {
 	@JsonProperty("body")
 	private String body;
 	
+	@JsonProperty("email")
+	private String email;
+	
 	@JsonProperty("dependsOn")
 	private String dependsOn;
 	
@@ -42,6 +45,12 @@ public class EventDTO {
 	
 	@JsonProperty("toDate")
 	private String toDate;
+	
+	@JsonProperty("eventType")
+	private String eventType;
+	
+	@JsonProperty("eventTypeDescription")
+	private String eventTypeDescription;
 	
 	@JsonProperty("isFavorite")
 	private Boolean isFavorite;

@@ -1,5 +1,7 @@
 package unq.edu.li.pdes.micultura.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import unq.edu.li.pdes.micultura.dto.AccountReviewDetailsDTO;
 import unq.edu.li.pdes.micultura.dto.ReviewDTO;
 import unq.edu.li.pdes.micultura.service.impl.ReviewServiceImpl;
 
@@ -57,4 +60,23 @@ public class ReviewController {
 	public ReviewDTO getReview(@PathVariable("placeId") Long placeId, @PathVariable("accountId") Long accountId) {
 		return service.getReviewByPlaceAndAccount(placeId, accountId);
 	}
+    
+	@ApiOperation(
+            value = "Service that returns all reviews",
+            notes = "This service returns all reviews load",
+            nickname = "findAll",
+            response = AccountReviewDetailsDTO.class, 
+            responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = AccountReviewDetailsDTO.class, responseContainer = "List"),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = AccountReviewDetailsDTO.class, responseContainer = "List") })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @GetMapping(
+            value = "/find-all",
+            produces = { "application/json" }
+    )
+    public List<AccountReviewDetailsDTO> findAll(){
+        return service.findAll();
+    }
 }

@@ -13,7 +13,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class EventTest {
 
-
 	private static final Long ID = 1L;
 	private static final Long OTHER_ID = 2L;
 	private static final Long EVENT_ID = 1L;
