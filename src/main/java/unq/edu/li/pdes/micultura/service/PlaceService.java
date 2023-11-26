@@ -1,5 +1,6 @@
 package unq.edu.li.pdes.micultura.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import unq.edu.li.pdes.micultura.dto.PlaceDTO;
@@ -21,4 +22,6 @@ public interface PlaceService {
 	List<PlaceDTO> findAllByUserId(Long userId);
 	
 	List<PlaceDTO> findAll();
+	
+	BigDecimal getTotalReviewScore(Long placeId);
 }

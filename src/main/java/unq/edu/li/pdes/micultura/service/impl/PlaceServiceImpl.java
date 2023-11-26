@@ -118,6 +118,7 @@ public class PlaceServiceImpl implements PlaceService{
 		return mapper.mapList(repository.findAll(), PlaceDTO.class);
 	}
 
+	@Override
 	public BigDecimal getTotalReviewScore(Long placeId) {
 		var totalScore = accountReviewPlaceRepository.getTotalReviewScore(placeId);
 		return totalScore == null ? BigDecimal.ZERO : totalScore;
