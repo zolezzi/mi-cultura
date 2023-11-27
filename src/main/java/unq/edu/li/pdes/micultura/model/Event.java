@@ -35,7 +35,7 @@ public class Event {
 	@Column(name = "sub_title")
 	private String subTitle;
 	
-	@Column(name = "body")
+	@Column(name = "body", length= 10000000, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
 	private String body;
 	
 	@Column(name = "depends_on")
