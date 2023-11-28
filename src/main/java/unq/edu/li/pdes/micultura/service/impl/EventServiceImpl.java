@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import unq.edu.li.pdes.micultura.dto.EventDTO;
+import unq.edu.li.pdes.micultura.exception.EventNotFoundException;
 import unq.edu.li.pdes.micultura.exception.MiCulturaException;
-import unq.edu.li.pdes.micultura.exception.PlaceNotFoundException;
 import unq.edu.li.pdes.micultura.mapper.Mapper;
 import unq.edu.li.pdes.micultura.model.AccountInterestEvent;
 import unq.edu.li.pdes.micultura.model.AccountReviewEvent;
@@ -127,7 +127,7 @@ public class EventServiceImpl implements EventService{
 	private Event getEventById(Long eventId) {
 		var eventIdOpt = repository.findByEventId(eventId);
 		if(eventIdOpt.isEmpty()) {
-			throw new PlaceNotFoundException(String.format("Event not found with id:%s ", eventId));
+			throw new EventNotFoundException(String.format("Event not found with id:%s ", eventId));
 		}
 		return eventIdOpt.get();
 	}

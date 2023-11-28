@@ -5,12 +5,12 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +59,7 @@ public class PlaceServiceTest {
 	private static final Long ID_PLACE_NOT_FOUND = 10L;
 	private static final Long ID_USER_NOT_FOUND = 0L;
 	private static final Long ACCOUNT_UPDATE_ID = 20L;
+	private static final Integer TOTAL_SCORE = 5;
 	private static final String NAME = "https://www.cultura.gob.ar/api/v2.0/organismos/27/?format=api";
 	private static final String URL = "http://test.com";
 	private static final String LINK = "https://www.cultura.gob.ar/institucional/organismos/museos/comision-nacional-de-la-manzana-de-las-luces/";
@@ -217,8 +218,8 @@ public class PlaceServiceTest {
 	public void testSavePlaceWithoutUserExistsThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("No found user:%s", ID_USER_NOT_FOUND));
-		var accountVO = createPlaceVO();
-		service.save(accountVO, ID_USER_NOT_FOUND, ID);
+		var placeNewVO = createPlaceVO();
+		service.save(placeNewVO, ID_USER_NOT_FOUND, ID);
 	}
 	
 	@Test
@@ -258,7 +259,6 @@ public class PlaceServiceTest {
 		place.setEmail(EMAIL_UPDATE);
 		when(accountReviewPlaceRepository.findOneByPlaceIdAndAccountId(ID, ID)).thenReturn(Optional.empty());
 		when(mapper.map(reviewVO, Review.class)).thenReturn(review);
-		when(mapper.map(review, Review.class)).thenReturn(review);
 		when(reviewRepository.save(review)).thenReturn(review);
 	    assertThat(service.update(reviewVO, USER_ID, ID), is(placeDto));
 	    verify(reviewRepository).save(eq(review));
@@ -271,9 +271,6 @@ public class PlaceServiceTest {
 		assertThat(place.getEmail(), is(EMAIL));
 		place.setEmail(EMAIL_UPDATE);
 		when(accountReviewPlaceRepository.findOneByPlaceIdAndAccountId(ID, ACCOUNT_UPDATE_ID)).thenReturn(Optional.of(accountReviewPlace));
-		when(mapper.map(reviewVO, Review.class)).thenReturn(review);
-		when(mapper.map(review, Review.class)).thenReturn(review);
-		when(reviewRepository.save(review)).thenReturn(review);
 		when(accountReviewPlace.getReview()).thenReturn(review);
 	    assertThat(service.update(reviewVO, USER_UPDATE_ID, ID), is(placeDto));
 	    verify(accountReviewPlaceRepository).save(any());
@@ -281,9 +278,40 @@ public class PlaceServiceTest {
 	}
 
 	@Test
+	public void testFindAllPlacesByUserIdWithoutUserExistsInTheDatabase(){
+		ex.expect(MiCulturaException.class);
+		ex.expectMessage(String.format("No found user:%s", ID_USER_NOT_FOUND));
+		service.findAllByUserId(ID_USER_NOT_FOUND);
+	    verify(accountInterestPlaceRepository, never()).findAllPlacesByAccountId(any());
+	}
+	
+	@Test
+	public void testFindAllPlacesByUserIdWithElements(){
+		when(accountInterestPlaceRepository.findAllPlacesByAccountId(ID)).thenReturn(List.of(place));
+	    assertThat(service.findAllByUserId(USER_ID), is(List.of(placeDto)));
+	    verify(accountInterestPlaceRepository).findAllPlacesByAccountId(ID);
+	}
+	
+	@Test
 	public void testFindAllPlacesWithElements(){
 	    assertThat(service.findAll(), is(List.of(placeDto)));
 	    verify(repository).findAll();
+	}
+	
+	@Test
+	public void testGetTotalReviewScoreWithValueTotalScore(){
+		BigDecimal scoreTotal = new BigDecimal(TOTAL_SCORE);
+		when(accountReviewPlaceRepository.getTotalReviewScore(ID)).thenReturn(scoreTotal);
+	    assertThat(service.getTotalReviewScore(ID), is(scoreTotal));
+	    verify(accountReviewPlaceRepository).getTotalReviewScore(ID);
+	}
+	
+	@Test
+	public void testGetTotalReviewScoreWithValueTotalScoreIsNull(){
+		BigDecimal scoreTotal = null;
+		when(accountReviewPlaceRepository.getTotalReviewScore(ID)).thenReturn(scoreTotal);
+	    assertThat(service.getTotalReviewScore(ID), is(BigDecimal.ZERO));
+	    verify(accountReviewPlaceRepository).getTotalReviewScore(ID);
 	}
 	
 	private PlaceVO createPlaceVO() {

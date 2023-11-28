@@ -1,5 +1,6 @@
 package unq.edu.li.pdes.micultura.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -49,10 +50,10 @@ public class ReviewServiceImpl implements ReviewService{
 	
 	@Override
 	public List<AccountReviewDetailsDTO> findAll(){
-		var listPlaces = mapper.mapList(accountReviewPlaceRepository.findAll(), AccountReviewDetailsDTO.class);
-		var listEvents = mapper.mapList(accountReviewEventRepository.findAll(), AccountReviewDetailsDTO.class);
-		listPlaces.addAll(listEvents);
-		return listPlaces;
+		List<AccountReviewDetailsDTO> results = new ArrayList<>();
+		results.addAll(mapper.mapList(accountReviewPlaceRepository.findAll(), AccountReviewDetailsDTO.class));
+		results.addAll(mapper.mapList(accountReviewEventRepository.findAll(), AccountReviewDetailsDTO.class));
+		return results;
 	}
 	
 	private Review getReviewById(Long reviewId) {
