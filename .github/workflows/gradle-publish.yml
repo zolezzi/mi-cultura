@@ -1,7 +1,7 @@
 name: Micultura
 on:
   push:
-    branches: [ main, development, development_feature-14 ]
+    branches: [ main, development ]
   pull_request:
     branches: [ main, development ]
 

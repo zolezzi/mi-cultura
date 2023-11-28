@@ -1,10 +1,11 @@
 package unq.edu.li.pdes.micultura.exception;
 
-public class PlaceNotFoundException extends RuntimeException{
+public class EventNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 
-	public PlaceNotFoundException(String msg){
+	public EventNotFoundException(String msg){
 		super(msg);
 	}
+
 }
