@@ -18,8 +18,8 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { Observable }                                        from 'rxjs';
 
 import { BasicResponse } from '../model/basicResponse';
-import { PlaceDTO } from '../model/placeDTO';
-import { PlaceVO } from '../model/placeVO';
+import { EventDTO } from '../model/eventDTO';
+import { EventVO } from '../model/eventVO';
 import { ReviewVO } from '../model/reviewVO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 
 
 @Injectable()
-export class PlaceControllerService {
+export class EventControllerService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -59,26 +59,29 @@ export class PlaceControllerService {
 
 
     /**
-     * This service update a Place
-     * Update a Place, if it doesn&#39;t find it throw an exception
+     * This service update a Event
+     * Update a Event, if it doesn&#39;t find it throw an exception
      * @param accountId accountId
      * @param authorization 
-     * @param placeId placeId
+     * @param eventId eventId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public favorite(accountId: number, authorization: string, eventVO: EventVO, eventId: number, observe?: 'body', reportProgress?: boolean): Observable<EventDTO>;
+    public favorite(accountId: number, authorization: string, eventVO: EventVO, eventId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EventDTO>>;
+    public favorite(accountId: number, authorization: string, eventVO: EventVO, eventId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EventDTO>>;
+    public favorite(accountId: number, authorization: string, eventVO: EventVO, eventId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (accountId === null || accountId === undefined) {
             throw new Error('Required parameter accountId was null or undefined when calling favorite.');
         }
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling favorite.');
         }
-        if (placeId === null || placeId === undefined) {
-            throw new Error('Required parameter placeId was null or undefined when calling favorite.');
+        if (eventVO === null || eventVO === undefined) {
+            throw new Error('Required parameter eventVO was null or undefined when calling favorite.');
+        }
+        if (eventId === null || eventId === undefined) {
+            throw new Error('Required parameter eventId was null or undefined when calling favorite.');
         }
 
         let headers = this.defaultHeaders;
@@ -100,8 +103,8 @@ export class PlaceControllerService {
             'application/json'
         ];
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
-            null,
+        return this.httpClient.put<EventDTO>(`${this.basePath}/event/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
+            eventVO,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -112,18 +115,18 @@ export class PlaceControllerService {
     }
 
     /**
-     * Service that returns all places
-     * This service returns all places load
+     * Service that returns all events
+     * This service returns all events load
      * @param authorization 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<Array<PlaceDTO>>;
-    public findAll(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<PlaceDTO>>>;
-    public findAll(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<PlaceDTO>>>;
+    public findAll(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<Array<EventDTO>>;
+    public findAll(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<EventDTO>>>;
+    public findAll(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<EventDTO>>>;
     public findAll(authorization: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
-            throw new Error('Required parameter authorization was null or undefined when calling findAll.');
+            throw new Error('Required parameter authorization was null or undefined when calling findAll1.');
         }
 
         let headers = this.defaultHeaders;
@@ -144,7 +147,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all`,
+        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/event/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -155,16 +158,16 @@ export class PlaceControllerService {
     }
 
     /**
-     * Service that returns all places by user
-     * This service returns all places load by user
+     * Service that returns all events by user
+     * This service returns all events load by user
      * @param authorization 
      * @param userId userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllByUserId(authorization: string, userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<PlaceDTO>>;
-    public findAllByUserId(authorization: string, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<PlaceDTO>>>;
-    public findAllByUserId(authorization: string, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<PlaceDTO>>>;
+    public findAllByUserId(authorization: string, userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<EventDTO>>;
+    public findAllByUserId(authorization: string, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<EventDTO>>>;
+    public findAllByUserId(authorization: string, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<EventDTO>>>;
     public findAllByUserId(authorization: string, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling findAllByUserId.');
@@ -191,7 +194,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/event/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -202,16 +205,16 @@ export class PlaceControllerService {
     }
 
     /**
-     * Service that return a Place
-     * This service return a Place by the ID
+     * Service that return a Event
+     * This service return a Event by the ID
      * @param authorization 
      * @param id id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findById(authorization: string, id: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
-    public findById(authorization: string, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
-    public findById(authorization: string, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
+    public findById(authorization: string, id: number, observe?: 'body', reportProgress?: boolean): Observable<EventDTO>;
+    public findById(authorization: string, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EventDTO>>;
+    public findById(authorization: string, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EventDTO>>;
     public findById(authorization: string, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling findById.');
@@ -238,7 +241,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<PlaceDTO>(`${this.basePath}/place/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<EventDTO>(`${this.basePath}/event/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -252,19 +255,19 @@ export class PlaceControllerService {
      * Service that returns all value score
      * This service returns all value score
      * @param authorization 
-     * @param placeId placeId
+     * @param eventId eventId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTotalReviewScore(authorization: string, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public getTotalReviewScore(authorization: string, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public getTotalReviewScore(authorization: string, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public getTotalReviewScore(authorization: string, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getTotalReviewScore(authorization: string, eventId: number, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getTotalReviewScore(authorization: string, eventId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getTotalReviewScore(authorization: string, eventId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getTotalReviewScore(authorization: string, eventId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling getTotalReviewScore.');
         }
-        if (placeId === null || placeId === undefined) {
-            throw new Error('Required parameter placeId was null or undefined when calling getTotalReviewScore.');
+        if (eventId === null || eventId === undefined) {
+            throw new Error('Required parameter eventId was null or undefined when calling getTotalReviewScore.');
         }
 
         let headers = this.defaultHeaders;
@@ -285,7 +288,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<number>(`${this.basePath}/place/total-review-score/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.get<number>(`${this.basePath}/event/total-review-score/${encodeURIComponent(String(eventId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -296,26 +299,26 @@ export class PlaceControllerService {
     }
 
     /**
-     * This service delete a place
-     * Delete a place, if it doesn&#39;t find it throw an exception
+     * This service delete a event
+     * Delete a event, if it doesn&#39;t find it throw an exception
      * @param accountId accountId
      * @param authorization 
-     * @param placeId placeId
+     * @param eventId eventId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeFavorite(authorization: string, accountId: number, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicResponse>;
-    public removeFavorite(authorization: string, accountId: number, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicResponse>>;
-    public removeFavorite(authorization: string, accountId: number, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicResponse>>;
-    public removeFavorite(authorization: string, accountId: number, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeFavorite(accountId: number, authorization: string, eventId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicResponse>;
+    public removeFavorite(accountId: number, authorization: string, eventId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicResponse>>;
+    public removeFavorite(accountId: number, authorization: string, eventId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicResponse>>;
+    public removeFavorite(accountId: number, authorization: string, eventId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (accountId === null || accountId === undefined) {
             throw new Error('Required parameter accountId was null or undefined when calling removeFavorite.');
         }
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling removeFavorite.');
         }
-        if (placeId === null || placeId === undefined) {
-            throw new Error('Required parameter placeId was null or undefined when calling removeFavorite.');
+        if (eventId === null || eventId === undefined) {
+            throw new Error('Required parameter eventId was null or undefined when calling removeFavorite.');
         }
 
         let headers = this.defaultHeaders;
@@ -336,7 +339,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.delete<BasicResponse>(`${this.basePath}/place/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.delete<BasicResponse>(`${this.basePath}/event/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -347,27 +350,27 @@ export class PlaceControllerService {
     }
 
     /**
-     * This service save a Place
-     * Service that return PlaceDTO with saved object Place
+     * This service save a Event
+     * Service that return EventDTO with saved object Event
      * @param authorization 
-     * @param placeId placeId
-     * @param placeVO placeVO
+     * @param eventId eventId
+     * @param eventVO eventVO
      * @param userId userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public save(authorization: string, placeId: number, placeVO: PlaceVO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
-    public save(authorization: string, placeId: number, placeVO: PlaceVO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
-    public save(authorization: string, placeId: number, placeVO: PlaceVO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
-    public save(authorization: string, placeId: number, placeVO: PlaceVO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public save(authorization: string, eventId: number, eventVO: EventVO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<EventDTO>;
+    public save(authorization: string, eventId: number, eventVO: EventVO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EventDTO>>;
+    public save(authorization: string, eventId: number, eventVO: EventVO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EventDTO>>;
+    public save(authorization: string, eventId: number, eventVO: EventVO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling save.');
         }
-        if (placeId === null || placeId === undefined) {
-            throw new Error('Required parameter placeId was null or undefined when calling save.');
+        if (eventId === null || eventId === undefined) {
+            throw new Error('Required parameter eventId was null or undefined when calling save.');
         }
-        if (placeVO === null || placeVO === undefined) {
-            throw new Error('Required parameter placeVO was null or undefined when calling save.');
+        if (eventVO === null || eventVO === undefined) {
+            throw new Error('Required parameter eventVO was null or undefined when calling save.');
         }
         if (userId === null || userId === undefined) {
             throw new Error('Required parameter userId was null or undefined when calling save.');
@@ -396,8 +399,8 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<PlaceDTO>(`${this.basePath}/place/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
-            placeVO,
+        return this.httpClient.post<EventDTO>(`${this.basePath}/event/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
+            eventVO,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -408,24 +411,24 @@ export class PlaceControllerService {
     }
 
     /**
-     * This service update a Place
-     * Update a Place, if it doesn&#39;t find it throw an exception
+     * This service update a Event
+     * Update a Event, if it doesn&#39;t find it throw an exception
      * @param authorization 
-     * @param placeId placeId
+     * @param eventId eventId
      * @param review review
      * @param userId userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update(authorization: string, placeId: number, review: ReviewVO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
-    public update(authorization: string, placeId: number, review: ReviewVO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
-    public update(authorization: string, placeId: number, review: ReviewVO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
-    public update(authorization: string, placeId: number, review: ReviewVO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public update(authorization: string, eventId: number, review: ReviewVO, userId: number, observe?: 'body', reportProgress?: boolean): Observable<EventDTO>;
+    public update(authorization: string, eventId: number, review: ReviewVO, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EventDTO>>;
+    public update(authorization: string, eventId: number, review: ReviewVO, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EventDTO>>;
+    public update(authorization: string, eventId: number, review: ReviewVO, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (authorization === null || authorization === undefined) {
             throw new Error('Required parameter authorization was null or undefined when calling update.');
         }
-        if (placeId === null || placeId === undefined) {
-            throw new Error('Required parameter placeId was null or undefined when calling update.');
+        if (eventId === null || eventId === undefined) {
+            throw new Error('Required parameter eventId was null or undefined when calling update.');
         }
         if (review === null || review === undefined) {
             throw new Error('Required parameter review was null or undefined when calling update.');
@@ -457,7 +460,7 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.put<EventDTO>(`${this.basePath}/event/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
             review,
             {
                 withCredentials: this.configuration.withCredentials,

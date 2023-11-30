@@ -35,4 +35,8 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = false;
     this.router.navigate(['/home']);
   }
+
+  goToWelcome(){
+    this.router.navigate(['/home']);
+  }
 }

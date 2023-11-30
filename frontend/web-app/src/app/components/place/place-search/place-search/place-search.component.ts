@@ -102,7 +102,7 @@ export class PlaceSearchComponent implements OnInit{
       placeI.phoneNumber = item.telefono;
       placeI.description = item.descripcion;
       placeI.email = item.email;
-      placeI.placeTypeDescription = "INSTITUCIÓN";
+      placeI.placeTypeDescription = "MUSEO";
       placeI.province = item.provincia;
       placeI.dependsOn = item.depende_de;
       placeI.link = item.link;

@@ -26,6 +26,9 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faStar, faStarHalfAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { ReviewControllerService } from './api/service/reviewController.service';
+import { EventSearchComponent } from './components/event/event-search/event-search/event-search.component';
+import { EventViewComponent } from './components/event/event-view/event-view/event-view.component';
+import { EventControllerService } from './api/service/eventController.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { ReviewControllerService } from './api/service/reviewController.service'
     PlaceSearchComponent,
     PlaceViewComponent,
     ConfirmDialogComponent,
+    EventSearchComponent,
+    EventViewComponent,
     
   ],
   imports: [
@@ -50,7 +55,8 @@ import { ReviewControllerService } from './api/service/reviewController.service'
     FontAwesomeModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, ReviewControllerService,
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, 
+    ReviewControllerService, EventControllerService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   bootstrap: [AppComponent]
 })

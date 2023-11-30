@@ -36,4 +36,20 @@ export class CulturaAPIService {
     var data = this.http.get(url, {'headers': headers });
     return data;
   }
+
+  public getAnnouncements(): Observable<any> {   
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    const url = this.BASE_URL +'convocatorias/?limit=20&offset=120';
+    var data = this.http.get(url, {'headers': headers });
+    return data;
+  }
+
+  public getProcedures(): Observable<any> {   
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    const url = this.BASE_URL +'tramites/';
+    var data = this.http.get(url, {'headers': headers });
+    return data;
+  }
 }
