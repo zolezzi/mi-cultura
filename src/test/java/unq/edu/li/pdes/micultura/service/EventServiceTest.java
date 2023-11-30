@@ -56,6 +56,7 @@ public class EventServiceTest {
 	private static final Long USER_UPDATE_ID = 15L;
 	private static final Long ID_EVENT_DELETE = 2L;
 	private static final Long ID_EVENT_UPDATE = 3L;
+	private static final Long EVENT_FAVORITE_ID = 30L;
 	private static final Long ID_EVENT_NOT_FOUND = 10L;
 	private static final Long ID_USER_NOT_FOUND = 0L;
 	private static final Long ACCOUNT_UPDATE_ID = 20L;
@@ -82,6 +83,9 @@ public class EventServiceTest {
 	
 	@Mock
 	private Event eventDelete;
+	
+	@Mock
+	private Event eventFavorite;
 	
 	@Mock
 	private Account account;
@@ -150,6 +154,7 @@ public class EventServiceTest {
 	public void setUp(){
 		service = new EventServiceImpl(repository, userRepository, accountRepository, accountInterestEventRepository, accountReviewEventRepository, reviewRepository, mapper);
 		when(repository.findByEventId(ID)).thenReturn(Optional.of(event));
+		when(repository.findByEventId(EVENT_FAVORITE_ID)).thenReturn(Optional.of(eventFavorite));
 		when(repository.findByEventId(ID_EVENT_DELETE)).thenReturn(Optional.of(eventDelete));
 		when(repository.findByEventId(ID_EVENT_NOT_FOUND)).thenReturn(Optional.empty());
 		when(mapper.map(any(), eq(EventDTO.class))).thenReturn(eventDto);
@@ -161,15 +166,17 @@ public class EventServiceTest {
 		when(accountDelete.getId()).thenReturn(DELETE_ACCOUNT_ID);
 		when(eventDelete.getId()).thenReturn(ID_EVENT_DELETE);
 		when(event.getId()).thenReturn(ID);
+		when(eventFavorite.getId()).thenReturn(EVENT_FAVORITE_ID);
 		when(accountFavorite.getId()).thenReturn(FAVORITE_ACCOUNT_ID);
 		when(user.getAccount()).thenReturn(account);
 		when(account.getId()).thenReturn(ID);
 		when(userUpdate.getAccount()).thenReturn(accountUpdate);
 		when(accountUpdate.getId()).thenReturn(ACCOUNT_UPDATE_ID);
 		when(accountInterestEventRepository.findByEventIdAndAccountId(ID_EVENT_DELETE, DELETE_ACCOUNT_ID)).thenReturn(accountInterestEvent);
-		when(accountInterestEventRepository.findByEventIdAndAccountId(ID, FAVORITE_ACCOUNT_ID)).thenReturn(accountInterestEvent);
+		when(accountInterestEventRepository.findOneEventIdAndAccountId(EVENT_FAVORITE_ID, FAVORITE_ACCOUNT_ID)).thenReturn(Optional.of(accountInterestEvent));
 		when(event.getEmail()).thenReturn(EMAIL);
 		when(repository.findAll()).thenReturn(List.of(event));
+		when(accountInterestEvent.getEvent()).thenReturn(eventFavorite);
 		when(mapper.mapList(anyList(), eq(EventDTO.class))).thenReturn(List.of(eventDto));
 	}
 	
@@ -206,14 +213,23 @@ public class EventServiceTest {
 	public void testFavoriteEventWithoutAccountExistsThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("No found account:%s", ID_ACCOUNT_NOT_FOUND_FAVORITE));
-		service.favorite(ID_ACCOUNT_NOT_FOUND_FAVORITE, ID);
+		var newEventVO = createEventVO();
+		service.favorite(newEventVO, ID_ACCOUNT_NOT_FOUND_FAVORITE, ID);
 	    verify(accountInterestEventRepository).delete(eq(accountInterestEvent));
 	}
 	
 	@Test
-	public void testFavoriteEvent(){
-	    assertThat(service.favorite(FAVORITE_ACCOUNT_ID, ID), is(eventDto));
+	public void testFavoriteEventAndPersitNewAccountInterestEvent(){
+		var newEventVO = createEventVO();
+	    assertThat(service.favorite(newEventVO, FAVORITE_ACCOUNT_ID, EVENT_FAVORITE_ID), is(eventDto));
 	    verify(accountInterestEventRepository).save(eq(accountInterestEvent));
+	}
+	
+	@Test
+	public void testFavoriteEvent(){
+		var newEventVO = createEventVO();
+	    assertThat(service.favorite(newEventVO, FAVORITE_ACCOUNT_ID, ID), is(eventDto));
+	    verify(accountInterestEventRepository).save(any());
 	}
 	
 	@Test
@@ -289,7 +305,7 @@ public class EventServiceTest {
 	
 	@Test
 	public void testFindAllEventsByUserIdWithElements(){
-		when(accountInterestEventRepository.findAllEventsByAccountId(ID)).thenReturn(List.of(event));
+		when(accountInterestEventRepository.findAllEventsByAccountId(ID)).thenReturn(List.of(accountInterestEvent));
 	    assertThat(service.findAllByUserId(USER_ID), is(List.of(eventDto)));
 	    verify(accountInterestEventRepository).findAllEventsByAccountId(ID);
 	}

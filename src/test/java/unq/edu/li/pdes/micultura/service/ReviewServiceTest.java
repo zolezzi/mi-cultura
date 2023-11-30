@@ -42,7 +42,9 @@ public class ReviewServiceTest {
 	private static final Long ACCOUNT_ID = 2L;
 	private static final Long ID_REVIEW_NOT_FOUND = 10L;
 	private static final Long PLACE_ID = 9L;
+	private static final Long EVENT_ID = 8L;
 	private static final Long ID_PLACE_NOT_FOUND = -1L;
+	private static final Long ID_EVENT_NOT_FOUND = -2L;
 	private static final String COMMENTS = "El Complejo Hist&oacute;rico Cultural Manzana de las Luces depende del Ministerio de Cultura";
 	private static final String COMMENTS_UPDATE = "EXCELENTE LUGAR";
 	
@@ -90,7 +92,10 @@ public class ReviewServiceTest {
 		when(review.getCommets()).thenReturn(COMMENTS);
 		when(accountReviewPlaceRepository.findOneByPlaceIdAndAccountId(ID_PLACE_NOT_FOUND, ACCOUNT_ID)).thenReturn(Optional.empty());
 		when(accountReviewPlaceRepository.findOneByPlaceIdAndAccountId(PLACE_ID, ACCOUNT_ID)).thenReturn(Optional.of(accountReviewPlace));
+		when(accountReviewEventRepository.findOneByEventIdAndAccountId(ID_EVENT_NOT_FOUND, ACCOUNT_ID)).thenReturn(Optional.empty());
+		when(accountReviewEventRepository.findOneByEventIdAndAccountId(EVENT_ID, ACCOUNT_ID)).thenReturn(Optional.of(accountReviewEvent));
 		when(accountReviewPlace.getReview()).thenReturn(review);
+		when(accountReviewEvent.getReview()).thenReturn(review);
 		when(accountReviewPlaceRepository.findAll()).thenReturn(List.of(accountReviewPlace));
 		when(accountReviewEventRepository.findAll()).thenReturn(List.of(accountReviewEvent));
 		when(mapper.mapList(anyList(), eq(AccountReviewDetailsDTO.class))).thenReturn(List.of(accountReviewDetailsDto));
@@ -129,6 +134,18 @@ public class ReviewServiceTest {
 	@Test
 	public void testgetReviewByPlaceAndAccountThanReturn(){
 		assertThat(service.getReviewByPlaceAndAccount(PLACE_ID, ACCOUNT_ID), is(reviewDto));
+	}
+	
+	@Test
+	public void testgetReviewByEventAndAccountAndNotFoundAndThanReturnException(){
+		ex.expect(MiCulturaException.class);
+		ex.expectMessage(String.format("No found review para la cuenta:%s", ACCOUNT_ID));
+		service.getReviewByEventAndAccount(ID_EVENT_NOT_FOUND, ACCOUNT_ID);
+	}
+	
+	@Test
+	public void testgetReviewByEventAndAccountThanReturn(){
+		assertThat(service.getReviewByEventAndAccount(EVENT_ID, ACCOUNT_ID), is(reviewDto));
 	}
 	
 	@Test
