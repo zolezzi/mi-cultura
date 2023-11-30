@@ -39,4 +39,8 @@ export class NavbarComponent implements OnInit {
   goToWelcome(){
     this.router.navigate(['/home']);
   }
+
+  getRouter(){
+    return this.router;
+  }
 }
