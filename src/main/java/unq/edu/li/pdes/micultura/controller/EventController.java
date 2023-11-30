@@ -175,7 +175,7 @@ public class EventController {
             value = "/favorite/{accountId}/{eventId}",
             produces = { "application/json" }
     )
-    public EventDTO update(@PathVariable("accountId") Long accountId, @PathVariable("eventId") Long eventId){
-        return service.favorite(accountId, eventId);
+    public EventDTO update(@RequestBody EventVO eventVO, @PathVariable("accountId") Long accountId, @PathVariable("eventId") Long eventId){
+        return service.favorite(eventVO, accountId, eventId);
     }
 }

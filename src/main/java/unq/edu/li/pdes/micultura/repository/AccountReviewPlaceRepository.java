@@ -16,5 +16,4 @@ public interface AccountReviewPlaceRepository  extends JpaRepository<AccountRevi
 
 	@Query("SELECT arp FROM AccountReviewPlace arp WHERE  arp.place.placeId = (:placeId) AND  arp.account.id = (:accountId)")
 	Optional<AccountReviewPlace> findOneByPlaceIdAndAccountId(@Param("placeId") Long placeId, @Param("accountId") Long accountId);
-
 }

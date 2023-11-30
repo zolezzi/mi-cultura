@@ -61,6 +61,24 @@ public class ReviewController {
 		return service.getReviewByPlaceAndAccount(placeId, accountId);
 	}
     
+    @ApiOperation(
+            value = "Service that return a Review",
+            notes = "This service return a Review by the ID",
+            nickname = "getReviewEvent",
+            response = ReviewDTO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The request has succeeded.", response = ReviewDTO.class),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ReviewDTO.class) })
+    @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @GetMapping(
+            value = "/get-review-event/{eventId}/{accountId}",
+            produces = { "application/json" }
+    )
+	public ReviewDTO getReviewEvent(@PathVariable("eventId") Long eventId, @PathVariable("accountId") Long accountId) {
+		return service.getReviewByEventAndAccount(eventId, accountId);
+	}
+    
 	@ApiOperation(
             value = "Service that returns all reviews",
             notes = "This service returns all reviews load",

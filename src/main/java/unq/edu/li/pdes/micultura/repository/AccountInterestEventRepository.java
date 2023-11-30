@@ -18,6 +18,6 @@ public interface AccountInterestEventRepository extends JpaRepository<AccountInt
 	@Query("SELECT aie FROM AccountInterestEvent aie WHERE aie.event.id = (:eventId) AND aie.account.id = (:accountId) ")
 	Optional<AccountInterestEvent> findOneEventIdAndAccountId(@Param("eventId") Long eventId, @Param("accountId") Long accountId);
 	
-	@Query("SELECT aie.event FROM AccountInterestEvent aie WHERE  aie.account.id = (:accountId) ")
-	List<Event> findAllEventsByAccountId(@Param("accountId") Long accountId);
+	@Query("SELECT aie FROM AccountInterestEvent aie WHERE  aie.account.id = (:accountId) ")
+	List<AccountInterestEvent> findAllEventsByAccountId(@Param("accountId") Long accountId);
 }
