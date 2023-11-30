@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import unq.edu.li.pdes.micultura.model.AccountInterestEvent;
-import unq.edu.li.pdes.micultura.model.Event;
 
 public interface AccountInterestEventRepository extends JpaRepository<AccountInterestEvent, Long>{
 
