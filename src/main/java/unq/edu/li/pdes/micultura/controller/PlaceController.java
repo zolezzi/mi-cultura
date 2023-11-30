@@ -44,7 +44,7 @@ public class PlaceController {
     @ApiImplicitParam(name = "Authorization",required = true, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
     @GetMapping(
             value = "/find-by-id/{id}",
-            produces = { "applicati	on/json" }
+            produces = { "application/json" }
     )
 	public PlaceDTO findById(@PathVariable("id") Long id) {
 		return service.findById(id);

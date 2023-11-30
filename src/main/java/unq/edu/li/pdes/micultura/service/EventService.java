@@ -17,7 +17,7 @@ public interface EventService {
 	
 	EventDTO update(ReviewVO review, Long userId, Long eventId);
 	
-	EventDTO favorite(Long accountId, Long eventId);
+	EventDTO favorite(EventVO eventVO, Long accountId, Long eventId);
 	
 	List<EventDTO> findAllByUserId(Long userId);
 	

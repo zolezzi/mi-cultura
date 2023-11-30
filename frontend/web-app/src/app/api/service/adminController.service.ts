@@ -171,7 +171,7 @@ export class AdminControllerService {
 
         let headers = this.defaultHeaders;
         if (authorization !== undefined && authorization !== null) {
-            headers = headers.set('Authorization', String('Bearer ' + authorization));
+            headers = headers.set('Authorization', String(authorization));
         }
 
         // to determine the Accept header

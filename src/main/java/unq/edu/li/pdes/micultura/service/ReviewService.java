@@ -14,5 +14,7 @@ public interface ReviewService {
 	
 	ReviewDTO getReviewByPlaceAndAccount(Long placeId, Long accountId);
 	
+	ReviewDTO getReviewByEventAndAccount(Long eventId, Long accountId);
+	
 	List<AccountReviewDetailsDTO> findAll();
 }

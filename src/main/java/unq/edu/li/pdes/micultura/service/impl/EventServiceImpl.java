@@ -96,10 +96,25 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public EventDTO favorite(Long accountId, Long eventId) {
+	public EventDTO favorite(EventVO eventVO, Long accountId, Long eventId) {
 		var accountDB = accountRepository.findById(accountId).orElseThrow(() -> new MiCulturaException(String.format("No found account:%s", accountId)));
-		var eventDB = getEventById(eventId);
-		var accountInterestEvent = accountInterestEventRepository.findByEventIdAndAccountId(eventDB.getId(), accountDB.getId());
+		var eventOpt = repository.findByEventId(eventId);
+		Event event = null;
+		if(eventOpt.isEmpty()) {
+			var aNewEvent = mapper.map(eventVO, Event.class);
+			event = repository.save(aNewEvent);
+		}else {
+			event = eventOpt.get();
+		}
+		AccountInterestEvent accountInterestEvent = null;
+		var accountInterestEventOpt = accountInterestEventRepository.findOneEventIdAndAccountId(event.getId(), accountDB.getId());
+		if(accountInterestEventOpt.isEmpty()){
+			accountInterestEvent = new AccountInterestEvent();
+			accountInterestEvent.setAccount(accountDB);
+			accountInterestEvent.setEvent(event);
+		}else {
+			accountInterestEvent = accountInterestEventOpt.get();
+		}
 		accountInterestEvent.setIsFavorite(Boolean.TRUE);
 		accountInterestEventRepository.save(accountInterestEvent);
 		var result = mapper.map(accountInterestEvent.getEvent(), EventDTO.class);

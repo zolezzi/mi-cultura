@@ -15,6 +15,7 @@ import unq.edu.li.pdes.micultura.dto.PlaceDTO;
 import unq.edu.li.pdes.micultura.dto.ReviewDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
 import unq.edu.li.pdes.micultura.model.Account;
+import unq.edu.li.pdes.micultura.model.AccountInterestEvent;
 import unq.edu.li.pdes.micultura.model.AccountReviewEvent;
 import unq.edu.li.pdes.micultura.model.AccountReviewPlace;
 import unq.edu.li.pdes.micultura.model.AccountRole;
@@ -318,6 +319,28 @@ public class RegisterMapper {
 				a.setEventTypeDescription(b.getEvent().getEventType().getDescription());
 			}
 
+		}).byDefault().register();
+		
+		mapperFactory.classMap(EventDTO.class, AccountInterestEvent.class).customize(new CustomMapper<EventDTO, AccountInterestEvent>() {
+			@Override
+			public void mapBtoA(AccountInterestEvent b, EventDTO a, MappingContext context) {
+				a.setId(b.getId());
+				a.setBody(b.getEvent().getBody());
+				a.setDependsOn(b.getEvent().getDependsOn());
+				a.setEmail(b.getEvent().getEmail());
+				a.setLink(b.getEvent().getLink());
+				a.setEventId(b.getEvent().getEventId());
+				a.setEventType(b.getEvent().getEventType().toString());
+				a.setEventTypeDescription(b.getEvent().getEventType().getDescription());
+				a.setFromDate(b.getEvent().getFromDate());
+				a.setImage(b.getEvent().getImage());
+				a.setState(b.getEvent().getState());
+				a.setTitle(b.getEvent().getTitle());
+				a.setSubTitle(b.getEvent().getSubTitle());
+				a.setToDate(b.getEvent().getToDate());
+				a.setUrl(b.getEvent().getUrl());
+				a.setIsFavorite(b.getIsFavorite());
+			}
 		}).byDefault().register();
 	}
 }

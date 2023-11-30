@@ -14,6 +14,6 @@ public interface AccountReviewEventRepository extends JpaRepository<AccountRevie
 	@Query("SELECT SUM(review.score) / COUNT(are.id) FROM AccountReviewEvent are inner join are.review as review WHERE are.event.eventId = (:eventId) ")
 	BigDecimal getTotalReviewScore(@Param("eventId") Long eventId);
 
-	@Query("SELECT are FROM AccountReviewEvent arp WHERE are.event.eventId = (:eventId) AND  are.account.id = (:accountId)")
+	@Query("SELECT are FROM AccountReviewEvent are WHERE are.event.eventId = (:eventId) AND  are.account.id = (:accountId)")
 	Optional<AccountReviewEvent> findOneByEventIdAndAccountId(@Param("eventId") Long eventId, @Param("accountId") Long accountId);
 }

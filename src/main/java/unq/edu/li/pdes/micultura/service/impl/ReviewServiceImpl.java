@@ -49,6 +49,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 	@Override
+	public ReviewDTO getReviewByEventAndAccount(Long eventId, Long accountId) {
+		var accountReviewEventOpt = accountReviewEventRepository.findOneByEventIdAndAccountId(eventId, accountId)
+				.orElseThrow(() -> new MiCulturaException(String.format("No found review para la cuenta:%s", accountId)));;
+		return mapper.map(accountReviewEventOpt.getReview(), ReviewDTO.class);
+	}
+	
+	@Override
 	public List<AccountReviewDetailsDTO> findAll(){
 		List<AccountReviewDetailsDTO> results = new ArrayList<>();
 		results.addAll(mapper.mapList(accountReviewPlaceRepository.findAll(), AccountReviewDetailsDTO.class));

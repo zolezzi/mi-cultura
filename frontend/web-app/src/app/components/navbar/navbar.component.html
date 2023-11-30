@@ -1,12 +1,12 @@
 <nav class="mask">
-  <a class="logo">
+  <a class="logo" (click)="goToWelcome()">
     <img src=".\assets\images\logo.png" alt="">
   </a>
   <ul class="list">
     <li *ngIf="isLoggedIn && !isAdmin"><a routerLink="/login">Favoritos</a></li>
     <li *ngIf="isLoggedIn && isAdmin"><a routerLink="/login">Usuarios</a></li>
     <li><a routerLink="/places">Lugares</a></li>
-    <li><a routerLink="/login">Eventos</a></li>
+    <li><a routerLink="/events">Eventos</a></li>
     <li><a href="#">Novedades</a></li>
     <li><a href="#">Contacto</a></li>
   </ul>
