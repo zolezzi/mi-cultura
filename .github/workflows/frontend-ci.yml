@@ -1,0 +1,42 @@
+name: Micultura Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js v18.15.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.15.0
+    - name: Set up working directory
+      run: cd frontend/web-app/
+
+    - name: Install Angular CLI and npm v9.6.2
+      run: |
+        npm install -g @angular/cli@latest
+        npm install -g npm@9.6.2
+
+    - name: Install dependencies
+      run: |
+        cd frontend/web-app
+        npm install --no-audit --no-fund --no-optional
+
+    - name: Build and Test
+      run: |
+        cd frontend/web-app
+        npm run build
+    - name: Test
+      run: |
+        cd frontend/web-app
+        npm test
