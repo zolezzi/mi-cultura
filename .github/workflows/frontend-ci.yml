@@ -29,9 +29,15 @@ jobs:
         npm install -g npm@9.6.2
 
     - name: Install dependencies
-      run: npm install --no-audit --no-fund --no-optional
+      run: |
+        cd frontend/web-app
+        npm install --no-audit --no-fund --no-optional
 
     - name: Build and Test
-      run: npm run build
+      run: |
+        cd frontend/web-app
+        npm run build
     - name: Test
-      run: npm test
+      run: |
+        cd frontend/web-app
+        npm test
