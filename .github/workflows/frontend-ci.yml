@@ -20,6 +20,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18.15.0
+    - name: Set up working directory
+      run: cd frontend/webapp/
 
     - name: Install Angular CLI and npm v9.6.2
       run: |
