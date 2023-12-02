@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: 18.15.0
     - name: Set up working directory
-      run: ls -l frontend/webapp/
+      run: cd frontend/web-app/
 
     - name: Install Angular CLI and npm v9.6.2
       run: |
