@@ -40,4 +40,4 @@ jobs:
     - name: Test
       run: |
         cd frontend/web-app
-        npm test --watch=false --browsers=ChromeHeadless
+        npm test
