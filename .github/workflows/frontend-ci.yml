@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd frontend/web-app
-        npm install --no-audit --no-fund --no-optional
+        npm ci
 
     - name: Build and Test
       run: |

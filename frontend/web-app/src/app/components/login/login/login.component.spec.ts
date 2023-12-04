@@ -48,15 +48,20 @@ describe('LoginComponent', () => {
   });
 
   it('should create', () => {
+    // @ts-ignore
     expect(component).toBeTruthy();
   });
 
   it('should create the login form with required fields', () => {
+    // @ts-ignore
     expect(component.loginForm).toBeDefined();
+    // @ts-ignore
     expect(component.loginForm.controls['email']).toBeDefined();
+    // @ts-ignore
     expect(component.loginForm.controls['password']).toBeDefined();
-  
+    // @ts-ignore 
     expect(component.loginForm.controls['email'].valid).toBeFalsy();
+    // @ts-ignore
     expect(component.loginForm.controls['password'].valid).toBeFalsy();
   });
 
@@ -66,13 +71,15 @@ describe('LoginComponent', () => {
   
     emailControl.setValue('');
     passwordControl.setValue('');
-  
+    // @ts-ignore
     expect(emailControl.valid).toBeFalsy();
+    // @ts-ignore
     expect(passwordControl.valid).toBeFalsy();
   });
 
   it('should set submitted to true when the form is invalid', () => {
     component.onSubmit({ email: '', password: '' });
+    // @ts-ignore
     expect(component.submitted).toBeTruthy();
   });
 
@@ -82,8 +89,9 @@ describe('LoginComponent', () => {
     const formValues = { email: 'test@example.com', password: 'password123' };
     component.loginForm.setValue({ email: 'test@example.com', password: 'password123' });
     component.onSubmit(formValues);
-
+    // @ts-ignore
     expect(userService.login).toHaveBeenCalledWith(jasmine.objectContaining<UserLoginVO>({ email: formValues.email, password: formValues.password }));
+    // @ts-ignore
     expect(localStorageService.store).not.toHaveBeenCalled();
   });
 
