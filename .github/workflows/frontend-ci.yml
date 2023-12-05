@@ -2,97 +2,96 @@ name: Micultura Frontend CI
 
 on:
   push:
-    branches: [ main, development, development_feature-23 ]
+    branches: [main, development, development_feature-23]
   pull_request:
-    branches: [ main, development ]
+    branches: [main, development]
     types: [opened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js v18.15.0
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.15.0
-    - name: Set up working directory
-      run: cd frontend/web-app/
+      - uses: actions/checkout@v2
+      - name: Use Node.js v18.15.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+      - name: Set up working directory
+        run: cd frontend/web-app/
 
-    - name: Install Angular CLI and npm v9.6.2
-      run: |
-        npm install -g @angular/cli@latest
-        npm install -g npm@9.6.2
+      - name: Install Angular CLI and npm v9.6.2
+        run: |
+          npm install -g @angular/cli@latest
+          npm install -g npm@9.6.2
 
-    - name: Install dependencies
-      run: |
-        cd frontend/web-app
-        npm ci  
+      - name: Install dependencies
+        run: |
+          cd frontend/web-app
+          npm ci
 
-    - name: Build and Test
-      run: |
-        cd frontend/web-app
-        npm run build
-    - uses: actions/upload-artifact@v2
-      with:
-        name: frontend/web-app/dist
-        path: frontend/web-app/dist
+      - name: Build and Test
+        run: |
+          cd frontend/web-app
+          npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: frontend/web-app/dist
+          path: frontend/web-app/dist
 
   test:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js v18.15.0
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.15.0
-    - name: Set up working directory
-      run: cd frontend/web-app/
-    - name: Install Angular CLI and npm v9.6.2
-      run: |
-        npm install -g @angular/cli@latest
-        npm install -g npm@9.6.2
-    - name: Install dependencies
-      run: |
-        cd frontend/web-app
-        npm ci  
-    - uses: actions/download-artifact@v2
-      with:
-        name: frontend/web-app/dist
-        path: frontend/web-app/dist
-    - name: Test
-      run: |
-        cd frontend/web-app
-        npm test
+      - uses: actions/checkout@v2
+      - name: Use Node.js v18.15.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+      - name: Set up working directory
+        run: cd frontend/web-app/
+      - name: Install Angular CLI and npm v9.6.2
+        run: |
+          npm install -g @angular/cli@latest
+          npm install -g npm@9.6.2
+      - name: Install dependencies
+        run: |
+          cd frontend/web-app
+          npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend/web-app/dist
+          path: frontend/web-app/dist
+      - name: Test
+        run: |
+          cd frontend/web-app
+          npm test
 
   e2e:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js v18.15.0
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.15.0
-    - name: Set up working directory
-      run: cd frontend/web-app/
-     - name: Install Angular CLI and npm v9.6.2
-      run: |
-        npm install -g @angular/cli@latest
-        npm install -g npm@9.6.2
-    - name: Install dependencies
-      run: |
-        cd frontend/web-app
-        npm ci  
-    - uses: actions/download-artifact@v2
-      with:
-        name: frontend/web-app/dist
-        path: frontend/web-app/dist
-    - name: E2E tests
-      uses: cypress-io/github-action@v2
-      with:
-        command: npm run test:e2e
-        start: npm run start-test
-        wait-on: http://localhost:4200
-      
+      - uses: actions/checkout@v2
+      - name: Use Node.js v18.15.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+      - name: Set up working directory
+        run: cd frontend/web-app/
+      - name: Install Angular CLI and npm v9.6.2
+        run: |
+          npm install -g @angular/cli@latest
+          npm install -g npm@9.6.2
+      - name: Install dependencies
+        run: |
+          cd frontend/web-app
+          npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend/web-app/dist
+          path: frontend/web-app/dist
+      - name: E2E tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:e2e
+          start: npm run start-test
+          wait-on: http://localhost:4200
