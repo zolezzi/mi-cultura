@@ -35,7 +35,7 @@ jobs:
           npm run build
       - uses: actions/upload-artifact@v2
         with:
-          name: frontend/web-app/dist
+          name: dist
           path: frontend/web-app/dist
 
   test:
@@ -87,7 +87,7 @@ jobs:
           npm ci
       - uses: actions/download-artifact@v2
         with:
-          name: frontend/web-app/dist
+          name: dist
           path: frontend/web-app/dist
       - name: E2E tests
         uses: cypress-io/github-action@v2
