@@ -4,7 +4,7 @@ services:
   micultura-frontend:
     container_name: micultura-frontend_container
     image: micultura-frontend:latest
-    build: ../frontend/web-app/
+    build: ./frontend/web-app/
     ports:
       - 4200:4200
     depends_on:
@@ -22,7 +22,7 @@ services:
       - DATABASE_USER=mi_cultura
       - DATABASE_PASSWORD=micultura123
     volumes:
-      - ../src/main/resources:/app/config
+      - ./src/main/resources:/app/config
     depends_on:
       - mariadb
   mariadb:
@@ -35,5 +35,5 @@ services:
     - MYSQL_ROOT_PASSWORD=mariadb123
     - TZ=America/Argentina/Buenos_Aires
     volumes:
-    - ./mariadb/data/my.cnf:/etc/mysql/my.cnf
-    - ./mariadb/data/config:/var/lib/mysql
+    - ./mi-cultura-docker/mariadb/data/my.cnf:/etc/mysql/my.cnf
+    - ./mi-cultura-docker/mariadb/data/config:/var/lib/mysql
