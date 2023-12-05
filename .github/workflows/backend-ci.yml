@@ -1,4 +1,4 @@
-name: Micultura
+name: Micultura Backend CI
 on:
   push:
     branches: [ main, development ]
