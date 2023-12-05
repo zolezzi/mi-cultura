@@ -7,6 +7,5 @@ describe('Página de inicio', () => {
 
   it('debería mostrar el Complejo Histórico Cultural Manzana de las Luces', () => {
     cy.contains("Complejo Histórico Cultural Manzana de las Luces").should('exist');
-    // Agrega aquí más comandos de Cypress para verificar otros aspectos si es necesario
   })
 })
