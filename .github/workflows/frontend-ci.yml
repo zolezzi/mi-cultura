@@ -37,7 +37,7 @@ jobs:
       with:
         name: frontend/web-app/dist
         path: frontend/web-app/dist
-  
+
   test:
     needs: [build]
     runs-on: ubuntu-latest
