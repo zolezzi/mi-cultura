@@ -92,6 +92,5 @@ jobs:
       - name: E2E tests
         working-directory: frontend/web-app
         run: |
-          npm install cypress
           npm run start-test &
           npx wait-on http://localhost:4200 && npm run test:e2e
