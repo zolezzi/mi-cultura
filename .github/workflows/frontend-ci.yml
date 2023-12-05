@@ -91,8 +91,7 @@ jobs:
           path: frontend/web-app/dist
       - name: E2E tests
         working-directory: frontend/web-app
-        uses: cypress-io/github-action@v2
-        with:
-          command: npm run test:e2e
-          start: npm run start-test
-          wait-on: http://localhost:4200
+        run: |
+          npm install cypress
+          npm run start-test &
+          npx wait-on http://localhost:4200 && npm run test:e2e
