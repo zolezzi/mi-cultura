@@ -59,7 +59,7 @@ jobs:
           npm ci
       - uses: actions/download-artifact@v2
         with:
-          name: frontend/web-app/dist
+          name: dist
           path: frontend/web-app/dist
       - name: Test
         run: |
@@ -90,6 +90,7 @@ jobs:
           name: dist
           path: frontend/web-app/dist
       - name: E2E tests
+        working-directory: frontend/web-app
         uses: cypress-io/github-action@v2
         with:
           command: npm run test:e2e
