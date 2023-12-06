@@ -37,3 +37,4 @@ services:
     volumes:
     - ./mi-cultura-docker/mariadb/data/my.cnf:/etc/mysql/my.cnf
     - ./mi-cultura-docker/mariadb/data/config:/var/lib/mysql
+    - /mi-cultura-docker/mariadb/scripts.sql:/docker-entrypoint-initdb.d
