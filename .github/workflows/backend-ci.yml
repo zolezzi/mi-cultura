@@ -92,6 +92,7 @@ jobs:
           path: build
       - name: Start the application
         run: |
+          cd build/libs
           java -jar micultura.jar
           sleep 40
       - name: Install k6
