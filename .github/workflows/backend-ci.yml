@@ -97,14 +97,6 @@ jobs:
         with:
           name: build-micultura
           path: build
-      - name: Install k6
-        run: |
-          sudo apt-get update
-          sudo apt-get install ca-certificates gnupg -y
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt-get install k6
       - name: Run Load Tests
         run: |
           docker pull micultura-testing-ci-app:latest
@@ -114,7 +106,8 @@ jobs:
       - name: Run k6 load test
         run: |
           cd load-testing
-          k6 run load_testing.js
+          docker pull loadimpact/k6
+          docker run -i loadimpact/k6 run - < load_testing.js
       - name: Clean Up
         run: |
           docker rmi micultura-testing-ci-app:latest
