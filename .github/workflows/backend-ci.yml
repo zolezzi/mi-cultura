@@ -99,7 +99,7 @@ jobs:
           sudo rm -f /usr/local/bin/k6
       - name: Install k6
         run: |
-          curl -o k6-v0.47.0-linux-amd64.tar.gz https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz
+          wget https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -O k6-v0.47.0-linux-amd64.tar.gz
       - name: Check if file exists
         run: |
           if [ -f "k6-v0.47.0-linux-amd64.tar.gz" ]; then
