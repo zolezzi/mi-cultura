@@ -83,25 +83,20 @@ jobs:
   test_load:
     needs: [build]
     runs-on: ubuntu-latest
+    services:
+      app:
+        image: charliezolezzi/micultura-app:latest
+        ports:
+          - 8080:8080
     steps:
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Checkout code
         uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
-        with:
-          name: build-micultura
-          path: build
-      - name: Run Load Tests
-        run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker pull charliezolezzi/micultura-testing-ci-app:latest
-          docker run -d -p 8080:8080 --rm charliezolezzi/micultura-testing-ci-app:latest
       - name: Wait for the application to stand up
-        run: sleep 40s
+        run: sleep 20s
       - name: Run k6 load test
         run: |
           cd load-testing
           docker pull loadimpact/k6
           docker run -i loadimpact/k6 run - < load_testing.js
-      - name: Clean Up
-        run: |
-          docker rmi charliezolezzi/micultura-testing-ci-app:latest
