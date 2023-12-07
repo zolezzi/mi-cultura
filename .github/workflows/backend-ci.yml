@@ -104,4 +104,4 @@ jobs:
           docker run -i loadimpact/k6 run - < load_testing.js
       - name: Clean Up
         run: |
-          docker rmi micultura-testing-ci-app:latest
+          docker rmi charliezolezzi/micultura-testing-ci-app:latest
