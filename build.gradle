@@ -70,14 +70,10 @@ task unpack(type: Copy) {
     into("build/dependency")
 }
 
-ext {
-    dockerImageName = project.hasProperty('env') && env == 'testing-ci' ? 'micultura-testing-ci-app:latest' : 'micultura-prod-app:latest'
-}
-
 docker {
-    println "Docker Result -> $dockerImageName"
-    name dockerImageName
-    tag 'MiCultura', dockerImageName
+    println "Docker Result -> micultura-app:latest"
+    name "micultura-app:latest"
+    tag "MiCultura", "micultura-app:latest"
     dockerfile file("./Dockerfile")
     copySpec.from(tasks.unpack.outputs).into("dependency")
     buildArgs(['DEPENDENCY': "dependency"])
