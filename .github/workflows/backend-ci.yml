@@ -134,11 +134,14 @@ jobs:
         run: |
           CONTAINER_ID=$(docker ps -qf "name=micultura_container")
           echo "El ID del contenedor es: $CONTAINER_ID"
+      - name: Wait download file k6
+        run: sleep 60s
       - name: Run k6 load test
         run: |
           cd load-testing
           k6 run load_testing.js
       - name: Ver logs del contenedor
         run: |
-          CONTAINER_ID=$(docker-compose ps -q | head -n 1)
-          docker-compose logs $CONTAINER_ID
+          CONTAINER_ID=$(docker ps -qf "ancestor=charliezolezzi/micultura-testing-ci-app:latest" | head -n 1)
+          echo "El ID del contenedor es: $CONTAINER_ID"
+          docker logs $CONTAINER_ID
