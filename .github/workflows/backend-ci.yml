@@ -85,6 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       app:
+        container_name: micultura_app_container
         image: charliezolezzi/micultura-testing-ci-app:latest
         ports:
           - 8080:8080
@@ -125,16 +126,19 @@ jobs:
            fi
       - name: Ver contenedores Docker
         run: docker ps -a
+      - name: Ver logs del contenedor
+        run: |
+          CONTAINER_ID=$(docker-compose ps -q backend | head -n 1)
+          docker-compose logs $CONTAINER_ID
       - name: Obtener ID del contenedor
         run: |
           CONTAINER_ID=$(docker ps -qf "name=micultura_container")
           echo "El ID del contenedor es: $CONTAINER_ID"
-      - name: Ver logs del contenedor
-        run: docker logs $CONTAINER_ID
       - name: Run k6 load test
         run: |
           cd load-testing
           k6 run load_testing.js
-          
+      - name: Ver logs del servicio
+        run: docker-compose logs micultura_app_container
       - name: Ver logs del contenedor
-        run: docker logs micultura_container
+        run: docker logs micultura_app_container
