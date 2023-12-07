@@ -123,9 +123,12 @@ jobs:
            else
             echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
            fi
+      - name: Ver contenedores Docker
+        run: docker ps -a
       - name: Run k6 load test
         run: |
           cd load-testing
           k6 run load_testing.js
+          
       - name: Ver logs del contenedor
         run: docker logs micultura_container
