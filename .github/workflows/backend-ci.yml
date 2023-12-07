@@ -127,3 +127,5 @@ jobs:
         run: |
           cd load-testing
           k6 run load_testing.js
+      - name: Ver logs del contenedor
+        run: docker logs micultura_container
