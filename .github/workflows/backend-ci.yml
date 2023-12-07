@@ -100,29 +100,13 @@ jobs:
       - name: Install k6
         run: |
           wget https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -O k6-v0.47.0-linux-amd64.tar.gz
-      - name: Check if file exists
-        run: |
-          if [ -f "k6-v0.47.0-linux-amd64.tar.gz" ]; then
-            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz se ha descargado correctamente."
-          else
-            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
-          fi
       - name: Verificar la descarga del archivo
         run: |
-          if [ -f "k6-v0.47.0-linux-amd64.tar.gz" ]; then
-            if [ $(wc -c < k6-v0.47.0-linux-amd64.tar.gz) -gt 0 ]; then
-                echo "El archivo k6-v0.47.0-linux-amd64.tar.gz se ha descargado correctamente."
-                tar xvzf k6-v0.47.0-linux-amd64.tar.gz
-                cd k6-v0.47.0-linux-amd64
-                ls -l
-                chmod +x k6
-                mv k6 /usr/local/bin/k6
-            else
-            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado completamente."
-            fi
-           else
-            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
-           fi
+          echo "El archivo k6-v0.47.0-linux-amd64.tar.gz se ha descargado correctamente."
+          tar xvzf k6-v0.47.0-linux-amd64.tar.gz
+          cd k6-v0.47.0-linux-amd64
+          chmod +x k6
+          mv k6 /usr/local/bin/k6
       - name: Ver contenedores Docker
         run: docker ps -a
       - name: Run k6 load test
