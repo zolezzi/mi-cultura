@@ -109,6 +109,22 @@ jobs:
           fi
       - name: Wait download file k6
         run: sleep 20s
+      - name: Verificar la descarga del archivo
+        run: |
+          if [ -f "k6-v0.47.0-linux-amd64.tar.gz" ]; then
+            if [ $(wc -c < k6-v0.47.0-linux-amd64.tar.gz) -gt 0 ]; then
+                echo "El archivo k6-v0.47.0-linux-amd64.tar.gz se ha descargado correctamente."
+                tar xvzf k6-v0.47.0-linux-amd64.tar.gz
+                chmod +x k6
+                mv k6 /usr/local/bin/k6
+            else
+            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado completamente."
+            fi
+           else
+            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
+           fi
+      - name: Descomprimir el archivo usando unzip
+        run: unzip k6-v0.47.0-linux-amd64.zip
       - name: TAR
         run: |
           tar xvzf k6-v0.47.0-linux-amd64.tar.gz
