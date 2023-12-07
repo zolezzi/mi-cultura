@@ -95,7 +95,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Install k6
         run: |
-          curl https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1
+          curl -o k6-v0.47.0-linux-amd64.tar.gz https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz
+      - name: Check if file exists
+        run: |
+          if [ -f "k6-v0.47.0-linux-amd64.tar.gz" ]; then
+            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz se ha descargado correctamente."
+          else
+            echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
+          fi
+      - name: TAR
+        run: |
           tar xvzf k6-v0.47.0-linux-amd64.tar.gz
           chmod +x k6
           sudo mv k6 /usr/local/bin/k6
