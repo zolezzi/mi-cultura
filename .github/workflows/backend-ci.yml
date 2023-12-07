@@ -127,8 +127,9 @@ jobs:
         run: docker ps -a
       - name: Ver logs del contenedor
         run: |
-          CONTAINER_ID=$(docker-compose ps -q | head -n 1)
-          docker-compose logs $CONTAINER_ID
+          CONTAINER_ID=$(docker ps -qf "ancestor=charliezolezzi/micultura-testing-ci-app:latest" | head -n 1)
+          echo "El ID del contenedor es: $CONTAINER_ID"
+          docker logs $CONTAINER_ID
       - name: Obtener ID del contenedor
         run: |
           CONTAINER_ID=$(docker ps -qf "name=micultura_container")
