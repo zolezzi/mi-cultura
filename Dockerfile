@@ -15,4 +15,4 @@ ENV TZ=America/Argentina/Buenos_Aires
 WORKDIR /app
 
 # Esperar a que la base de datos esté disponible y luego iniciar la aplicación
-CMD /app/wait-for-it.sh mariadb:3306 -t 20 && java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication
+CMD /app/wait-for-it.sh mariadb:3306 && java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication
