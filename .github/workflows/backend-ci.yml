@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       app:
-        image: charliezolezzi/micultura-app:latest
+        image: charliezolezzi/micultura-testing-ci-app:latest
         ports:
           - 8080:8080
     steps:
