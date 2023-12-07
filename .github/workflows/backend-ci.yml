@@ -83,6 +83,11 @@ jobs:
   test_load:
     needs: [build]
     runs-on: ubuntu-latest
+    services:
+      app:
+        image: charliezolezzi/micultura-testing-ci-app:latest
+        ports:
+          - 8080:8080
     steps:
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
@@ -92,10 +97,6 @@ jobs:
         run: |
           rm -f k6-v0.47.0-linux-amd64.tar.gz
           sudo rm -f /usr/local/bin/k6
-      - name: Run Load Tests
-        run: |
-          docker pull charliezolezzi/micultura-testing-ci-app:latest
-          docker run -d -p 8080:8080 --rm charliezolezzi/micultura-testing-ci-app:latest
       - name: Install k6
         run: |
           wget https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -O k6-v0.47.0-linux-amd64.tar.gz
@@ -124,22 +125,7 @@ jobs:
            fi
       - name: Ver contenedores Docker
         run: docker ps -a
-      - name: Ver logs del contenedor
-        run: |
-          CONTAINER_ID=$(docker ps -qf "ancestor=charliezolezzi/micultura-testing-ci-app:latest" | head -n 1)
-          echo "El ID del contenedor es: $CONTAINER_ID"
-          docker logs $CONTAINER_ID
-      - name: Wait download file k6
-        run: sleep 60s
       - name: Run k6 load test
         run: |
           cd load-testing
           k6 run load_testing.js
-      - name: Ver logs del contenedor
-        run: |
-          CONTAINER_ID=$(docker ps -qf "ancestor=charliezolezzi/micultura-testing-ci-app:latest" | head -n 1)
-          echo "El ID del contenedor es: $CONTAINER_ID"
-          docker logs $CONTAINER_ID
-      - name: Clean Up
-        run: |
-          docker rmi charliezolezzi/micultura-testing-ci-app:latest
