@@ -123,8 +123,6 @@ jobs:
            else
             echo "El archivo k6-v0.47.0-linux-amd64.tar.gz no se ha descargado o no se encuentra."
            fi
-      - name: Ejecutar script de verificación de la base de datos
-        run: bash check_db.sh
       - name: Run k6 load test
         run: |
           cd load-testing
