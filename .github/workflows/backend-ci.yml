@@ -125,6 +125,12 @@ jobs:
            fi
       - name: Ver contenedores Docker
         run: docker ps -a
+      - name: Obtener ID del contenedor
+        run: |
+          CONTAINER_ID=$(docker ps -qf "name=micultura_container")
+          echo "El ID del contenedor es: $CONTAINER_ID"
+      - name: Ver logs del contenedor
+        run: docker logs $CONTAINER_ID
       - name: Run k6 load test
         run: |
           cd load-testing
