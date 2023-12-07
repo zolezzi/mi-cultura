@@ -93,10 +93,15 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install k6
+        run: |
+          curl https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1
+          tar xvzf k6-v0.47.0-linux-amd64.tar.gz
+          chmod +x k6
+          sudo mv k6 /usr/local/bin/k6
       - name: Wait for the application to stand up
         run: sleep 20s
       - name: Run k6 load test
         run: |
           cd load-testing
-          docker pull loadimpact/k6
-          docker run -i loadimpact/k6 run - < load_testing.js
+          k6 run load_testing.js
