@@ -99,9 +99,9 @@ jobs:
           path: build
       - name: Install k6
         run: |
-          curl -O https://k6.io/install.sh
-          chmod +x install.sh
-          ./install.sh
+          curl -o k6install.sh https://dl.k6.io/v0.47.0/k6-install.sh
+          chmod +x k6install.sh
+          ./k6install.sh
       - name: Run Load Tests
         run: |
           docker pull micultura-testing-ci-app:latest
