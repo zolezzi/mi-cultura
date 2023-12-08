@@ -1,5 +1,8 @@
+drop table if exists flyway_schema_history;
 drop table if exists account_review_place;
 drop table if exists account_interest_place;
+drop table if exists account_review_event;
+drop table if exists account_interest_event;
 drop table if exists user;
 drop table if exists review;
 drop table if exists account;

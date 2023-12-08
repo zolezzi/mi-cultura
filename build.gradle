@@ -47,27 +47,13 @@ task buildClient(type:NpmTask, dependsOn:'npmInstall') {
   args = ['run','build.prod']
 }
 
-if (hasProperty('profile') && ext.profile == 'container')  {
-
-	bootJar {
+bootJar {
 	    dependsOn "buildClient"
 	    archiveFileName = "micultura.jar"
 	    version="1.0.0"
 	    into('BOOT-INF/classes/static') {
 		    from "frontend/web-app/dist"
 	    }    
-	}
-}
-else {
-	bootJar {
-	    dependsOn "buildClient"
-	    archiveFileName = "micultura.jar"
-	    version="1.0.0"
-	    launchScript();
-	    into('BOOT-INF/classes/static') {
-		    from "frontend/web-app/dist"
-	    }
-	}
 }
 
 node {
@@ -84,11 +70,15 @@ task unpack(type: Copy) {
     into("build/dependency")
 }
 
+ext {
+    dockerImageName = project.hasProperty('env') && env == 'testing-ci' ? 'micultura-testing-ci-app:latest' : 'micultura-prod-app:latest'
+}
+
 docker {
-    println "Docker Result -> micultura-app:latest"
-    name "micultura-app:latest"
-    tag "MiCultura", "micultura-app:latest"
-    dockerfile file("mi-cultura-docker/Dockerfile")
+    println "Docker Result -> $dockerImageName"
+    name dockerImageName
+    tag 'MiCultura', dockerImageName
+    dockerfile file("./Dockerfile")
     copySpec.from(tasks.unpack.outputs).into("dependency")
     buildArgs(['DEPENDENCY': "dependency"])
 }
