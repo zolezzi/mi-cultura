@@ -1,19 +1,97 @@
+buildscript {
+  ext {
+        springBootVersion = '2.7.2'
+        springDependencyManagementVersion = '1.0.15.RELEASE'
+  }
+  repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        
+        maven 
+        {
+            url "https://plugins.gradle.org/m2/"
+        }
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "com.palantir.git-version" version "0.12.0-rc2"
+	id "com.github.node-gradle.node" version "3.0.1"
+	id "com.palantir.docker" version "0.35.0"
+	id 'jacoco'
 }
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.git-version'
+apply plugin: 'org.springframework.boot'
 
 group = 'unq.edu.li.pdes'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+targetCompatibility = 11
 
-java {
-	sourceCompatibility = '11'
+task buildClient(type:NpmTask, dependsOn:'npmInstall') {
+  group = 'build'
+  description = "Compile client side folder for production"
+  args = ['run','build.prod']
 }
+
+bootJar {
+	    dependsOn "buildClient"
+	    archiveFileName = "micultura.jar"
+	    version="1.0.0"
+	    into('BOOT-INF/classes/static') {
+		    from "frontend/web-app/dist"
+	    }    
+}
+
+node {
+    version = "18.15.0"
+	download = true
+	nodeModulesDir = file("frontend/web-app")
+	nodeProjectDir = file("frontend/web-app")
+	npmVersion= "9.6.2"
+}
+
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/dependency")
+}
+
+ext {
+    dockerImageName = project.hasProperty('env') && env == 'testing-ci' ? 'micultura-testing-ci-app:latest' : 'micultura-prod-app:latest'
+}
+
+docker {
+    println "Docker Result -> $dockerImageName"
+    name dockerImageName
+    tag 'MiCultura', dockerImageName
+    dockerfile file("./Dockerfile")
+    copySpec.from(tasks.unpack.outputs).into("dependency")
+    buildArgs(['DEPENDENCY': "dependency"])
+}
+
+jar.dependsOn(buildClient)
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
 	}
 }
 
@@ -47,10 +125,42 @@ dependencies {
 	testImplementation 'org.mockito:mockito-core:5.0.0'
 	testCompileOnly 'junit:junit:4.12' 
 	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.1'
+	testImplementation 'com.h2database:h2:1.4.200'
 	implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.13.3'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+}
+
+jacoco {
+	toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+	reports {
+		csv.required.set(true)
+		xml.required.set(true)
+		xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+		csv.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.csv")
+    }
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+				exclude: ['**/utils/**',
+					'**/dto/**',
+					'**/vo/**',
+					'**/mapper/**',
+					'**/security/**',
+					'**/configuration/**'
+				]
+			)
+		}))
+	}
+	dependsOn test
+}
+
+test {
+	finalizedBy jacocoTestReport
 }
 
 tasks.named('test') {

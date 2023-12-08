@@ -24,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import lombok.AllArgsConstructor;
 import unq.edu.li.pdes.micultura.model.User;
 import unq.edu.li.pdes.micultura.repository.UserRepository;
+import unq.edu.li.pdes.micultura.security.CustomAccessDeniedHandler;
 import unq.edu.li.pdes.micultura.security.JWTAuthorizationFilter;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -40,6 +41,8 @@ public class WebSecurityConfig {
     	 http.csrf().disable();
          http.cors().configurationSource(corsConfigurationSource());
          return http
+        		 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                 .and()
                  .authorizeRequests()
                  .antMatchers("/create", "/login").permitAll()
                  .anyRequest()
@@ -82,7 +85,7 @@ public class WebSecurityConfig {
         configuration.setAllowCredentials(Boolean.TRUE);
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers","Authorization"));
+        configuration.setAllowedHeaders(Arrays.asList("Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"));
         configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));  
         configuration.setMaxAge(Duration.ZERO);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

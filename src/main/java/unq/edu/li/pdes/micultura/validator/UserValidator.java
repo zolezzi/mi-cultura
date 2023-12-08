@@ -21,12 +21,10 @@ public class UserValidator {
             erros.add("Error password must have at least one number");
             isValid = Boolean.FALSE;
         }
-
         if (!validateEmail(user.getEmail())) {
             erros.add("Error email invalid");
             isValid = Boolean.FALSE;
         }
-
         return isValid;
     }
 

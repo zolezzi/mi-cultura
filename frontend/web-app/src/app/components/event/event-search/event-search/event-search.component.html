@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="title">
+        <h1>Eventos</h1>
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="events.length > 0" class="card-container" >
+        <mat-card *ngFor="let event of events | slice:
+        (paginator.pageIndex*paginator.pageSize):
+        ((paginator.pageIndex+1)*paginator.pageSize)" class="example-card">
+            <img *ngIf="'ANNOUNCEMENT' == event.eventType" mat-card-image src="https://www.ayto-valdetorresdejarama.es/media/35022/onz74m0.jpg?anchor=center&mode=crop&width=750&height=332&rnd=132049163550000000" alt="">
+            <img *ngIf="'PROCEDURE' == event.eventType" mat-card-image src="https://img.freepik.com/vector-premium/tramites-servicios-notariales_24911-69491.jpg?w=360" alt="">
+            <span *ngIf="'ANNOUNCEMENT' == event.eventType" class="tag tag-brown">Convocatoria</span>
+            <span *ngIf="'PROCEDURE' == event.eventType" class="tag tag-blue">Trámite</span>
+            <mat-card-content>
+                <h4>{{event.title}}</h4>
+                <div>
+                    <p>Fecha de inicio: {{event.fromDate}} y terminá el {{event.toDate}} </p>
+                    <p>Estado: {{event.state}}</p>
+                </div>
+            </mat-card-content>
+            <div class="flex-fill"></div>
+            <mat-card-actions>
+                <button mat-button (click)="view(event)">VER MÁS</button>
+                <button *ngIf="!isAdmin && isLoggedIn && !event.isFavorite" mat-icon-button color="" aria-label="Example icon button with a heart icon" (click)="favorite(event)">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button *ngIf="isLoggedIn && event.isFavorite" mat-icon-button color="warn" aria-label="Example icon button with a heart icon" (click)="delete(event)">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+<mat-paginator  #paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" 
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="onPageChange($event)">
+</mat-paginator>
+
+
+
+

@@ -38,9 +38,6 @@ public class Account {
 	@Column(name="phone_number")
     private String phoneNumber;
 	
-	@Column(name="image_path")
-	private String imagePath;
-	
 	@Enumerated(EnumType.STRING)
 	private AccountRole accountRole;
 }

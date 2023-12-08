@@ -1,0 +1,15 @@
+<div class="container">
+    <div mat-dialog-title>
+      <h4>{{ title }}</h4>
+    </div>
+  
+    <div mat-dialog-content class="content">
+      <p style="font-size: 16px; color: black; font-weight: bold">
+        {{ message }}
+      </p>
+    </div>
+    <div mat-dialog-actions style="display: flex; justify-content: center">
+        <button mat-stroked-button color="primary" (click)="onNoClick()">Cancelar</button>
+        <button mat-stroked-button color="accent" type="submit" [mat-dialog-close]="btn" cdkFocusInitial>Aceptar</button>
+    </div>
+  </div>

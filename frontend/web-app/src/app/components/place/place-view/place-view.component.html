@@ -1,0 +1,166 @@
+<button class="btn btn-primary" style="width: 50px" routerLink="/places">
+    <i class="fa-solid fa-backward" style="color: black"></i>
+</button>
+<div class="container">
+    <div class="container-form">
+        <div class="place-box-title">
+            <h2>LUGAR</h2>
+            <div class="health-favorite">
+                <button *ngIf="!isAdmin && isLoggedIn && !place.isFavorite" (click)="isFavourite()" mat-icon-button color="" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button *ngIf="isLoggedIn && place.isFavorite" (click)="removeFavourite()" mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Dirección</mat-label>
+                    <input [(ngModel)]="place.address" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Provincia</mat-label>
+                    <input [(ngModel)]="place.province" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input [(ngModel)]="place.phoneNumber"  matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Email</mat-label>
+                    <input [(ngModel)]="place.email" matInput readonly>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Nombre</mat-label>
+                    <input [(ngModel)]="place.name" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Link</mat-label>
+                    <input [(ngModel)]="place.link" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>URL</mat-label>
+                    <input  [(ngModel)]="place.url" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Pertenece al Ministerio</mat-label>
+                    <input [(ngModel)]="place.dependsOn" matInput readonly>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="container-form-2">
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Tipo de lugar</mat-label>
+                    <input [(ngModel)]="place.placeTypeDescription" matInput readonly>
+                  </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Nombre Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.name" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Email Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.email" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
+                </mat-form-field>
+            </div>
+            <div class="place-box">
+                <mat-form-field class="mat-field-full-width">
+                    <mat-label>Cargo Autoridad</mat-label>
+                    <input *ngIf="authority != undefined" [(ngModel)]="authority.position" matInput readonly>
+                    <input *ngIf="authority == undefined" [(ngModel)]="VALUE_NULL" matInput readonly>
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <h2>DESCRIPCIÓN</h2>
+            <div [innerHTML]="place.description | sanitizeHtml"></div>
+        </div>
+    </div>
+    <div class="container-form-review">
+        <h2>CALIFICACIÓN</h2>
+        <div>
+            <bar-rating class="star-total-font" [readOnly]="true" [theme]="'stars'" [rate]="totalRate" [max]="5">
+                <fa-icon
+                *ratingInactive
+                [icon]="['far', 'star']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+              <fa-icon
+                *ratingActive
+                [icon]="['fas', 'star']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+              <fa-icon
+                *ratingFraction
+                [icon]="['fas', 'star-half-alt']"
+                [fixedWidth]="true"
+                size="lg"
+                style="color: #38b6ff"
+              ></fa-icon>
+            </bar-rating>
+            <span>total: {{totalRate}} / 5</span>
+        </div>
+        <div style="margin-top: 8px;">
+            <bar-rating class="star-font" [theme]="'stars'" [(rate)]="currentRate" [max]="5">
+                <fa-icon
+                  *ratingInactive
+                  [icon]="['far', 'star']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+                <fa-icon
+                  *ratingActive
+                  [icon]="['fas', 'star']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+                <fa-icon
+                  *ratingFraction
+                  [icon]="['fas', 'star-half-alt']"
+                  [fixedWidth]="true"
+                  size="lg"
+                  style="color: #FFD700"
+                ></fa-icon>
+              </bar-rating>
+        </div>
+          <div class="place-box-description">
+            <mat-form-field style="width: 600px;">
+                <mat-label>Dejanos un comentario:</mat-label>
+                <textarea [(ngModel)]="comments" style="height: 100px;" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="sendReview()">ENVIAR</button>
+        
+    </div>
+    
+</div>
