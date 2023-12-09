@@ -47,16 +47,12 @@ jobs:
 
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - name: Login to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_DEPLOY_TOKEN }}
-        run: railway login --token $RAILWAY_TOKEN
 
       - name: Deploy to Railway
         if: ${{ github.event_name == 'push' }}
         env:
           RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_DEPLOY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           railway link $RAILWAY_PROJECT_ID
-          railway up --image charliezolezzi/micultura-prod-app:latest --token $RAILWAY_TOKEN
+          railway up --image charliezolezzi/micultura-prod-app:latest
