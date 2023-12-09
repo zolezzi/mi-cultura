@@ -11,4 +11,4 @@ ENV TZ=America/Argentina/Buenos_Aires
 WORKDIR /app
 
 # Esperar a que la base de datos esté disponible y luego iniciar la aplicación
-CMD java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication
+CMD java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication --spring.profiles.active=${SPRING_PROFILE:-prod}
