@@ -2,7 +2,7 @@ name: Deploy to Railway
 
 on:
   workflow_run:
-    workflows: ["Frontend CI", "Backend CI"]
+    workflows: ["Micultura Frontend CI", "Micultura Backend CI"]
     types:
       - completed
   push:
