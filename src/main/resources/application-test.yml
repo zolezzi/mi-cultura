@@ -1,4 +1,9 @@
 spring:
+  profiles: test
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch.matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver

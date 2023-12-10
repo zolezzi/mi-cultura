@@ -10,22 +10,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import unq.edu.li.pdes.micultura.MiCulturaApplication;
+import unq.edu.li.pdes.micultura.configuration.TestSecurityConfig;
 import unq.edu.li.pdes.micultura.service.impl.UserServiceImpl;
 import unq.edu.li.pdes.micultura.utils.TokenUtils;
 import unq.edu.li.pdes.micultura.vo.AccountVO;
 import unq.edu.li.pdes.micultura.vo.UserLoginVO;
 import unq.edu.li.pdes.micultura.vo.UserVO;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MiCulturaApplication.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = TestSecurityConfig.class)
 @ActiveProfiles("test")
 public class UserControllerIntegrationTest {
 
-    @Autowired
+    @Autowired(required=true)
     private MockMvc mockMvc;
 
     @Autowired
