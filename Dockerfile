@@ -9,8 +9,8 @@ RUN npm run build.prod
 
 FROM adoptopenjdk/openjdk11:latest
 
+COPY . /app
 WORKDIR /app
-COPY . .
 COPY --from=angular-build /app/frontend/web-app/dist /app/frontend/web-app/dist
 RUN ./gradlew build
 
@@ -18,10 +18,10 @@ RUN ./gradlew build
 RUN echo "Cambiar algo en este paso"
 
 # Copiar los archivos de la aplicación
-#ARG DEPENDENCY=build/dependency
-#COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-#COPY ${DEPENDENCY}/META-INF /app/META-INF
-#COPY ${DEPENDENCY}/BOOT-INF/classes /app
+ARG DEPENDENCY=build/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 # Establecer variables de entorno
 ENV TZ=America/Argentina/Buenos_Aires
