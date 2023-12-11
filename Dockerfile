@@ -12,7 +12,7 @@ FROM adoptopenjdk/openjdk11:latest
 WORKDIR /app
 COPY . .
 COPY --from=angular-build /app/frontend/web-app/dist /app/frontend/web-app/dist
-RUN ./gradlew build
+RUN ./gradlew clean build
 
 # Cambio para invalidar la caché
 RUN echo "Cambiar algo en este paso"
