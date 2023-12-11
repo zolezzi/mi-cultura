@@ -31,8 +31,8 @@ spring:
     clean-on-validation-error: true
     clean-disabled: false
   datasource:
-    url:      jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?autoReconnect=true&useSSL=false&characterEncoding=UTF-8
-    jdbcUrl:  jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?autoReconnect=true&useSSL=false&characterEncoding=UTF-8
+    url:      jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    jdbcUrl:  jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
     username: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
     minimumIdle: 5
