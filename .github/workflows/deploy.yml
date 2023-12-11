@@ -9,6 +9,12 @@ on:
       - completed
 
 jobs:
+  initial:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initial setup
+        run: echo "Initial setup - No dependencies"
+
   build:
     needs: [Micultura_Backend_CI, Micultura_Frontend_CI]
     runs-on: ubuntu-latest
