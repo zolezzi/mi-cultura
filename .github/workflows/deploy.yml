@@ -16,7 +16,7 @@ jobs:
         run: echo "Initial setup - No dependencies"
 
   build:
-    needs: [backend-ci.yml#Micultura_Backend_CI, frontend-ci.yml#Micultura_Frontend_CI]
+    needs: [Micultura_Backend_CI, Micultura_Frontend_CI]
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
