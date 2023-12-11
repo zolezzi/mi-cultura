@@ -14,6 +14,9 @@ COPY . .
 COPY --from=angular-build /app/frontend/web-app/dist /app/frontend/web-app/dist
 RUN ./gradlew build
 
+# Cambio para invalidar la caché
+RUN echo "Cambiar algo en este paso"
+
 # Copiar los archivos de la aplicación
 ARG DEPENDENCY=build/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib

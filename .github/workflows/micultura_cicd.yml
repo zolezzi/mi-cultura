@@ -2,7 +2,7 @@ name: Micultura_CICD
 
 on:
   push:
-    branches: [main, development, development_deploy]
+    branches: [main, development]
   pull_request:
     branches: [main, development]
     types: [opened, synchronize]
@@ -140,7 +140,6 @@ jobs:
         run: |
           npm run start-test &
           npx wait-on http://localhost:4200 && npm run test:e2e
-
 
   build:
     needs: [test-backend, test-frontend, e2e]
