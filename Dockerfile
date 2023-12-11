@@ -33,4 +33,4 @@ ENV TZ=America/Argentina/Buenos_Aires
 #CMD java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication --spring.profiles.active=${SPRING_PROFILE:-prod}
 #CMD java -jar /build/libs/micultura.jar --spring.profiles.active=${SPRING_PROFILE:-prod}
 COPY --from=builder /app/build/libs/micultura.jar ./micultura.jar
-CMD ["java", "-jar", "micultura.jar", "--spring.profiles.active=${SPRING_PROFILE:-prod}"]
+CMD ["java", "-jar", "micultura.jar", "--spring.profiles.active=${SPRING_PROFILE:prod}"]
