@@ -12,6 +12,7 @@ FROM adoptopenjdk/openjdk11:latest
 WORKDIR /app
 COPY . .
 COPY --from=angular-build /app/frontend/web-app/dist /app/frontend/web-app/dist
+RUN ./gradlew build
 
 # Copiar los archivos de la aplicación
 ARG DEPENDENCY=build/dependency
