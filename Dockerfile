@@ -18,10 +18,10 @@ RUN ./gradlew clean build
 RUN echo "Cambiar algo en este paso"
 
 # Copiar los archivos de la aplicación
-ARG DEPENDENCY=build/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
+#ARG DEPENDENCY=build/dependency
+#COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+#COPY ${DEPENDENCY}/META-INF /app/META-INF
+#COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 # Establecer variables de entorno
 ENV TZ=America/Argentina/Buenos_Aires
