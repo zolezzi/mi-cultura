@@ -64,3 +64,5 @@ out/
 application.properties
 
 /src/main/resources/static/
+
+BOOT-INF/

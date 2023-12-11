@@ -18,6 +18,7 @@ services:
       
   micultura-app:
     image: micultura-app:latest
+    build: ./mi-cultura-docker/Dockerfile
     container_name: micultura_container
     restart: always
     ports:

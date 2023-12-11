@@ -49,9 +49,7 @@ task buildClient(type:NpmTask, dependsOn:'npmInstall') {
 
 task copyStaticFiles(type: Copy) {
     from "frontend/web-app/dist"
-    
     into 'BOOT-INF/classes/static'
-    into 'src/main/resources/static'
 }
 
 bootJar {
@@ -74,11 +72,15 @@ task unpack(type: Copy) {
     into("build/dependency")
 }
 
+ext {
+    dockerFilePath = project.hasProperty('env') && env == 'dev' ? './mi-cultura-docker/Dockerfile' : './Dockerfile'
+}
+
 docker {
     println "Docker Result -> micultura-app:latest"
     name "micultura-app:latest"
     tag "MiCultura", "micultura-app:latest"
-    dockerfile file("./Dockerfile")
+    dockerfile file(dockerFilePath)
     copySpec.from(tasks.unpack.outputs).into("dependency")
     buildArgs(['DEPENDENCY': "dependency"])
 }
@@ -170,5 +172,3 @@ tasks.named('test') {
 }
 
 bootJar.dependsOn copyStaticFiles
-
-/*tasks.build.dependsOn 'docker'*/
