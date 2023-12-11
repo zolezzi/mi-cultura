@@ -7,4 +7,4 @@ services:
     ports:
       - 8080:8080
     buildScript: ./gradlew build
-    runScript: java -cp .:lib/* $JAVA_OPTS unq.edu.li.pdes.micultura.MiCulturaApplication --spring.profiles.active=${SPRING_PROFILE:-prod}
+    runScript: java -jar micultura.jar --spring.profiles.active=${SPRING_PROFILE:prod}
