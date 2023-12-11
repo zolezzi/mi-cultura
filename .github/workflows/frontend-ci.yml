@@ -1,8 +1,8 @@
-name: Micultura Frontend CI
+name: Micultura_Frontend_CI
 
 on:
   push:
-    branches: [main, development]
+    branches: [main, development, development_deploy]
   pull_request:
     branches: [main, development]
     types: [opened, synchronize]

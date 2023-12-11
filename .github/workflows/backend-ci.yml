@@ -1,7 +1,7 @@
-name: Micultura Backend CI
+name: Micultura_Backend_CI
 on:
   push:
-    branches: [main, development]
+    branches: [main, development, development_deploy]
   pull_request:
     branches: [main, development]
     types: [opened, synchronize]

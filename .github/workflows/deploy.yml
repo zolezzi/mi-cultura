@@ -1,16 +1,16 @@
 name: Deploy to Railway
 
 on:
+  push:
+    branches: [development_deploy]
   workflow_run:
-    workflows: ["Micultura Frontend CI", "Micultura Backend CI"]
+    workflows: ["Micultura_Backend_CI", "Micultura_Frontend_CI"]
     types:
       - completed
-  push:
-    branches:
-      - main
 
 jobs:
   build:
+  needs: [Micultura_Backend_CI, Micultura_Frontend_CI]
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
@@ -24,14 +24,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build
-        run: ./gradlew clean build docker -Penv=prod
+        run: ./gradlew clean build docker -Penv=dev
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Push Docker Image
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker tag micultura-prod-app:latest charliezolezzi/micultura-prod-app:latest
-          docker push charliezolezzi/micultura-prod-app:latest
+          docker tag micultura-app:latest charliezolezzi/micultura-app:latest
+          docker push charliezolezzi/micultura-app:latest
 
   deploy:
     needs: [build]
@@ -52,4 +52,4 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           railway link $RAILWAY_PROJECT_ID
-          railway up --image charliezolezzi/micultura-prod-app:latest
+          railway up --image charliezolezzi/micultura-app:latest
