@@ -7,16 +7,18 @@ RUN npm install
 COPY frontend/web-app .
 RUN npm run build.prod
 
+FROM gradle:latest AS builder
+WORKDIR /app
+COPY . .
+RUN gradle build
+
 FROM adoptopenjdk/openjdk11:latest
 
 COPY . /app
 WORKDIR /app
 COPY --from=angular-build /app/frontend/web-app/dist /app/frontend/web-app/dist
-RUN chmod +x gradlew
-RUN ./gradlew build
-
-# Cambio para invalidar la caché
-RUN echo "Cambiar algo en este paso"
+#RUN chmod +x gradlew
+#RUN ./gradlew build
 
 # Copiar los archivos de la aplicación
 #ARG DEPENDENCY=build/dependency
