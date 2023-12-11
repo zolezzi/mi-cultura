@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-  needs: [Micultura_Backend_CI, Micultura_Frontend_CI]
+    needs: [Micultura_Backend_CI, Micultura_Frontend_CI]
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
