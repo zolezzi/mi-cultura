@@ -47,7 +47,7 @@ public class UserControllerIntegrationTest {
         userLoginVO.setEmail("charlie@gmail.com");
         userLoginVO.setPassword("Password1234!");
 
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userLoginVO)))
                 .andExpect(status().isOk());
@@ -66,7 +66,7 @@ public class UserControllerIntegrationTest {
         accountVO.setLastname("Test");
         accountVO.setPhoneNumber("21332123123");
         accountVO.setRole("TOURIST");
-        mockMvc.perform(post("/create")
+        mockMvc.perform(post("/api/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userVO)))
                 .andExpect(status().isOk());

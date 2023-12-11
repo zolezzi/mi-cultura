@@ -57,6 +57,11 @@ public class SpringConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
     	 return (web) -> web.ignoring().requestMatchers(
     			 new AntPathRequestMatcher("/swagger-resources/**"),
+    			 new AntPathRequestMatcher("/resources/**"),
+    			 new AntPathRequestMatcher("/static/**"),
+    			 new AntPathRequestMatcher("/css/**"),
+    			 new AntPathRequestMatcher("/js/**"),
+    			 new AntPathRequestMatcher("/images/**"),
     			 new AntPathRequestMatcher("/swagger-ui/**"),
     			 new AntPathRequestMatcher("/v2/api-docs/**"));
     }

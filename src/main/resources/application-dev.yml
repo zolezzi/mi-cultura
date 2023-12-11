@@ -1,7 +1,10 @@
 server:
   port: 8080
   servlet:
-    contextPath: /
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json
 
 mysql:
   service:
@@ -20,7 +23,7 @@ spring:
   name: "MiCultura"
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ant-path-matcher
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
