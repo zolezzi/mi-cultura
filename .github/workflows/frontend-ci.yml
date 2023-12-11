@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
           name: dist
           path: frontend/web-app/dist
 
-  test:
+  test-frontend:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
