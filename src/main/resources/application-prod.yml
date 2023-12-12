@@ -22,8 +22,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/app/frontend/web-app/dist/
+#  resources:
+#    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/app/frontend/web-app/dist/
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
