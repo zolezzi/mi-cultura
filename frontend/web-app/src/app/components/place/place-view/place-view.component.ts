@@ -71,7 +71,7 @@ export class PlaceViewComponent implements OnInit{
   isFavourite(){ 
     this.place.isFavorite = true;
     var value_id = this.place.placeId;
-    this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(value_id)).subscribe((result) => {
+    this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), this.place, Number(value_id)).subscribe((result) => {
       this.place = result; 
     });
   }

@@ -16,6 +16,7 @@ import unq.edu.li.pdes.micultura.dto.ReviewDTO;
 import unq.edu.li.pdes.micultura.dto.UserDTO;
 import unq.edu.li.pdes.micultura.model.Account;
 import unq.edu.li.pdes.micultura.model.AccountInterestEvent;
+import unq.edu.li.pdes.micultura.model.AccountInterestPlace;
 import unq.edu.li.pdes.micultura.model.AccountReviewEvent;
 import unq.edu.li.pdes.micultura.model.AccountReviewPlace;
 import unq.edu.li.pdes.micultura.model.AccountRole;
@@ -339,6 +340,28 @@ public class RegisterMapper {
 				a.setSubTitle(b.getEvent().getSubTitle());
 				a.setToDate(b.getEvent().getToDate());
 				a.setUrl(b.getEvent().getUrl());
+				a.setIsFavorite(b.getIsFavorite());
+			}
+		}).byDefault().register();
+		
+		mapperFactory.classMap(PlaceDTO.class, AccountInterestPlace.class).customize(new CustomMapper<PlaceDTO, AccountInterestPlace>() {
+			@Override
+			public void mapBtoA(AccountInterestPlace b, PlaceDTO a, MappingContext context) {
+				a.setId(b.getId());
+				a.setPlaceId(b.getPlace().getPlaceId());
+				a.setAddress(b.getPlace().getAddress());
+				a.setDependsOn(b.getPlace().getDependsOn());
+				a.setEmail(b.getPlace().getEmail());
+				a.setLink(b.getPlace().getLink());
+				a.setDependsOn(b.getPlace().getDependsOn());
+				a.setEmail(b.getPlace().getEmail());
+				a.setLink(b.getPlace().getLink());
+				a.setName(b.getPlace().getName());
+				a.setPhoneNumber(b.getPlace().getPhoneNumber());
+				a.setPlaceType(b.getPlace().getPlaceType().toString());
+				a.setPlaceTypeDescription(b.getPlace().getPlaceType().getDescription());
+				a.setProvince(b.getPlace().getProvince());
+				a.setUrl(b.getPlace().getUrl());
 				a.setIsFavorite(b.getIsFavorite());
 			}
 		}).byDefault().register();

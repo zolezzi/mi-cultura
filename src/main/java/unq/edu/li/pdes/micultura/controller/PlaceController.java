@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import unq.edu.li.pdes.micultura.controller.response.BasicResponse;
 import unq.edu.li.pdes.micultura.dto.PlaceDTO;
 import unq.edu.li.pdes.micultura.service.impl.PlaceServiceImpl;
+import unq.edu.li.pdes.micultura.vo.EventVO;
 import unq.edu.li.pdes.micultura.vo.PlaceVO;
 import unq.edu.li.pdes.micultura.vo.ReviewVO;
 
@@ -175,7 +176,7 @@ public class PlaceController {
             value = "/favorite/{accountId}/{placeId}",
             produces = { "application/json" }
     )
-    public PlaceDTO update(@PathVariable("accountId") Long accountId, @PathVariable("placeId") Long placeId){
-        return service.favorite(accountId, placeId);
+    public PlaceDTO update(@RequestBody PlaceVO placeVO, @PathVariable("accountId") Long accountId, @PathVariable("placeId") Long placeId){
+        return service.favorite(placeVO, accountId, placeId);
     }
 }

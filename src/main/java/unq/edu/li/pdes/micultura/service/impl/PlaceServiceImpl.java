@@ -53,10 +53,25 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	@Override
-	public PlaceDTO favorite(Long accountId, Long placeId) {
+	public PlaceDTO favorite(PlaceVO placeVO, Long accountId, Long placeId) {
 		var accountDB = accountRepository.findById(accountId).orElseThrow(() -> new MiCulturaException(String.format("No found account:%s", accountId)));
-		var placeDB = getPlaceById(placeId);
-		var accountInterestPlace = accountInterestPlaceRepository.findByPlaceIdAndAccountId(placeDB.getId(), accountDB.getId());
+		var placeOpt = repository.findByPlaceId(placeId);
+		Place place = null;
+		if(placeOpt.isEmpty()) {
+			var aNewEvent = mapper.map(placeVO, Place.class);
+			place = repository.save(aNewEvent);
+		}else {
+			place = placeOpt.get();
+		}
+		AccountInterestPlace accountInterestPlace = null;
+		var accountInterestPlaceOpt = accountInterestPlaceRepository.findOnePlaceIdAndAccountId(place.getId(), accountDB.getId());
+		if(accountInterestPlaceOpt.isEmpty()){
+			accountInterestPlace = new AccountInterestPlace();
+			accountInterestPlace.setAccount(accountDB);
+			accountInterestPlace.setPlace(place);
+		}else {
+			accountInterestPlace = accountInterestPlaceOpt.get();
+		}
 		accountInterestPlace.setIsFavorite(Boolean.TRUE);
 		accountInterestPlaceRepository.save(accountInterestPlace);
 		var result = mapper.map(accountInterestPlace.getPlace(), PlaceDTO.class);

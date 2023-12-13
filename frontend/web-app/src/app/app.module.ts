@@ -31,6 +31,7 @@ import { EventSearchComponent } from './components/event/event-search/event-sear
 import { EventViewComponent } from './components/event/event-view/event-view/event-view.component';
 import { EventControllerService } from './api/service/eventController.service';
 import { ProxyControllerService } from './api/service/proxyController.service';
+import { ReviewSearchComponent } from './components/review/review-search/review-search.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ProxyControllerService } from './api/service/proxyController.service';
     ConfirmDialogComponent,
     EventSearchComponent,
     EventViewComponent,
+    ReviewSearchComponent,
     
   ],
   imports: [
