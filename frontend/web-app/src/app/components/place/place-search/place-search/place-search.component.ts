@@ -161,7 +161,7 @@ export class PlaceSearchComponent implements OnInit{
 
   update(id: number) {}
 
-  view(place: any) {debugger;
+  view(place: any) {
     if(!this.isLoggedIn){
       this.router.navigate(['/login']);
     }

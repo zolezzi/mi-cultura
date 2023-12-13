@@ -8,7 +8,7 @@
         <mat-card *ngFor="let review of reviews | slice:
         (paginator.pageIndex*paginator.pageSize):
         ((paginator.pageIndex+1)*paginator.pageSize)" class="example-card">
-            <div>
+            <div style="margin-top: 8px; margin-left: 80px;">
                 <bar-rating class="star-total-font" [readOnly]="true" [theme]="'stars'" [rate]="review.score" [max]="5">
                     <fa-icon *ratingInactive [icon]="['far', 'star']" [fixedWidth]="true" size="lg" style="color: #38b6ff"></fa-icon>
                     <fa-icon *ratingActive [icon]="['fas', 'star']" [fixedWidth]="true" size="lg" style="color: #38b6ff"></fa-icon>
@@ -22,7 +22,12 @@
             <span *ngIf="'INSTITUTE' == review.placeType" class="tag tag-blue">Instituto</span>
             <span *ngIf="'AGENCIES' == review.placeType" class="tag tag-red">Organismo</span>
             <mat-card-content>
-                <h4>{{review.title}}</h4>
+                <div *ngIf="'ANNOUNCEMENT' == review.eventType || 'PROCEDURE' == review.eventType">
+                    <h4>{{review.title}}</h4>
+                </div>
+                <div *ngIf="'MUSEUM' == review.placeType || 'INSTITUTE' == review.placeType || 'AGENCIES' == review.placeType">
+                    <h4>{{review.placeName}}</h4>
+                </div>
                 <div>
                     <p>Nombre: {{review.firstname}} {{review.lastname}} </p>
                     <p>Comentario: {{review.comments}}</p>
