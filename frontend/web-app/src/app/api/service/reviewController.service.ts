@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { AccountReviewDetailsDTO } from '../model/accountReviewDetailsDTO';
 import { ReviewDTO } from '../model/reviewDTO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -38,6 +38,11 @@ export class ReviewControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 

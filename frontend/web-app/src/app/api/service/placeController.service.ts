@@ -21,7 +21,7 @@ import { BasicResponse } from '../model/basicResponse';
 import { PlaceDTO } from '../model/placeDTO';
 import { PlaceVO } from '../model/placeVO';
 import { ReviewVO } from '../model/reviewVO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -40,6 +40,11 @@ export class PlaceControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 

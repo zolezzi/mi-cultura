@@ -20,7 +20,7 @@ import { Observable }                                        from 'rxjs';
 import { AccountDTO } from '../model/accountDTO';
 import { AccountVO } from '../model/accountVO';
 import { BasicResponse } from '../model/basicResponse';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -39,6 +39,11 @@ export class AccountControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
