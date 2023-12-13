@@ -30,6 +30,7 @@ import { ReviewControllerService } from './api/service/reviewController.service'
 import { EventSearchComponent } from './components/event/event-search/event-search/event-search.component';
 import { EventViewComponent } from './components/event/event-view/event-view/event-view.component';
 import { EventControllerService } from './api/service/eventController.service';
+import { ProxyControllerService } from './api/service/proxyController.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { EventControllerService } from './api/service/eventController.service';
     FontAwesomeModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, 
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, ProxyControllerService,
     ReviewControllerService, EventControllerService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
     { provide: LocationStrategy, useClass: HashLocationStrategy }

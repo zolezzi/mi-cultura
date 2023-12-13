@@ -26,7 +26,7 @@ import unq.edu.li.pdes.micultura.vo.ReviewVO;
 
 @RestController("place")
 @Api(value = "Place Controller")
-@RequestMapping("/place")
+@RequestMapping("/api/place")
 @RequiredArgsConstructor
 public class PlaceController {
 

@@ -26,7 +26,7 @@ import unq.edu.li.pdes.micultura.vo.ReviewVO;
 
 @RestController("event")
 @Api(value = "Event Controller")
-@RequestMapping("/event")
+@RequestMapping("/api/event")
 @RequiredArgsConstructor
 public class EventController {
 
