@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class ReviewControllerService {
 
-    protected basePath = 'http://localhost:8080/api';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -89,7 +89,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<AccountReviewDetailsDTO>>(`${this.basePath}/review/find-all`,
+        return this.httpClient.get<Array<AccountReviewDetailsDTO>>(`${this.basePath}/api/review/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -136,7 +136,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -187,7 +187,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/get-review/${encodeURIComponent(String(placeId))}/${encodeURIComponent(String(accountId))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/get-review/${encodeURIComponent(String(placeId))}/${encodeURIComponent(String(accountId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -238,7 +238,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/get-review-event/${encodeURIComponent(String(eventId))}/${encodeURIComponent(String(accountId))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/get-review-event/${encodeURIComponent(String(eventId))}/${encodeURIComponent(String(accountId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

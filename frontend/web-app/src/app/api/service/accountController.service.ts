@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class AccountControllerService {
 
-    protected basePath = 'http://localhost:8080/api';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -94,7 +94,7 @@ export class AccountControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<AccountDTO>(`${this.basePath}/account/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<AccountDTO>(`${this.basePath}/api/account/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -146,7 +146,7 @@ export class AccountControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<AccountDTO>(`${this.basePath}/account/save`,
+        return this.httpClient.post<AccountDTO>(`${this.basePath}/api/account/save`,
             accountVO,
             {
                 withCredentials: this.configuration.withCredentials,

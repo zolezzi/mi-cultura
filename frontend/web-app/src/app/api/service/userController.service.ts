@@ -29,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class UserControllerService {
 
-    protected basePath = 'http://localhost:8080/api';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -93,7 +93,7 @@ export class UserControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<UserDTO>(`${this.basePath}/create`,
+        return this.httpClient.post<UserDTO>(`${this.basePath}/api/create`,
             user,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -139,7 +139,7 @@ export class UserControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<JwtResponseDTO>(`${this.basePath}/login`,
+        return this.httpClient.post<JwtResponseDTO>(`${this.basePath}/api/login`,
             user,
             {
                 withCredentials: this.configuration.withCredentials,

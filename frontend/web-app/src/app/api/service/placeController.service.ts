@@ -29,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class PlaceControllerService {
 
-    protected basePath = 'http://localhost:8080/api';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -100,7 +100,7 @@ export class PlaceControllerService {
             'application/json'
         ];
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.put<PlaceDTO>(`${this.basePath}/api/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -144,7 +144,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all`,
+        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/api/place/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -191,7 +191,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/api/place/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -238,7 +238,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<PlaceDTO>(`${this.basePath}/place/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<PlaceDTO>(`${this.basePath}/api/place/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -285,7 +285,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<number>(`${this.basePath}/place/total-review-score/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.get<number>(`${this.basePath}/api/place/total-review-score/${encodeURIComponent(String(placeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -336,7 +336,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.delete<BasicResponse>(`${this.basePath}/place/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.delete<BasicResponse>(`${this.basePath}/api/place/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -396,7 +396,7 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<PlaceDTO>(`${this.basePath}/place/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.post<PlaceDTO>(`${this.basePath}/api/place/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
             placeVO,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -457,7 +457,7 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.put<PlaceDTO>(`${this.basePath}/api/place/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
             review,
             {
                 withCredentials: this.configuration.withCredentials,
