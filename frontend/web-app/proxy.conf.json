@@ -1,6 +1,14 @@
 {
-    "/api/*": {
-      "target": "https://www.cultura.gob.ar",
-      "secure": false
+   "/api/": {
+     "target": "http://localhost:8080/api",
+     "secure": false
+   },
+   "/api/v2.0/": {
+    "target": "https://www.cultura.gob.ar",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/v2.0/": "/"
+    },
+    "changeOrigin": true
     }
-  }
+}

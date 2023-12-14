@@ -1,7 +1,7 @@
 version: '3'
- 
+
 networks:
-  mi_red:
+  micultura-network:
     driver: bridge
 
 services:
@@ -14,37 +14,40 @@ services:
     depends_on:
       - micultura-app
     networks:
-      - mi_red
+      - micultura-network
+      
   micultura-app:
     image: micultura-app:latest
+    build: ./mi-cultura-docker/Dockerfile
     container_name: micultura_container
     restart: always
     ports:
       - 8080:8080
     environment:
-      - DATABASE_HOST=mariadb
+      - DATABASE_HOST=mysql-db
       - DATABASE_PORT=3306
       - DATABASE_NAME=mi_cultura
       - DATABASE_USER=mi_cultura
       - DATABASE_PASSWORD=micultura123
+      - SPRING_PROFILE=dev
     volumes:
       - ./src/main/resources:/app/config
     depends_on:
-      - mariadb
+      - mysql-db
     networks:
-      - mi_red
-  mariadb:
-    image: mariadb:10.6.7
-    container_name: mariadb_container
+      - micultura-network
+      
+  mysql-db:
+    image: mysql:8.0.27
+    container_name: mysql_container
     restart: always
     ports:
     - 3306:3306
     environment:
-    - MYSQL_ROOT_PASSWORD=mariadb123
+    - MYSQL_USER=mi_cultura
+    - MYSQL_DATABASE=mi_cultura
+    - MYSQL_ROOT_PASSWORD=admin
+    - MYSQL_PASSWORD=micultura123
     - TZ=America/Argentina/Buenos_Aires
-    volumes:
-    - ./mi-cultura-docker/mariadb/data/my.cnf:/etc/mysql/my.cnf
-    - ./mi-cultura-docker/mariadb/data/config:/var/lib/mysql
-    - ./scripts.sql:/docker-entrypoint-initdb.d/scripts.sql
     networks:
-      - mi_red
+      - micultura-network

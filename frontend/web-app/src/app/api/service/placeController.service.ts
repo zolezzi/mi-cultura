@@ -21,7 +21,7 @@ import { BasicResponse } from '../model/basicResponse';
 import { PlaceDTO } from '../model/placeDTO';
 import { PlaceVO } from '../model/placeVO';
 import { ReviewVO } from '../model/reviewVO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -40,6 +40,11 @@ export class PlaceControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -63,14 +68,15 @@ export class PlaceControllerService {
      * Update a Place, if it doesn&#39;t find it throw an exception
      * @param accountId accountId
      * @param authorization 
+     * @param PlaceVO placeVO
      * @param placeId placeId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
-    public favorite(accountId: number, authorization: string, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public favorite(accountId: number, authorization: string, placeVO: PlaceVO, placeId: number, observe?: 'body', reportProgress?: boolean): Observable<PlaceDTO>;
+    public favorite(accountId: number, authorization: string, placeVO: PlaceVO, placeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PlaceDTO>>;
+    public favorite(accountId: number, authorization: string, placeVO: PlaceVO, placeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PlaceDTO>>;
+    public favorite(accountId: number, authorization: string, placeVO: PlaceVO, placeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (accountId === null || accountId === undefined) {
             throw new Error('Required parameter accountId was null or undefined when calling favorite.');
         }
@@ -80,7 +86,9 @@ export class PlaceControllerService {
         if (placeId === null || placeId === undefined) {
             throw new Error('Required parameter placeId was null or undefined when calling favorite.');
         }
-
+        if (placeVO === null || placeVO === undefined) {
+            throw new Error('Required parameter placeVO was null or undefined when calling favorite.');
+        }
         let headers = this.defaultHeaders;
         if (authorization !== undefined && authorization !== null) {
             headers = headers.set('Authorization', String('Bearer ' + authorization));
@@ -100,8 +108,8 @@ export class PlaceControllerService {
             'application/json'
         ];
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
-            null,
+        return this.httpClient.put<PlaceDTO>(`${this.basePath}/api/place/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+            placeVO,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -144,7 +152,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all`,
+        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/api/place/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -191,7 +199,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/place/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.get<Array<PlaceDTO>>(`${this.basePath}/api/place/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -238,7 +246,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<PlaceDTO>(`${this.basePath}/place/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<PlaceDTO>(`${this.basePath}/api/place/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -285,7 +293,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<number>(`${this.basePath}/place/total-review-score/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.get<number>(`${this.basePath}/api/place/total-review-score/${encodeURIComponent(String(placeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -336,7 +344,7 @@ export class PlaceControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.delete<BasicResponse>(`${this.basePath}/place/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.delete<BasicResponse>(`${this.basePath}/api/place/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(placeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -396,7 +404,7 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<PlaceDTO>(`${this.basePath}/place/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.post<PlaceDTO>(`${this.basePath}/api/place/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
             placeVO,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -457,7 +465,7 @@ export class PlaceControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<PlaceDTO>(`${this.basePath}/place/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
+        return this.httpClient.put<PlaceDTO>(`${this.basePath}/api/place/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(placeId))}`,
             review,
             {
                 withCredentials: this.configuration.withCredentials,

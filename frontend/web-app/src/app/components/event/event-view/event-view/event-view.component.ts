@@ -5,6 +5,7 @@ import { EventDTO } from 'src/app/api/model/eventDTO';
 import { ReviewVO } from 'src/app/api/model/reviewVO';
 import { EventControllerService } from 'src/app/api/service/eventController.service';
 import { ReviewControllerService } from 'src/app/api/service/reviewController.service';
+import party from "party-js";
 
 @Component({
   selector: 'app-event-view',
@@ -85,13 +86,14 @@ export class EventViewComponent implements OnInit{
     });
   }
 
-  sendReview(){
+  sendReview(event:any){
     var review :ReviewVO = {};
     review.score = this.currentRate;
     review.comments = this.comments;
     this.eventService.update(this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(this.event.eventId), review, this.userId).subscribe((result) => {
       this.event = result; 
       this.ngOnInit();
+      party.confetti(event);
     });
   }
 

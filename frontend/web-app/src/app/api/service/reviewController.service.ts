@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { AccountReviewDetailsDTO } from '../model/accountReviewDetailsDTO';
 import { ReviewDTO } from '../model/reviewDTO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -38,6 +38,11 @@ export class ReviewControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -89,7 +94,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<AccountReviewDetailsDTO>>(`${this.basePath}/review/find-all`,
+        return this.httpClient.get<Array<AccountReviewDetailsDTO>>(`${this.basePath}/api/review/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -136,7 +141,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -187,7 +192,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/get-review/${encodeURIComponent(String(placeId))}/${encodeURIComponent(String(accountId))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/get-review/${encodeURIComponent(String(placeId))}/${encodeURIComponent(String(accountId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -196,6 +201,7 @@ export class ReviewControllerService {
             }
         );
     }
+
     /**
      * Service that return a Review
      * This service return a Review by the ID
@@ -237,7 +243,7 @@ export class ReviewControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<ReviewDTO>(`${this.basePath}/review/get-review-event/${encodeURIComponent(String(eventId))}/${encodeURIComponent(String(accountId))}`,
+        return this.httpClient.get<ReviewDTO>(`${this.basePath}/api/review/get-review-event/${encodeURIComponent(String(eventId))}/${encodeURIComponent(String(accountId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -246,4 +252,5 @@ export class ReviewControllerService {
             }
         );
     }
+
 }

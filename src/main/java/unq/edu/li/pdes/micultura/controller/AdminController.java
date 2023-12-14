@@ -22,7 +22,7 @@ import unq.edu.li.pdes.micultura.service.impl.UserServiceImpl;
 
 @RestController("admin")
 @Api(value = "Admin Controller")
-@RequestMapping("")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AdminController {
 

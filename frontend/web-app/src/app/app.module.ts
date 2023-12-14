@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,9 @@ import { ReviewControllerService } from './api/service/reviewController.service'
 import { EventSearchComponent } from './components/event/event-search/event-search/event-search.component';
 import { EventViewComponent } from './components/event/event-view/event-view/event-view.component';
 import { EventControllerService } from './api/service/eventController.service';
+import { ProxyControllerService } from './api/service/proxyController.service';
+import { ReviewSearchComponent } from './components/review/review-search/review-search.component';
+import { UserSearchComponent } from './components/user/user-search/user-search.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,8 @@ import { EventControllerService } from './api/service/eventController.service';
     ConfirmDialogComponent,
     EventSearchComponent,
     EventViewComponent,
+    ReviewSearchComponent,
+    UserSearchComponent,
     
   ],
   imports: [
@@ -55,9 +61,11 @@ import { EventControllerService } from './api/service/eventController.service';
     FontAwesomeModule,
     NgxWebstorageModule.forRoot()
   ],
-  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, 
+  providers: [UserControllerService, AccountControllerService, AdminControllerService, PlaceControllerService, CulturaAPIService, ProxyControllerService,
     ReviewControllerService, EventControllerService,
-    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
+    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

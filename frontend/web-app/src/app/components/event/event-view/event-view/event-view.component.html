@@ -101,6 +101,6 @@
                 <textarea [(ngModel)]="comments" style="height: 100px;" matInput></textarea>
             </mat-form-field>
         </div>
-        <button mat-raised-button color="primary" (click)="sendReview()">ENVIAR</button>
+        <button mat-raised-button color="primary" (click)="sendReview($event.target)">ENVIAR</button>
     </div>  
 </div>

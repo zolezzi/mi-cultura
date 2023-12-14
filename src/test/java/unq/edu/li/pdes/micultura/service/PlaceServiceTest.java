@@ -165,7 +165,7 @@ public class PlaceServiceTest {
 		when(userUpdate.getAccount()).thenReturn(accountUpdate);
 		when(accountUpdate.getId()).thenReturn(ACCOUNT_UPDATE_ID);
 		when(accountInterestPlaceRepository.findByPlaceIdAndAccountId(ID_PLACE_DELETE, DELETE_ACCOUNT_ID)).thenReturn(accountInterestPlace);
-		when(accountInterestPlaceRepository.findByPlaceIdAndAccountId(ID, FAVORITE_ACCOUNT_ID)).thenReturn(accountInterestPlace);
+		//when(accountInterestPlaceRepository.findByPlaceIdAndAccountId(ID, FAVORITE_ACCOUNT_ID)).thenReturn(accountInterestPlace);
 		when(place.getEmail()).thenReturn(EMAIL);
 		when(repository.findAll()).thenReturn(List.of(place));
 		when(mapper.mapList(anyList(), eq(PlaceDTO.class))).thenReturn(List.of(placeDto));
@@ -204,14 +204,14 @@ public class PlaceServiceTest {
 	public void testFavoritePlaceWithoutAccountExistsThenReturnException(){
 		ex.expect(MiCulturaException.class);
 		ex.expectMessage(String.format("No found account:%s", ID_ACCOUNT_NOT_FOUND_FAVORITE));
-		service.favorite(ID_ACCOUNT_NOT_FOUND_FAVORITE, ID);
+		service.favorite(createPlaceVO(), ID_ACCOUNT_NOT_FOUND_FAVORITE, ID);
 	    verify(accountInterestPlaceRepository).delete(eq(accountInterestPlace));
 	}
 	
 	@Test
 	public void testFavoritePlace(){
-	    assertThat(service.favorite(FAVORITE_ACCOUNT_ID, ID), is(placeDto));
-	    verify(accountInterestPlaceRepository).save(eq(accountInterestPlace));
+	    assertThat(service.favorite(createPlaceVO(), FAVORITE_ACCOUNT_ID, ID), is(placeDto));
+	    verify(accountInterestPlaceRepository).save(any());
 	}
 	
 	@Test
@@ -287,7 +287,7 @@ public class PlaceServiceTest {
 	
 	@Test
 	public void testFindAllPlacesByUserIdWithElements(){
-		when(accountInterestPlaceRepository.findAllPlacesByAccountId(ID)).thenReturn(List.of(place));
+		when(accountInterestPlaceRepository.findAllPlacesByAccountId(ID)).thenReturn(List.of(accountInterestPlace));
 	    assertThat(service.findAllByUserId(USER_ID), is(List.of(placeDto)));
 	    verify(accountInterestPlaceRepository).findAllPlacesByAccountId(ID);
 	}

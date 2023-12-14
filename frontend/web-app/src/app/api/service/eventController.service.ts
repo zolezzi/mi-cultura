@@ -21,7 +21,7 @@ import { BasicResponse } from '../model/basicResponse';
 import { EventDTO } from '../model/eventDTO';
 import { EventVO } from '../model/eventVO';
 import { ReviewVO } from '../model/reviewVO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -40,6 +40,11 @@ export class EventControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -103,7 +108,7 @@ export class EventControllerService {
             'application/json'
         ];
 
-        return this.httpClient.put<EventDTO>(`${this.basePath}/event/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
+        return this.httpClient.put<EventDTO>(`${this.basePath}/api/event/favorite/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
             eventVO,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -147,7 +152,7 @@ export class EventControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/event/find-all`,
+        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/api/event/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -194,7 +199,7 @@ export class EventControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/event/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.get<Array<EventDTO>>(`${this.basePath}/api/event/find-all-by-user-id/${encodeURIComponent(String(userId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -241,7 +246,7 @@ export class EventControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<EventDTO>(`${this.basePath}/event/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<EventDTO>(`${this.basePath}/api/event/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -288,7 +293,7 @@ export class EventControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<number>(`${this.basePath}/event/total-review-score/${encodeURIComponent(String(eventId))}`,
+        return this.httpClient.get<number>(`${this.basePath}/api/event/total-review-score/${encodeURIComponent(String(eventId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -339,7 +344,7 @@ export class EventControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.delete<BasicResponse>(`${this.basePath}/event/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
+        return this.httpClient.delete<BasicResponse>(`${this.basePath}/api/event/delete/${encodeURIComponent(String(accountId))}/${encodeURIComponent(String(eventId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -399,7 +404,7 @@ export class EventControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<EventDTO>(`${this.basePath}/event/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
+        return this.httpClient.post<EventDTO>(`${this.basePath}/api/event/save/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
             eventVO,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -460,7 +465,7 @@ export class EventControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<EventDTO>(`${this.basePath}/event/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
+        return this.httpClient.put<EventDTO>(`${this.basePath}/api/event/update/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(eventId))}`,
             review,
             {
                 withCredentials: this.configuration.withCredentials,

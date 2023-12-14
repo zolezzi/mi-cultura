@@ -1,0 +1,20 @@
+table {
+    width: 90%;
+}
+
+.mdc-data-table__table {
+    min-width: 90%;
+    border: 0;
+    white-space: nowrap;
+    border-spacing: 0;
+    table-layout: fixed;
+    margin-left: 80px;
+    margin-top: 80px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.row {margin: 0 -5px; width: 100%;}

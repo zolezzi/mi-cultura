@@ -44,9 +44,15 @@ public class WebSecurityConfig {
         		 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
                  .and()
                  .authorizeRequests()
-                 .antMatchers("/create", "/login").permitAll()
+                 .antMatchers("/api/create", "/api/login").permitAll()
+                 .and()
+                 .authorizeRequests()
+                 .antMatchers("/api/micultura").permitAll()
+                 .and()
+                 .authorizeRequests()
+                 .antMatchers("/api/**").authenticated()
                  .anyRequest()
-                 .authenticated()
+                 .permitAll()
                  .and()
                  .exceptionHandling().and().sessionManagement()
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -83,7 +89,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(Boolean.TRUE);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("https://mi-cultura-production.up.railway.app", "http://localhost:8080", "http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"));
         configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));  
