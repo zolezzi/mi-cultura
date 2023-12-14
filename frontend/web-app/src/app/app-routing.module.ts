@@ -8,6 +8,7 @@ import { PlaceViewComponent } from './components/place/place-view/place-view.com
 import { EventSearchComponent } from './components/event/event-search/event-search/event-search.component';
 import { EventViewComponent } from './components/event/event-view/event-view/event-view.component';
 import { ReviewSearchComponent } from './components/review/review-search/review-search.component';
+import { UserSearchComponent } from './components/user/user-search/user-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'event-view/:id', component: EventViewComponent },
   { path: 'event-view-admin', component: EventViewComponent },
   { path: 'reviews', component: ReviewSearchComponent },
+  { path: 'users', component: UserSearchComponent },
 ];
 
 @NgModule({
