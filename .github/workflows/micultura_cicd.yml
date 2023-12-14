@@ -2,7 +2,7 @@ name: Micultura_CICD
 
 on:
   push:
-    branches: [main, development]
+    branches: [main]
   pull_request:
     branches: [main, development]
     types: [opened, synchronize]
@@ -143,7 +143,6 @@ jobs:
   build:
     needs: [test-backend, test-frontend, e2e]
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -167,7 +166,6 @@ jobs:
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
