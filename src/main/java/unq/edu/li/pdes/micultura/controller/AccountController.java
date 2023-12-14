@@ -19,7 +19,7 @@ import unq.edu.li.pdes.micultura.vo.AccountVO;
 
 @RestController("account")
 @Api(value = "Account Controller")
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 @RequiredArgsConstructor
 public class AccountController {
 

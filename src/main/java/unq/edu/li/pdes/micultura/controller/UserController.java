@@ -18,7 +18,7 @@ import unq.edu.li.pdes.micultura.vo.UserVO;
 
 @RestController("user")
 @Api(value = "User Controller")
-@RequestMapping("")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 

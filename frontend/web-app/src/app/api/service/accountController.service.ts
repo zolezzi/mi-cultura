@@ -20,7 +20,7 @@ import { Observable }                                        from 'rxjs';
 import { AccountDTO } from '../model/accountDTO';
 import { AccountVO } from '../model/accountVO';
 import { BasicResponse } from '../model/basicResponse';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -39,6 +39,11 @@ export class AccountControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -94,7 +99,7 @@ export class AccountControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<AccountDTO>(`${this.basePath}/account/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<AccountDTO>(`${this.basePath}/api/account/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -146,7 +151,7 @@ export class AccountControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<AccountDTO>(`${this.basePath}/account/save`,
+        return this.httpClient.post<AccountDTO>(`${this.basePath}/api/account/save`,
             accountVO,
             {
                 withCredentials: this.configuration.withCredentials,

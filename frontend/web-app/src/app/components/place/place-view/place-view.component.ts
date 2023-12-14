@@ -5,6 +5,7 @@ import { PlaceDTO, ReviewVO } from 'src/app/api';
 import { PlaceControllerService } from 'src/app/api/service/placeController.service';
 import { ReviewControllerService } from 'src/app/api/service/reviewController.service';
 import { PlaceCommunicationService } from 'src/app/shared/service/place-communication.service';
+import party from "party-js";
 
 @Component({
   selector: 'app-place-view',
@@ -71,7 +72,7 @@ export class PlaceViewComponent implements OnInit{
   isFavourite(){ 
     this.place.isFavorite = true;
     var value_id = this.place.placeId;
-    this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(value_id)).subscribe((result) => {
+    this.placeService.favorite(this.localStorageService.retrieve(this.ACCOUNT_ID), this.localStorageService.retrieve(this.ACCESS_TOKEN), this.place, Number(value_id)).subscribe((result) => {
       this.place = result; 
     });
   }
@@ -84,13 +85,14 @@ export class PlaceViewComponent implements OnInit{
     });
   }
 
-  sendReview(){
+  sendReview(event:any){
     var review :ReviewVO = {};
     review.score = this.currentRate;
     review.comments = this.comments;
     this.placeService.update(this.localStorageService.retrieve(this.ACCESS_TOKEN), Number(this.place.placeId), review, this.userId).subscribe((result) => {
       this.place = result; 
       this.ngOnInit();
+      party.confetti(event);
     });
   }
 

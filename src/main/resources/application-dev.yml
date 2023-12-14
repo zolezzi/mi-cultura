@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json
+
+mysql:
+  service:
+    # The host of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_HOST' env variable
+    host:     localhost
+    # The port of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_PORT' env variable
+    port:     3306
+    # The database to use, can be customized using the 'MYSQL_SERVICE_DATABASE'
+    # env variable
+    database: mi_cultura 
+
+spring:
+  application:
+  name: "MiCultura"
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/frontend/web-app/dist/
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  
+  datasource:
+    url:      jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    jdbcUrl:  jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    minimumIdle: 5
+    maximumPoolSize: 5
+    maxActive: 5
+    maxIdle: 5
+    maxWait: 1000
+    validationQuery: "select 1"
+    testOnBorrow: true
+    testOnConnect: true
+    testWhileIdle: true
+  jpa:
+#    database: mysql
+    hibernate:
+      ddl-auto: update
+      #database-platform: org.hibernate.dialect.MariaDB53Dialect
+      database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate.show_sql: true
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      hibernate.enable_lazy_load_no_trans: true
+
+jwt:
+  secret: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  validaty: 18000

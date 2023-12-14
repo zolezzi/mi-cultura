@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="title">
+        <h1>REVIEW</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="card-container">
+        <mat-card *ngFor="let review of reviews | slice:
+        (paginator.pageIndex*paginator.pageSize):
+        ((paginator.pageIndex+1)*paginator.pageSize)" class="example-card">
+            <div style="margin-top: 8px; margin-left: 80px;">
+                <bar-rating class="star-total-font" [readOnly]="true" [theme]="'stars'" [rate]="review.score" [max]="5">
+                    <fa-icon *ratingInactive [icon]="['far', 'star']" [fixedWidth]="true" size="lg" style="color: #38b6ff"></fa-icon>
+                    <fa-icon *ratingActive [icon]="['fas', 'star']" [fixedWidth]="true" size="lg" style="color: #38b6ff"></fa-icon>
+                    <fa-icon *ratingFraction [icon]="['fas', 'star-half-alt']" [fixedWidth]="true" size="lg" style="color: #38b6ff"></fa-icon>
+                </bar-rating>
+                <span>total: {{review.score}} / 5</span>
+            </div>
+            <span *ngIf="'ANNOUNCEMENT' == review.eventType" class="tag tag-purple">Convocatoria</span>
+            <span *ngIf="'PROCEDURE' == review.eventType" class="tag tag-green">Trámite</span>
+            <span *ngIf="'MUSEUM' == review.placeType" class="tag tag-brown">Museo</span>
+            <span *ngIf="'INSTITUTE' == review.placeType" class="tag tag-blue">Instituto</span>
+            <span *ngIf="'AGENCIES' == review.placeType" class="tag tag-red">Organismo</span>
+            <mat-card-content>
+                <div *ngIf="'ANNOUNCEMENT' == review.eventType || 'PROCEDURE' == review.eventType">
+                    <h4>{{review.title}}</h4>
+                </div>
+                <div *ngIf="'MUSEUM' == review.placeType || 'INSTITUTE' == review.placeType || 'AGENCIES' == review.placeType">
+                    <h4>{{review.placeName}}</h4>
+                </div>
+                <div>
+                    <p>Nombre: {{review.firstname}} {{review.lastname}} </p>
+                    <p>Comentario: {{review.comments}}</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+</div>
+<mat-paginator  #paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" 
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="onPageChange($event)">
+</mat-paginator>

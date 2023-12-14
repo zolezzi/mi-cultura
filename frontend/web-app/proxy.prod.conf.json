@@ -1,0 +1,14 @@
+{
+    "/api/": {
+      "target": "mi-cultura-production.up.railway.app/api",
+      "secure": false
+    },
+    "/api/v2.0/": {
+     "target": "https://www.cultura.gob.ar",
+     "secure": false,
+     "pathRewrite": {
+       "^/api/v2.0/": "/"
+     },
+     "changeOrigin": true
+     }
+ }

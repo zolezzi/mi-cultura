@@ -30,6 +30,7 @@ describe('AppComponent', () => {
   });
 
   it('should create the app', () => {
+    // @ts-ignore
     expect(component).toBeTruthy();
   });
 });

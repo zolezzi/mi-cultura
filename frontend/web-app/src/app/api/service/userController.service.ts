@@ -24,7 +24,7 @@ import { UserVO } from '../model/userVO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserControllerService {
@@ -40,6 +40,11 @@ export class UserControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -93,7 +98,7 @@ export class UserControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<UserDTO>(`${this.basePath}/create`,
+        return this.httpClient.post<UserDTO>(`${this.basePath}/api/create`,
             user,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -139,7 +144,7 @@ export class UserControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<JwtResponseDTO>(`${this.basePath}/login`,
+        return this.httpClient.post<JwtResponseDTO>(`${this.basePath}/api/login`,
             user,
             {
                 withCredentials: this.configuration.withCredentials,

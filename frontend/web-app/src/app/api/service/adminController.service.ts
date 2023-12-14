@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { BasicResponse } from '../model/basicResponse';
 import { UserDTO } from '../model/userDTO';
-
+import { environment } from 'src/environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -38,6 +38,11 @@ export class AdminControllerService {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if(environment.production){
+            this.basePath = environment.apiUrl;
+        }else{
+            this.basePath = environment.apiUrl;
         }
     }
 
@@ -97,7 +102,7 @@ export class AdminControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.delete<BasicResponse>(`${this.basePath}/delete/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<BasicResponse>(`${this.basePath}/api/delete/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -140,7 +145,7 @@ export class AdminControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<UserDTO>>(`${this.basePath}/find-all`,
+        return this.httpClient.get<Array<UserDTO>>(`${this.basePath}/api/find-all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -187,7 +192,7 @@ export class AdminControllerService {
         let consumes: string[] = [
         ];
 
-        return this.httpClient.get<UserDTO>(`${this.basePath}/find-by-id/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<UserDTO>(`${this.basePath}/api/find-by-id/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -243,7 +248,7 @@ export class AdminControllerService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<UserDTO>(`${this.basePath}/update/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.put<UserDTO>(`${this.basePath}/api/update/${encodeURIComponent(String(userId))}`,
             user,
             {
                 withCredentials: this.configuration.withCredentials,

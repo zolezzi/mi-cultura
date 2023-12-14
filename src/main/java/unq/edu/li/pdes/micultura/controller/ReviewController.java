@@ -19,7 +19,7 @@ import unq.edu.li.pdes.micultura.service.impl.ReviewServiceImpl;
 
 @RestController("review")
 @Api(value = "Review Controller")
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 @RequiredArgsConstructor
 public class ReviewController {
 

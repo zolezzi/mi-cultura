@@ -7,6 +7,7 @@ import { AccountControllerService } from './service/accountController.service';
 import { AdminControllerService } from './service/adminController.service';
 import { EventControllerService } from './service/eventController.service';
 import { PlaceControllerService } from './service/placeController.service';
+import { ProxyControllerService } from './service/proxyController.service';
 import { ReviewControllerService } from './service/reviewController.service';
 import { UserControllerService } from './service/userController.service';
 
@@ -19,6 +20,7 @@ import { UserControllerService } from './service/userController.service';
     AdminControllerService,
     EventControllerService,
     PlaceControllerService,
+    ProxyControllerService,
     ReviewControllerService,
     UserControllerService ]
 })

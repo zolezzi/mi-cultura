@@ -1,55 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ProxyControllerService } from 'src/app/api/service/proxyController.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CulturaAPIService {
-  
-  private readonly BASE_URL: string = 'https://www.cultura.gob.ar/api/v2.0/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private proxyService: ProxyControllerService) {}
 
+  public getMuseums(): Observable<any> {
+    return this.proxyService.getMuseos();
   }
 
-  public getMuseums(): Observable<any> {   
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    const url = this.BASE_URL +'museos/?limit=30';
-    var data = this.http.get(url, {'headers': headers });
-    return data;
-  }
-
-  public getInstitutes(): Observable<any> {   
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    const url = this.BASE_URL +'institutos/';
-    var data = this.http.get(url, {'headers': headers });
-    return data;
+  public getInstitutes(): Observable<any> {
+    return this.proxyService.getInstitutos();
   }
   
   public getAgencies(): Observable<any> {   
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    const url = this.BASE_URL +'organismos/?limit=20&offset=120';
-    var data = this.http.get(url, {'headers': headers });
-    return data;
+    return this.proxyService.getOrganismos();
   }
 
   public getAnnouncements(): Observable<any> {   
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    const url = this.BASE_URL +'convocatorias/?limit=20&offset=120';
-    var data = this.http.get(url, {'headers': headers });
-    return data;
+    return this.proxyService.getConvocatorias();
   }
 
   public getProcedures(): Observable<any> {   
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    const url = this.BASE_URL +'tramites/';
-    var data = this.http.get(url, {'headers': headers });
-    return data;
+    return this.proxyService.getTramites();
   }
 }
