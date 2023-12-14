@@ -78,7 +78,7 @@ jobs:
       - name: Build and Test
         run: |
           cd frontend/web-app
-          npm run build
+          npm run build.prod
       - uses: actions/upload-artifact@v2
         with:
           name: dist
