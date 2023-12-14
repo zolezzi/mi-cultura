@@ -138,8 +138,7 @@ jobs:
       - name: E2E tests
         working-directory: frontend/web-app
         run: |
-          npm run start-test &
-          npx wait-on http://localhost:4200 && npm run test:e2e
+          npm run start-test & npx wait-on http://localhost:4200 && npm run test:e2e
 
   build:
     needs: [test-backend, test-frontend, e2e]

@@ -5,7 +5,7 @@ describe('Página de inicio', () => {
     cy.visit('#/places')
   })
 
-  it('debería mostrar el Complejo Histórico Cultural Manzana de las Luces', () => {
-    cy.contains("Complejo Histórico Cultural Manzana de las Luces").should('exist');
+  it('debería mostrar el Instituto Nacional de Antropología y Pensamiento Latinoamericano', () => {
+    cy.contains("Instituto Nacional de Antropología y Pensamiento Latinoamericano").should('exist');
   })
 })
